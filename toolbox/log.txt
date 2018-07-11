@@ -1,0 +1,108 @@
+[1] 1
+[1] "Tortoise says:"
+[1] "-I have imported your data!"
+[1] "-and now I have prepared your data!"
+[1] "-I have created a stratification grid!"
+[1] "-Now I will place the samples, hang on!"
+[1] "-The specified number of samples per stratum has been reached!"
+[1] "-I have completed your sampling!"
+[1] "-Please check your output folder. I have exported your results!"
+          x       y  r.value       mae no    density      change
+1  408821.5 6473846 22.66667 6.5656817  1 0.02666633          NA
+2  408321.5 6474346  8.50000 5.8253827  2 0.05333267          NA
+3  409121.5 6473696 32.55556 3.7955959  3 0.07999900          NA
+4  408971.5 6473996 12.22222 3.3689316  4 0.10666533         Inf
+5  408921.5 6473746 32.88889 2.1115714  5 0.13333167 294.6954415
+6  408471.5 6474246 17.57143 1.9517845  6 0.15999800   9.4883955
+7  408721.5 6473946 18.33333 1.8935895  7 0.18666433   3.1562317
+8  409021.5 6473846 28.55556 1.9108657  8 0.21333067   0.9083103
+9  409071.5 6473996 14.83333 1.9883570  9 0.23999700   4.1115365
+10 408871.5 6473996 14.33333 1.9810175 10 0.26666333   0.4061178
+11 409021.5 6473746 32.77778 1.4873328 11 0.29332967  27.2065790
+12 408571.5 6474146 19.33333 1.4400457 12 0.31999600   2.0486023
+13 409171.5 6473796 30.40000 1.3086318 13 0.34666233   5.5789045
+14 408721.5 6473596 27.88889 1.2228193 14 0.37332867   3.4504931
+15 408671.5 6473796 20.00000 1.1618662 15 0.39999500   2.3691558
+16 408771.5 6473696 27.50000 1.1659181 16 0.42666133   0.1538460
+17 409021.5 6473696 32.88889 1.0506146 17 0.45332767   4.3846982
+18 408671.5 6473646 25.77778 1.0561123 18 0.47999400   0.2002804
+19 408971.5 6473846 28.00000 1.1144117 19 0.50666033   2.1281175
+20 408621.5 6473546 27.00000 1.1203596 20 0.53332667   0.2218399
+21 408921.5 6474046 10.14286 0.9613283 21 0.55999300          NA
+[1] "Your data have been imported"
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[1] "Kriging ready"
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[1] "Residual kriging ready"
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[using ordinary kriging]
+[1] "Regression kriging ready"
+[1] "Evaluation measures have been computed"
+[1] "Your output data have been exported. Please\n          check the specified output folder"
+[1] "MRI is ready"
+     Measure              MAE             RMSE                  E
+1        map 7.52105263157895 8.65602923431195  -1.65554551969919
+2 ordkrig_cv 4.31852325619191 5.59539796703005 -0.109630237078383
+3 reskrig_cv 7.43294172164122 8.91052555641844   -1.8139926676284
+4 regkrig_cv 4.89384202895301 6.10444999215355 -0.320715886401518
+                  r2                   ME
+1  0.107646075252386     1.40526315789474
+2  0.955912536530397 -0.00596337690954737
+3   0.08796168135704  0.00483972965087952
+4 0.0105881442258219    -1.45162195145582

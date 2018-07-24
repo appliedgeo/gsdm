@@ -1,2 +1,2 @@
-path_to_package<-"D:/2018/CIAT/src/mapsRinteractive_0.1.0.tar.gz"
-working_directory<-"D:/2018/CIAT/Data"
+path_to_package<-"F:/2018/CIAT/dev/gsdm/toolbox/scripts/mapsRinteractive_0.1.0.tar.gz"
+working_directory<-"F:/2018/CIAT/Data"

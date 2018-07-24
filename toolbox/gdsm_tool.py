@@ -16,7 +16,7 @@ soil_sample_data = arcpy.GetParameterAsText(0)
 raster_map = arcpy.GetParameterAsText(1)
 area_of_interest = arcpy.GetParameterAsText(2)
 
-r_script_path = "D:\\2018\CIAT\dev\gsdm\\toolbox\scripts\\"
+r_script_path = "F:\\2018\CIAT\dev\gsdm\\toolbox\scripts\\"
 
 def create_param_file(soil_sample_data, raster_map, area_of_interest):
     # write parameters to R file

@@ -1,26 +1,37 @@
-#load configuration
-source("F:/2018/CIAT/dev/gsdm/toolbox/scripts/config.R")  
-source("F:/2018/CIAT/dev/gsdm/toolbox/scripts/params.R")
+#definitions (change these paths)
+working_directory<-"C:/Mitt arkiv/Projekt/CIAT/Soil Map Adapter/example"
 
+#install packages
+install.packages('SurfaceTortoise')
+install.packages('mapsRinteractive')
+install.packages('sp')
+install.packages('rgdal')
+                 
 #load packages
 require('SurfaceTortoise')
 require('mapsRinteractive')
 require('raster')
+require('sp')
+require('rgdal')
 
 #set working directory
 setwd(working_directory)
 
 #import data
 ##soil sample data (lab results)
-s<-read.table(file=soil_sample, header = T, sep = "\t")[,1:4]
+s<-read.table(file='indata/slu_clay.txt', header = T, sep = "\t")[,1:4]
 ##a raster map of clay content (an excerpt of the digital soi lmap of Sweden, dsms)
-r<-raster(raster_map) 
+r<-raster('indata/dsms_float.tif') 
 #a shapefile delineating the farm where the soil samples were taken
-a<-shapefile(aoi)
+a<-shapefile('indata/slu.shp')
 
 #crop raster to area of interest
 ##this is not necessary
 r<-mask(x=r, mask=a)
+
+#project spatial data to another coordiante system
+r.wm <- projectRaster(r, crs='+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ') 
+
 
 #example run of the tortoise function
 sampling<-tortoise(x1 = r, 

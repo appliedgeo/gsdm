@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en">
+    <Esri>
+        <CreaDate>20180801</CreaDate>
+        <CreaTime>16414800</CreaTime>
+        <ArcGISFormat>1.0</ArcGISFormat>
+        <SyncOnce>TRUE</SyncOnce>
+    </Esri>
+    <dataIdInfo>
+		<idCitation>
+			<resTitle>Sampling Design</resTitle>
+		</idCitation>
+		<idAbs>&lt;DIV STYLE="text-align:Left;"&gt;&lt;DIV&gt;&lt;DIV&gt;&lt;P&gt;&lt;SPAN&gt;Optimizing spatial sampling using the Surface Tortoise algoritm. Grid sampling and random stratified sampling are also available.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;&lt;/DIV&gt;&lt;/DIV&gt;
+        </idAbs>
+		<idCredit>International Center for Tropical Agriculture - CIAT
+        </idCredit>
+		<resConst>
+			<Consts>
+				<useLimit>&lt;DIV STYLE="text-align:Left;"&gt;&lt;DIV&gt;&lt;DIV&gt;&lt;P&gt;&lt;SPAN&gt;Requires
+                    Spatial Analyst Extention&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;&lt;/DIV&gt;&lt;/DIV&gt;
+                </useLimit>
+			</Consts>
+		</resConst>
+	</dataIdInfo>
+    <distInfo>
+		<distributor>
+			<distorFormat>
+				<formatName>ArcToolbox Tool</formatName>
+			</distorFormat>
+		</distributor>
+	</distInfo>
+    <tool name="SamplingDesign" displayname="Sampling Design" toolboxalias="Sampling Design" xmlns="">
+		<parameters>
+            <param name="r_exec_dir" displayname="R Executable Path" type="Required" datatype="DEFolder" expression="r_exec_dir" direction="Input">
+				<dialogReference>
+                    Path to installed R program
+                </dialogReference>
+				<pythonReference>
+                    Path to installed R program
+                </pythonReference>
+			</param>
+            <param name="aoi" displayname="Area of Interest" type="Required" datatype="DEShapefile" expression="aoi" direction="Input">
+				<dialogReference>
+                    SpatialPolygonsDataframe delineating the area to be sampled. The coordinate system shall be the same as for the rasters. If not completely overlapping, the itersection of x1 and y will be sampled.
+                </dialogReference>
+				<pythonReference>
+                    SpatialPolygonsDataframe delineating the area to be sampled. The coordinate system shall be the same as for the rasters. If not completely overlapping, the itersection of x1 and y will be sampled.
+                </pythonReference>
+			</param>
+            <param name="soil_raster" displayname="Soil Raster Layer" type="Required" datatype="DERasterDataset" expression="soil_raster" direction="Input">
+				<dialogReference>
+                    Raster layer. Additionally four raster layers (x2, x3, x4 and x5) can be used. These will be transferred to the same extent and resulution as x1. All rasters will be centered and scaled. The first principal component of the rasters will be used as the surface for wich to optimize the sampling.
+                </dialogReference>
+				<pythonReference>
+                    Raster layer. Additionally four raster layers (x2, x3, x4 and x5) can be used. These will be transferred to the same extent and resulution as x1. All rasters will be centered and scaled. The first principal component of the rasters will be used as the surface for wich to optimize the sampling.
+                </pythonReference>
+			</param>
+            <param name="sampling_method" displayname="Sampling Algorithm" type="Required" datatype="GPString" expression="sampling_method" direction="Input">
+				<dialogReference>
+                    Sampling algorithm: 'dir' = directed (SurfaceTortoise algorithm), 'stratdir' = stratified directed (SurfaceTortoise algorithm), 'grid' = regular grid and 'stratrand' = random stratified.
+                </dialogReference>
+				<pythonReference>
+                    Sampling algorithm: 'dir' = directed (SurfaceTortoise algorithm), 'stratdir' = stratified directed (SurfaceTortoise algorithm), 'grid' = regular grid and 'stratrand' = random stratified.
+                </pythonReference>
+			</param>
+            <param name="strat_size" displayname="Strat Size" type="Required" datatype="GPLong" expression="strat_size" direction="Input">
+				<dialogReference>
+                    Cell side (metre) of a square staratification grid
+                </dialogReference>
+				<pythonReference>
+                    Cell side (metre) of a square staratification grid
+                </pythonReference>
+			</param>
+            <param name="min_dist" displayname="Minimum Distance" type="Required" datatype="GPLong" expression="min_dist" direction="Input">
+				<dialogReference>
+                    Minimum distance allowed between samples. Valid for the 'dir' and the 'stratdir' methods.
+                </dialogReference>
+				<pythonReference>
+                    Minimum distance allowed between samples. Valid for the 'dir' and the 'stratdir' methods.
+                </pythonReference>
+			</param>
+            <param name="edge" displayname="Edge" type="Required" datatype="GPLong" expression="edge" direction="Input">
+				<dialogReference>
+                    Buffer zone (metre) inside the sample area border, where sampling is prohibited.
+                </dialogReference>
+				<pythonReference>
+                    Buffer zone (metre) inside the sample area border, where sampling is prohibited.
+                </pythonReference>
+			</param>
+            <param name="stop_dens" displayname="Stopping Criterium" type="Required" datatype="GPLong" expression="stop_dens" direction="Input">
+				<dialogReference>
+                    A stopping criterium. No more samples will be added when this number of samples per stratum has been reached. Valid for 'stratdir' and 'stratrand' methods.
+                </dialogReference>
+				<pythonReference>
+                    A stopping criterium. No more samples will be added when this number of samples per stratum has been reached. Valid for 'stratdir' and 'stratrand' methods.
+                </pythonReference>
+			</param>
+        </parameters>
+    </tool>
+</metadata>

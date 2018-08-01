@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en">
+    <Esri>
+        <CreaDate>20180801</CreaDate>
+        <CreaTime>14354100</CreaTime>
+        <ArcGISFormat>1.0</ArcGISFormat>
+        <SyncOnce>TRUE</SyncOnce>
+    </Esri>
+    <dataIdInfo>
+		<idCitation>
+			<resTitle>Local Map Adaptation</resTitle>
+		</idCitation>
+		<idAbs>&lt;DIV STYLE="text-align:Left;"&gt;&lt;DIV&gt;&lt;DIV&gt;&lt;P&gt;&lt;SPAN&gt;Local adaptation and evaluation of digital soil maps in raster format by use of point location soil property data.&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;&lt;/DIV&gt;&lt;/DIV&gt;
+        </idAbs>
+		<idCredit>International Center for Tropical Agriculture - CIAT
+        </idCredit>
+		<resConst>
+			<Consts>
+				<useLimit>&lt;DIV STYLE="text-align:Left;"&gt;&lt;DIV&gt;&lt;DIV&gt;&lt;P&gt;&lt;SPAN&gt;Requires
+                    Spatial Analyst Extention&lt;/SPAN&gt;&lt;/P&gt;&lt;/DIV&gt;&lt;/DIV&gt;&lt;/DIV&gt;
+                </useLimit>
+			</Consts>
+		</resConst>
+	</dataIdInfo>
+    <distInfo>
+		<distributor>
+			<distorFormat>
+				<formatName>ArcToolbox Tool</formatName>
+			</distorFormat>
+		</distributor>
+	</distInfo>
+    <tool name="MapAdaptation" displayname="Local Map Adaptation" toolboxalias="Local Map Adaptation" xmlns="">
+		<parameters>
+            <param name="r_exec_dir" displayname="R Executable Path" type="Required" datatype="DEFolder" expression="r_exec_dir" direction="Input">
+				<dialogReference>
+                    Path to installed R program file
+                </dialogReference>
+				<pythonReference>
+                    Path to installed R program file
+                </pythonReference>
+			</param>
+        </parameters>
+		<parameters>
+            <param name="raster_layer" displayname="Raster Layer" type="Required" datatype="DERasterDataset" expression="soil_raster" direction="Input">
+				<dialogReference>
+                    Path to raster file
+                </dialogReference>
+				<pythonReference>
+                    Path to raster file
+                </pythonReference>
+			</param>
+        </parameters>
+		<parameters>
+            <param name="samples_file" displayname="Points File (Text)" type="Required" datatype="DETextfile" expression="samples_file" direction="Input">
+				<dialogReference>
+                    Path to point file with observed soil property data. The coordinate system shall be the same as for the raster.
+                </dialogReference>
+				<pythonReference>
+                    Path to point file with observed soil property data. The coordinate system shall be the same as for the raster.
+                </pythonReference>
+			</param>
+        </parameters>
+		<parameters>
+            <param name="attribute_column" displayname="Attribute Column" type="Required" datatype="GPString" expression="attribute_column" direction="Input">
+				<dialogReference>
+                    Name of the attribute column in points file. Required. The data must be numerical.
+                </dialogReference>
+				<pythonReference>
+                    Name of the attribute column in points file. Required. The data must be numerical.
+                </pythonReference>
+			</param>
+        </parameters>
+		<parameters>
+            <param name="x_coords" displayname="X Coordinates" type="Required" datatype="GPString" expression="x_coords" direction="Input">
+				<dialogReference>
+                    Name of the x coordinate column in points file
+                </dialogReference>
+				<pythonReference>
+                    Name of the x coordinate column in points file
+                </pythonReference>
+			</param>
+        </parameters>
+		<parameters>
+            <param name="y_coords" displayname="Y Coordinates" type="Required" datatype="GPString" expression="y_coords" direction="Input">
+				<dialogReference>
+                    Name of the y coordinate column in points file
+                </dialogReference>
+				<pythonReference>
+                    Name of the y coordinate column in points file
+                </pythonReference>
+			</param>
+        </parameters>
+
+    </tool>
+</metadata>

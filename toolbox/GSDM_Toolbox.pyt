@@ -20,22 +20,22 @@ class Toolbox(object):
         self.alias = ""
 
         # List of tool classes associated with this toolbox
-        self.tools = [DesignSampling, UploadSample]
+        self.tools = [SamplingDesign, MapAdaptation]
 
 
-class DesignSampling(object):
+class SamplingDesign(object):
     def __init__(self):
         """Define the tool (tool name is the name of the class)."""
-        self.label = "Design Sampling"
-        self.description = "Design Sampling"
+        self.label = "Sampling Design"
+        self.description = "Sampling Design"
         self.canRunInBackground = False
 
     def getParameterInfo(self):
         """Define parameter definitions"""
         # working directory
         param1 = arcpy.Parameter(
-            displayName="Working Directory",
-            name="working_dir",
+            displayName="R Executable Path",
+            name="r_exec_dir",
             datatype="DEFolder",
             parameterType="Required",
             direction="Input"
@@ -63,7 +63,7 @@ class DesignSampling(object):
 
         # digital soil raster map
         param3 = arcpy.Parameter(
-            displayName="Soil Raster Map",
+            displayName="Soil Raster Layer",
             name="soil_raster",
             datatype="DERasterDataset",
             parameterType="Required",
@@ -82,12 +82,14 @@ class DesignSampling(object):
 
         # sampling method
         param5 = arcpy.Parameter(
-            displayName="Sampling Method",
+            displayName="Sampling Algorithm",
             name="sampling_method",
             datatype="GPString",
             parameterType="Optional",
             direction="Input"
         )
+
+        param5.filter.list = ['stratdir','dir','grid','stratrand']
 
         # strat size
         param6 = arcpy.Parameter(
@@ -155,7 +157,7 @@ class DesignSampling(object):
     def create_params_file(self, _params):
         # write parameters to R file
         # get user input
-        working_dir = _params[0].valueAsText
+        r_exec_dir = _params[0].valueAsText
         #mapsr_path = _params[1].valueAsText
         aoi = os.path.basename(_params[1].valueAsText)
         soil_raster = os.path.basename(_params[2].valueAsText)
@@ -166,11 +168,11 @@ class DesignSampling(object):
         edge = _params[7].valueAsText
         stop_dens = _params[8].valueAsText
 
-        working_dir = working_dir.replace('\\','/')
+        r_exec_dir = r_exec_dir.replace('\\','/')
 
-        param_file = working_dir + "\params.R"
+        param_file = r_exec_dir + "\params.R"
         file = open(param_file, "w")
-        file.write("working_directory<-'" + working_dir + "'\n")
+        file.write("r_exec_directory<-'" + r_exec_dir + "'\n")
         file.write("raster_map<-'" + soil_raster + "'\n")
         file.write("aoi<-'" + aoi + "'\n")
         file.write("epsg_code<-" + epsg_code + "\n")
@@ -184,21 +186,21 @@ class DesignSampling(object):
 
     def spatial_sampling(self, _params):
         # run spatial sampling using surface tortoise
-        working_dir = _params[0].valueAsText
-        working_dir = working_dir.replace('\\', '/')
+        r_exec_dir = _params[0].valueAsText
+        r_exec_dir = r_exec_dir.replace('\\', '/')
         arcpy.AddMessage("Running spatial sampling \n")
         #CREATE_NO_WINDOW = 0x08000000
         #process = subprocess.Popen(shlex.split(r_cmd), stdout=subprocess.PIPE, creationflags=CREATE_NO_WINDOW)
-        r_script = working_dir + '/run_spatial_sampling.R'
+        r_script = r_exec_dir + '/run_spatial_sampling.R'
         process = subprocess.call(['C:/Program Files/R/R-3.4.0//bin/i386/Rscript', '--vanilla', r_script], shell=False)
 
 
     def display_outputs(self, _params):
         # display sampling outputs
-        working_dir = _params[0].valueAsText
+        r_exec_dir = _params[0].valueAsText
 
-        st_points_shp = working_dir + '\\outdata\\st_points.shp'
-        st_strata_shp = working_dir + '\\outdata\\st_strata.shp'
+        st_points_shp = r_exec_dir + '\\outdata\\st_points.shp'
+        st_strata_shp = r_exec_dir + '\\outdata\\st_strata.shp'
 
         mxd = arcpy.mapping.MapDocument("CURRENT")
         df = arcpy.mapping.ListDataFrames(mxd, "*")[0]
@@ -219,11 +221,11 @@ class DesignSampling(object):
 
         return
 
-class UploadSample(object):
+class MapAdaptation(object):
     def __init__(self):
         """Define the tool (tool name is the name of the class)."""
-        self.label = "Upload Samples"
-        self.description = "Upload Samples"
+        self.label = "Local Map Adaptation"
+        self.description = "Local Map Adaptation"
         self.canRunInBackground = False
 
     def getParameterInfo(self):
@@ -231,8 +233,8 @@ class UploadSample(object):
 
         # upload sample
         param0 = arcpy.Parameter(
-            displayName="Working Directory",
-            name="working_dir",
+            displayName="R Executable Path",
+            name="r_exec_dir",
             datatype="DEFolder",
             parameterType="Required",
             direction="Input"
@@ -247,7 +249,7 @@ class UploadSample(object):
         )
 
         param2 = arcpy.Parameter(
-            displayName="Samples File (Text)",
+            displayName="Points File (Text)",
             name="samples_file",
             datatype="DETextfile",
             parameterType="Required",
@@ -310,7 +312,7 @@ class UploadSample(object):
 
     def create_params_file(self, _params):
         # write parameters to R file
-        working_dir = _params[0].valueAsText
+        r_exec_dir = _params[0].valueAsText
         raster_layer = os.path.basename(_params[1].valueAsText)
         sample_file = os.path.basename(_params[2].valueAsText)
         attr_column = _params[3].valueAsText
@@ -318,11 +320,11 @@ class UploadSample(object):
         y_coords = _params[5].valueAsText
         epsg_code = _params[6].valueAsText
 
-        working_dir = working_dir.replace('\\', '/')
+        r_exec_dir = r_exec_dir.replace('\\', '/')
 
-        param_file = working_dir + "\params.R"
+        param_file = r_exec_dir + "\params.R"
         file = open(param_file, "w")
-        file.write("working_directory<-'" + working_dir + "'\n")
+        file.write("r_exec_directory<-'" + r_exec_dir + "'\n")
         file.write("raster_map<-'" + raster_layer + "'\n")
         file.write("soil_sample<-'" + sample_file + "'\n")
         file.write("epsg_code<-" + epsg_code + "\n")
@@ -333,18 +335,18 @@ class UploadSample(object):
 
     def upload_sampling(self, _params):
         # run upload sampling
-        working_dir = _params[0].valueAsText
-        working_dir = working_dir.replace('\\', '/')
+        r_exec_dir = _params[0].valueAsText
+        r_exec_dir = r_exec_dir.replace('\\', '/')
         arcpy.AddMessage("Running sampling \n")
-        r_script = working_dir + '/run_upload_sampling.R'
+        r_script = r_exec_dir + '/run_upload_sampling.R'
         process = subprocess.call(['C:/Program Files/R/R-3.4.0//bin/i386/Rscript', '--vanilla', r_script], shell=False)
 
     def display_outputs(self, _params):
         # display sampling outputs
-        working_dir = _params[0].valueAsText
+        r_exec_dir = _params[0].valueAsText
 
-        mri_mapped_shp = working_dir + '\\outdata\\mri_mapped_area.shp'
-        mri_used_shp = working_dir + '\\outdata\\mri_used_samples.shp'
+        mri_mapped_shp = r_exec_dir + '\\outdata\\mri_mapped_area.shp'
+        mri_used_shp = r_exec_dir + '\\outdata\\mri_used_samples.shp'
 
         mxd = arcpy.mapping.MapDocument("CURRENT")
         df = arcpy.mapping.ListDataFrames(mxd, "*")[0]

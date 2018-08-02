@@ -8,7 +8,7 @@
 # Tested on ArcGIS 10.5
 #
 
-import os, sys, subprocess, shlex
+import os, sys, subprocess, shlex, tempfile
 import arcpy
 
 
@@ -34,9 +34,9 @@ class SamplingDesign(object):
         """Define parameter definitions"""
         # working directory
         param1 = arcpy.Parameter(
-            displayName="R Executable Path",
-            name="r_exec_dir",
-            datatype="DEFolder",
+            displayName="R Executable",
+            name="r_exec_path",
+            datatype="DEFile",
             parameterType="Required",
             direction="Input"
         )
@@ -66,7 +66,7 @@ class SamplingDesign(object):
             displayName="Sampling Algorithm",
             name="sampling_method",
             datatype="GPString",
-            parameterType="Optional",
+            parameterType="Required",
             direction="Input"
         )
 
@@ -108,9 +108,33 @@ class SamplingDesign(object):
             direction="Input"
         )
 
+        output1 = arcpy.Parameter(
+            displayName="Points Shapefile",
+            name="points_shp",
+            datatype="DEShapefile",
+            parameterType="Derived",
+            direction="Output"
+        )
+
+        output2 = arcpy.Parameter(
+            displayName="Points Text",
+            name="points_txt",
+            datatype="DETextfile",
+            parameterType="Derived",
+            direction="Output"
+        )
+
+        output3 = arcpy.Parameter(
+            displayName="Strata Shapefile",
+            name="strata_shp",
+            datatype="DEShapefile",
+            parameterType="Derived",
+            direction="Output"
+        )
+
         params = [param1, param2, param3,
                   param4, param5, param6,
-                  param7, param8]
+                  param7, param8, output1, output2, output3]
         return params
 
     def isLicensed(self):
@@ -134,25 +158,30 @@ class SamplingDesign(object):
         parameter.  This method is called after internal validation."""
         return
 
-    def create_params_file(self, _params):
+    def create_script_file(self, _params):
         # write parameters to R file
         # get user input
-        r_exec_dir = _params[0].valueAsText
-        #mapsr_path = _params[1].valueAsText
-        aoi = os.path.basename(_params[1].valueAsText)
-        soil_raster = os.path.basename(_params[2].valueAsText)
-        #epsg_code = _params[3].valueAsText
+        r_exec_path = _params[0].valueAsText
+        r_exec_path = r_exec_path.replace('\\', '/')
+
+        aoi = _params[1].valueAsText
+        aoi = aoi.replace('\\','/')
+
+        soil_raster = _params[2].valueAsText
+        soil_raster = soil_raster.replace('\\','/')
+
         sampling_method = _params[3].valueAsText
         strat_size = _params[4].valueAsText
         min_dist = _params[5].valueAsText
         edge = _params[6].valueAsText
         stop_dens = _params[7].valueAsText
 
-        r_exec_dir = r_exec_dir.replace('\\','/')
+        temp_dir = tempfile.gettempdir()
+        temp_dir = temp_dir.replace('\\','/')
 
-        param_file = r_exec_dir + "\params.R"
-        file = open(param_file, "w")
-        file.write("r_exec_directory<-'" + r_exec_dir + "'\n")
+        script_file = temp_dir + "/sampling_design.R"
+        file = open(script_file, "w")
+        file.write("working_directory<-'" + temp_dir + "'\n")
         file.write("raster_map<-'" + soil_raster + "'\n")
         file.write("aoi<-'" + aoi + "'\n")
         #file.write("epsg_code<-" + epsg_code + "\n")
@@ -161,43 +190,55 @@ class SamplingDesign(object):
         file.write("min_dist<-" + min_dist + "\n")
         file.write("edge<-" + edge + "\n")
         file.write("stop_dens<-" + stop_dens + "\n")
+        file.write("require('SurfaceTortoise')\n")
+        file.write("require('mapsRinteractive')\n")
+        file.write("require('raster')\n")
+        file.write("setwd(working_directory)\n")
+        file.write("r<-raster(raster_map)\n")
+        file.write("a<-shapefile(aoi)\n")
+        file.write("r<-mask(x=r, mask=a)\n")
+        file.write("sampling<-tortoise(x1 = r,\n")
+        file.write("y = a,\n")
+        #file.write("epsg = epsg_code,\n")
+        file.write("out_folder = 'outdata',\n")
+        file.write("method = sampling_method,\n")
+        file.write("strat_size = strat_size,\n")
+        file.write("min_dist = min_dist, \n")
+        file.write("edge= edge,\n")
+        file.write("stop_dens2 = stop_dens,\n")
+        file.write("plot_results = T)\n")
+        #file.write("\n")
         file.close()
 
+        self.spatial_sampling(r_exec_path, script_file)
+        self.display_outputs(temp_dir)
 
-    def spatial_sampling(self, _params):
+
+    def spatial_sampling(self, r_program, r_script):
         # run spatial sampling using surface tortoise
-        r_exec_dir = _params[0].valueAsText
-        r_exec_dir = r_exec_dir.replace('\\', '/')
         arcpy.AddMessage("Running spatial sampling \n")
         #CREATE_NO_WINDOW = 0x08000000
         #process = subprocess.Popen(shlex.split(r_cmd), stdout=subprocess.PIPE, creationflags=CREATE_NO_WINDOW)
-        r_script = r_exec_dir + '/run_spatial_sampling.R'
-        process = subprocess.call(['C:/Program Files/R/R-3.4.0//bin/i386/Rscript', '--vanilla', r_script], shell=False)
+
+        process = subprocess.call([r_program, '--vanilla', r_script], shell=False)
 
 
-    def display_outputs(self, _params):
+    def display_outputs(self, outputs_dir):
         # display sampling outputs
-        r_exec_dir = _params[0].valueAsText
+        outputs_dir = outputs_dir + '/outdata/'
 
-        st_points_shp = r_exec_dir + '\\outdata\\st_points.shp'
-        st_strata_shp = r_exec_dir + '\\outdata\\st_strata.shp'
+        st_points_shp = outputs_dir + '/st_points.shp'
+        st_strata_shp = outputs_dir + '/st_strata.shp'
+        st_points_txt = outputs_dir + '/st_points.txt'
 
-        mxd = arcpy.mapping.MapDocument("CURRENT")
-        df = arcpy.mapping.ListDataFrames(mxd, "*")[0]
-        st_points_layer = arcpy.mapping.Layer(st_points_shp)
-        st_strata_layer = arcpy.mapping.Layer(st_strata_shp)
-
-        arcpy.mapping.AddLayer(df, st_points_layer)
-        arcpy.mapping.AddLayer(df, st_strata_layer)
-
+        arcpy.SetParameter(8, st_points_shp)
+        arcpy.SetParameter(9, st_points_txt)
+        arcpy.SetParameter(10, st_strata_shp)
 
     def execute(self, parameters, messages):
         """The source code of the tool."""
         # create params file
-        self.create_params_file(parameters)
-        # run sampling
-        sampling = self.spatial_sampling(parameters)
-        outputs = self.display_outputs(parameters)
+        self.create_script_file(parameters)
 
         return
 

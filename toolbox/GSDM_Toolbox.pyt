@@ -254,9 +254,9 @@ class MapAdaptation(object):
 
         # upload sample
         param0 = arcpy.Parameter(
-            displayName="R Executable Path",
-            name="r_exec_dir",
-            datatype="DEFolder",
+            displayName="R Executable",
+            name="r_exec_path",
+            datatype="DEFile",
             parameterType="Required",
             direction="Input"
         )
@@ -301,8 +301,67 @@ class MapAdaptation(object):
             direction="Input"
         )
 
+        param6 = arcpy.Parameter(
+            displayName="EPSG",
+            name="epsg",
+            datatype="GPLong",
+            parameterType="Required",
+            direction="Input"
+        )
 
-        params = [param0, param1, param2, param3, param4, param5]
+        output1 = arcpy.Parameter(
+            displayName="MRI Map",
+            name="mri_map",
+            datatype="DERasterDataset",
+            parameterType="Derived",
+            direction="Output"
+        )
+
+        output2 = arcpy.Parameter(
+            displayName="MRI Ordkrig",
+            name="mri_ordkrig",
+            datatype="DERasterDataset",
+            parameterType="Derived",
+            direction="Output"
+        )
+
+        output3 = arcpy.Parameter(
+            displayName="MRI Regkrig",
+            name="mri_regkrig",
+            datatype="DERasterDataset",
+            parameterType="Derived",
+            direction="Output"
+        )
+
+        output4 = arcpy.Parameter(
+            displayName="MRI Reskrig",
+            name="mri_reskrig",
+            datatype="DERasterDataset",
+            parameterType="Derived",
+            direction="Output"
+        )
+
+        output5 = arcpy.Parameter(
+            displayName="MRI Evaluation",
+            name="mri_evaluation",
+            datatype="DETextfile",
+            parameterType="Derived",
+            direction="Output"
+        )
+
+        output6 = arcpy.Parameter(
+            displayName="MRI Feedback",
+            name="mri_feedback",
+            datatype="DETextfile",
+            parameterType="Derived",
+            direction="Output"
+        )
+
+
+
+
+        params = [param0, param1, param2, param3, param4, param5, param6,
+                  output1, output2, output3, output4, output5, output6]
         return params
 
     def isLicensed(self):
@@ -326,53 +385,87 @@ class MapAdaptation(object):
 
     def create_params_file(self, _params):
         # write parameters to R file
-        r_exec_dir = _params[0].valueAsText
-        raster_layer = os.path.basename(_params[1].valueAsText)
-        sample_file = os.path.basename(_params[2].valueAsText)
+        r_exec_path = _params[0].valueAsText
+        r_exec_path = r_exec_path.replace('\\', '/')
+
+        raster_layer = _params[1].valueAsText
+        raster_layer = raster_layer.replace('\\', '/')
+
+        sample_file = _params[2].valueAsText
+        sample_file = sample_file.replace('\\', '/')
+
         attr_column = _params[3].valueAsText
         x_coords = _params[4].valueAsText
         y_coords = _params[5].valueAsText
-        #epsg_code = _params[6].valueAsText
+        epsg_code = _params[6].valueAsText
 
-        r_exec_dir = r_exec_dir.replace('\\', '/')
+        temp_dir = tempfile.gettempdir()
+        temp_dir = temp_dir.replace('\\', '/')
 
-        param_file = r_exec_dir + "\params.R"
-        file = open(param_file, "w")
-        file.write("r_exec_directory<-'" + r_exec_dir + "'\n")
+        script_file = temp_dir + "/map_adaptation.R"
+        file = open(script_file, "w")
+        file.write("working_directory<-'" + temp_dir + "'\n")
         file.write("raster_map<-'" + raster_layer + "'\n")
         file.write("soil_sample<-'" + sample_file + "'\n")
-        #file.write("epsg_code<-" + epsg_code + "\n")
         file.write("attr_column<-'" + attr_column + "'\n")
         file.write("x_coords<-'" + x_coords + "'\n")
         file.write("y_coords<-'" + y_coords + "'\n")
+        file.write("epsg_code<-" + epsg_code + "\n")
+        file.write("require('SurfaceTortoise')\n")
+        file.write("require('mapsRinteractive')\n")
+        file.write("require('raster')\n")
+        file.write("setwd(working_directory)\n")
+
+        file.write("s<-read.table(file=soil_sample, header = T, sep = \"\\t\")[,1:4]\n")
+        file.write("r<-raster(raster_map)\n")
+        file.write("mri.out<-mri(\n")
+        file.write("rst.r = r,\n")
+        file.write("pts.df =s,\n")
+        file.write("pts.attr = attr_column,\n")
+        file.write("pts.x= x_coords,\n")
+        file.write("pts.y= y_coords,\n")
+        file.write("epsg = epsg_code,\n")
+        file.write("out.folder = 'outdata',\n")
+        file.write("out.prefix = 'mri_',\n")
+        file.write("out.dec = \".\", \n")
+        file.write("out.sep = \";\"\n")
+        file.write(")\n")
+        file.write("\n")
+        file.write("\n")
+        file.write("\n")
         file.close()
 
-    def upload_sampling(self, _params):
+        self.map_adaptation(r_exec_path, script_file)
+        self.display_outputs(temp_dir)
+
+    def map_adaptation(self, r_program, r_script):
         # run upload sampling
-        r_exec_dir = _params[0].valueAsText
-        r_exec_dir = r_exec_dir.replace('\\', '/')
-        arcpy.AddMessage("Running sampling \n")
-        r_script = r_exec_dir + '/run_upload_sampling.R'
-        process = subprocess.call(['C:/Program Files/R/R-3.4.0//bin/i386/Rscript', '--vanilla', r_script], shell=False)
 
-    def display_outputs(self, _params):
+        arcpy.AddMessage("Running local map adaptation \n")
+        process = subprocess.call([r_program, '--vanilla', r_script], shell=False)
+
+
+    def display_outputs(self, outputs_dir):
         # display sampling outputs
-        r_exec_dir = _params[0].valueAsText
+        outputs_dir = outputs_dir + '/outdata/'
 
-        mri_mapped_shp = r_exec_dir + '\\outdata\\mri_mapped_area.shp'
-        mri_used_shp = r_exec_dir + '\\outdata\\mri_used_samples.shp'
+        mri_map = outputs_dir + '/mri__map.tif'
+        mri_ordkrig = outputs_dir + '/mri__ordkrig.tif'
+        mri_regkrig = outputs_dir + '/mri__regkrig.tif'
+        mri_reskrig = outputs_dir + '/mri__reskrig.tif'
+        mri_evaluation = outputs_dir + '/mri_evaluation.txt'
+        mri_feedback = outputs_dir + '/mri_feedback.txt'
 
-        mxd = arcpy.mapping.MapDocument("CURRENT")
-        df = arcpy.mapping.ListDataFrames(mxd, "*")[0]
-        mri_mapped_layer = arcpy.mapping.Layer(mri_mapped_shp)
-        mri_used_layer = arcpy.mapping.Layer(mri_used_shp)
+        arcpy.SetParameter(7, mri_map)
+        arcpy.SetParameter(8, mri_ordkrig)
+        arcpy.SetParameter(9, mri_regkrig)
+        arcpy.SetParameter(10, mri_reskrig)
+        arcpy.SetParameter(11, mri_evaluation)
+        arcpy.SetParameter(12, mri_feedback)
 
-        arcpy.mapping.AddLayer(df, mri_mapped_layer)
-        arcpy.mapping.AddLayer(df, mri_used_layer)
 
     def execute(self, parameters, messages):
         """The source code of the tool."""
         self.create_params_file(parameters)
-        sampling = self.upload_sampling(parameters)
-        outputs = self.display_outputs(parameters)
+
         return

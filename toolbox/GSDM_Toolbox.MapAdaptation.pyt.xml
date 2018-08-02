@@ -31,12 +31,12 @@
 	</distInfo>
 	<tool name="MapAdaptation" displayname="Local Map Adaptation" toolboxalias="Local Map Adaptation" xmlns="">
 		<parameters>
-			<param name="r_exec_dir" displayname="R Executable Path" type="Required" datatype="DEFolder" expression="r_exec_dir" direction="Input">
+			<param name="r_exec_path" displayname="R Executable" type="Required" datatype="DEFile" expression="r_exec_path" direction="Input">
 				<dialogReference>
-                    Path to installed R program file
+                    Path to installed R program
                 </dialogReference>
 				<pythonReference>
-                    Path to installed R program file
+                    Path to installed R program
                 </pythonReference>
 			</param>
 			<param name="raster_layer" displayname="Raster Layer" type="Required" datatype="DERasterDataset" expression="soil_raster" direction="Input">
@@ -77,6 +77,62 @@
                 </dialogReference>
 				<pythonReference>
                     Name of the y coordinate column in points file
+                </pythonReference>
+			</param>
+			<param name="epsg" displayname="EPSG" type="Required" datatype="GPLong" expression="epsg" direction="Input">
+				<dialogReference>
+                    EPSG Code
+                </dialogReference>
+				<pythonReference>
+                    EPSG Code
+                </pythonReference>
+			</param>
+			<param name="mri_map" displayname="MRI Map" type="Derived" datatype="DERasterDataset" expression="mri_map" direction="Output">
+				<dialogReference>
+                    MRI Map
+                </dialogReference>
+				<pythonReference>
+                    MRI Map
+                </pythonReference>
+			</param>
+			<param name="mri_ordkrig" displayname="MRI Ordkrig" type="Derived" datatype="DERasterDataset" expression="mri_ordkrig" direction="Output">
+				<dialogReference>
+                    MRI Ordkrig
+                </dialogReference>
+				<pythonReference>
+                    MRI Ordkrig
+                </pythonReference>
+			</param>
+			<param name="mri_regkrig" displayname="MRI Regkrig" type="Derived" datatype="DERasterDataset" expression="mri_regkrig" direction="Output">
+				<dialogReference>
+                    MRI Regkrig
+                </dialogReference>
+				<pythonReference>
+                    MRI Regkrig
+                </pythonReference>
+			</param>
+			<param name="mri_reskrig" displayname="MRI Reskrig" type="Derived" datatype="DERasterDataset" expression="mri_reskrig" direction="Output">
+				<dialogReference>
+                    MRI Reskrig
+                </dialogReference>
+				<pythonReference>
+                    MRI Reskrig
+                </pythonReference>
+			</param>
+			<param name="mri_evaluation" displayname="MRI Evaluation" type="Derived" datatype="DETextfile" expression="mri_evaluation" direction="Output">
+				<dialogReference>
+                    MRI Evaluation
+                </dialogReference>
+				<pythonReference>
+                    MRI Evaluation
+                </pythonReference>
+			</param>
+			<param name="mri_feedback" displayname="MRI Feedback" type="Derived" datatype="DETextfile" expression="mri_feedback" direction="Output">
+				<dialogReference>
+                    MRI Feedback
+                </dialogReference>
+				<pythonReference>
+                    MRI Feedback
                 </pythonReference>
 			</param>
 		</parameters>

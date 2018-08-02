@@ -31,7 +31,7 @@
 	</distInfo>
 	<tool name="SamplingDesign" displayname="Sampling Design" toolboxalias="Sampling Design" xmlns="">
 		<parameters>
-			<param name="r_exec_path" displayname="R Executable" type="Required" datatype="DEFolder" expression="r_exec_path" direction="Input">
+			<param name="r_exec_path" displayname="R Executable" type="Required" datatype="DEFile" expression="r_exec_path" direction="Input">
 				<dialogReference>
                     Path to installed R program
                 </dialogReference>
@@ -93,6 +93,30 @@
                 </dialogReference>
 				<pythonReference>
                     A stopping criterium. No more samples will be added when this number of samples per stratum has been reached. Valid for 'stratdir' and 'stratrand' methods.
+                </pythonReference>
+			</param>
+			<param name="points_shp" displayname="Points Shapefile" type="Derived" datatype="DEShapefile" expression="points_shp" direction="Output">
+				<dialogReference>
+                    Points shapefile output
+                </dialogReference>
+				<pythonReference>
+                    Points shapefile output
+                </pythonReference>
+			</param>
+			<param name="points_txt" displayname="Points Text" type="Derived" datatype="DETextfile" expression="points_txt" direction="Output">
+				<dialogReference>
+                    Points textfile output
+                </dialogReference>
+				<pythonReference>
+                    Points textfile output
+                </pythonReference>
+			</param>
+			<param name="strata_shp" displayname="Strata Shapefile" type="Derived" datatype="DEShapefile" expression="strata_shp" direction="Output">
+				<dialogReference>
+                    Strata shapefile output
+                </dialogReference>
+				<pythonReference>
+                    Strata shapefile output
                 </pythonReference>
 			</param>
 		</parameters>

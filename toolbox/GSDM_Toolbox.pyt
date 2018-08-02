@@ -372,10 +372,19 @@ class MapAdaptation(object):
         """Modify the values and properties of parameters before internal
         validation is performed.  This method is called whenever a parameter
         has been changed."""
-        parameters[3].value = "clay_percent"
-        parameters[4].value = "POINT_X"
-        parameters[5].value = "POINT_Y"
+        points_file = parameters[2].valueAsText
+
+        fields = []
+        # read columns in text file
+        with open(points_file) as file:
+            header = file.readline().rstrip()
+            fields = header.split()
+
+        parameters[3].filter.list = fields
+        parameters[4].filter.list = fields
+        parameters[5].filter.list = fields
         parameters[6].value = 3006
+
         return
 
     def updateMessages(self, parameters):

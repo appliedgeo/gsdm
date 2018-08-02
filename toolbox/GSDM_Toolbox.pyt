@@ -41,17 +41,6 @@ class SamplingDesign(object):
             direction="Input"
         )
 
-        # path to package (mapsRinteractive)
-        """
-        param2 = arcpy.Parameter(
-            displayName="Path to mapsRinteractive package",
-            name="mapsr_path",
-            datatype="DEFile",
-            parameterType="Required",
-            direction="Input"
-        )
-        """
-
         # area of interest (shapefile)
         param2 = arcpy.Parameter(
             displayName="Area of Interest",
@@ -71,17 +60,9 @@ class SamplingDesign(object):
         )
 
         # optimize sampling parameters
-        # epsg code
-        param4 = arcpy.Parameter(
-            displayName="EPSG",
-            name="epsg_code",
-            datatype="GPLong",
-            parameterType="Optional",
-            direction="Input"
-        )
 
         # sampling method
-        param5 = arcpy.Parameter(
+        param4 = arcpy.Parameter(
             displayName="Sampling Algorithm",
             name="sampling_method",
             datatype="GPString",
@@ -89,10 +70,10 @@ class SamplingDesign(object):
             direction="Input"
         )
 
-        param5.filter.list = ['stratdir','dir','grid','stratrand']
+        param4.filter.list = ['stratdir','dir','grid','stratrand']
 
         # strat size
-        param6 = arcpy.Parameter(
+        param5 = arcpy.Parameter(
             displayName="Strat Size",
             name="strat_size",
             datatype="GPLong",
@@ -101,7 +82,7 @@ class SamplingDesign(object):
         )
 
         # minimum distance
-        param7 = arcpy.Parameter(
+        param6 = arcpy.Parameter(
             displayName="Minimum Distance",
             name="min_dist",
             datatype="GPLong",
@@ -110,7 +91,7 @@ class SamplingDesign(object):
         )
 
         # edge
-        param8 = arcpy.Parameter(
+        param7 = arcpy.Parameter(
             displayName="Edge",
             name="edge",
             datatype="GPLong",
@@ -119,7 +100,7 @@ class SamplingDesign(object):
         )
 
         # stop dens
-        param9 = arcpy.Parameter(
+        param8 = arcpy.Parameter(
             displayName="Stopping Criterium",
             name="stop_dens",
             datatype="GPLong",
@@ -129,7 +110,7 @@ class SamplingDesign(object):
 
         params = [param1, param2, param3,
                   param4, param5, param6,
-                  param7, param8, param9]
+                  param7, param8]
         return params
 
     def isLicensed(self):
@@ -140,12 +121,11 @@ class SamplingDesign(object):
         """Modify the values and properties of parameters before internal
         validation is performed.  This method is called whenever a parameter
         has been changed."""
-        parameters[3].value = 3006
-        parameters[4].value = "stratdir"
-        parameters[5].value = 100
+        #parameters[4].value = "stratdir"
+        parameters[4].value = 100
+        parameters[5].value = 10
         parameters[6].value = 10
-        parameters[7].value = 10
-        parameters[8].value = 1
+        parameters[7].value = 1
 
         return
 
@@ -161,12 +141,12 @@ class SamplingDesign(object):
         #mapsr_path = _params[1].valueAsText
         aoi = os.path.basename(_params[1].valueAsText)
         soil_raster = os.path.basename(_params[2].valueAsText)
-        epsg_code = _params[3].valueAsText
-        sampling_method = _params[4].valueAsText
-        strat_size = _params[5].valueAsText
-        min_dist = _params[6].valueAsText
-        edge = _params[7].valueAsText
-        stop_dens = _params[8].valueAsText
+        #epsg_code = _params[3].valueAsText
+        sampling_method = _params[3].valueAsText
+        strat_size = _params[4].valueAsText
+        min_dist = _params[5].valueAsText
+        edge = _params[6].valueAsText
+        stop_dens = _params[7].valueAsText
 
         r_exec_dir = r_exec_dir.replace('\\','/')
 
@@ -175,7 +155,7 @@ class SamplingDesign(object):
         file.write("r_exec_directory<-'" + r_exec_dir + "'\n")
         file.write("raster_map<-'" + soil_raster + "'\n")
         file.write("aoi<-'" + aoi + "'\n")
-        file.write("epsg_code<-" + epsg_code + "\n")
+        #file.write("epsg_code<-" + epsg_code + "\n")
         file.write("sampling_method<-'" + sampling_method + "'\n")
         file.write("strat_size<-" + strat_size + "\n")
         file.write("min_dist<-" + min_dist + "\n")
@@ -280,15 +260,8 @@ class MapAdaptation(object):
             direction="Input"
         )
 
-        param6 = arcpy.Parameter(
-            displayName="EPSG Code",
-            name="epsg",
-            datatype="GPLong",
-            parameterType="Required",
-            direction="Input"
-        )
 
-        params = [param0, param1, param2, param3, param4, param5, param6]
+        params = [param0, param1, param2, param3, param4, param5]
         return params
 
     def isLicensed(self):
@@ -318,7 +291,7 @@ class MapAdaptation(object):
         attr_column = _params[3].valueAsText
         x_coords = _params[4].valueAsText
         y_coords = _params[5].valueAsText
-        epsg_code = _params[6].valueAsText
+        #epsg_code = _params[6].valueAsText
 
         r_exec_dir = r_exec_dir.replace('\\', '/')
 
@@ -327,7 +300,7 @@ class MapAdaptation(object):
         file.write("r_exec_directory<-'" + r_exec_dir + "'\n")
         file.write("raster_map<-'" + raster_layer + "'\n")
         file.write("soil_sample<-'" + sample_file + "'\n")
-        file.write("epsg_code<-" + epsg_code + "\n")
+        #file.write("epsg_code<-" + epsg_code + "\n")
         file.write("attr_column<-'" + attr_column + "'\n")
         file.write("x_coords<-'" + x_coords + "'\n")
         file.write("y_coords<-'" + y_coords + "'\n")

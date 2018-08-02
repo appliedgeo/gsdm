@@ -39,8 +39,6 @@
                     Path to installed R program file
                 </pythonReference>
 			</param>
-        </parameters>
-		<parameters>
             <param name="raster_layer" displayname="Raster Layer" type="Required" datatype="DERasterDataset" expression="soil_raster" direction="Input">
 				<dialogReference>
                     Path to raster file
@@ -49,8 +47,6 @@
                     Path to raster file
                 </pythonReference>
 			</param>
-        </parameters>
-		<parameters>
             <param name="samples_file" displayname="Points File (Text)" type="Required" datatype="DETextfile" expression="samples_file" direction="Input">
 				<dialogReference>
                     Path to point file with observed soil property data. The coordinate system shall be the same as for the raster.
@@ -59,8 +55,6 @@
                     Path to point file with observed soil property data. The coordinate system shall be the same as for the raster.
                 </pythonReference>
 			</param>
-        </parameters>
-		<parameters>
             <param name="attribute_column" displayname="Attribute Column" type="Required" datatype="GPString" expression="attribute_column" direction="Input">
 				<dialogReference>
                     Name of the attribute column in points file. Required. The data must be numerical.
@@ -69,8 +63,6 @@
                     Name of the attribute column in points file. Required. The data must be numerical.
                 </pythonReference>
 			</param>
-        </parameters>
-		<parameters>
             <param name="x_coords" displayname="X Coordinates" type="Required" datatype="GPString" expression="x_coords" direction="Input">
 				<dialogReference>
                     Name of the x coordinate column in points file
@@ -79,8 +71,6 @@
                     Name of the x coordinate column in points file
                 </pythonReference>
 			</param>
-        </parameters>
-		<parameters>
             <param name="y_coords" displayname="Y Coordinates" type="Required" datatype="GPString" expression="y_coords" direction="Input">
 				<dialogReference>
                     Name of the y coordinate column in points file

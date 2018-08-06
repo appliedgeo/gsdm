@@ -32,7 +32,6 @@ class SamplingDesign(object):
 
     def getParameterInfo(self):
         """Define parameter definitions"""
-        # working directory
         param1 = arcpy.Parameter(
             displayName="R Executable",
             name="r_exec_path",
@@ -108,6 +107,15 @@ class SamplingDesign(object):
             direction="Input"
         )
 
+        # output directory
+        param9 = arcpy.Parameter(
+            displayName="Output Folder",
+            name="output_folder",
+            datatype="DEFolder",
+            parameterType="Required",
+            direction="Input"
+        )
+
         output1 = arcpy.Parameter(
             displayName="Points Shapefile",
             name="points_shp",
@@ -134,7 +142,8 @@ class SamplingDesign(object):
 
         params = [param2, param3, param1,
                   param4, param5, param6,
-                  param7, param8, output1, output2, output3]
+                  param7, param8, param9,
+                  output1, output2, output3]
         return params
 
     def isLicensed(self):
@@ -180,12 +189,15 @@ class SamplingDesign(object):
         edge = _params[6].valueAsText
         stop_dens = _params[7].valueAsText
 
+        output_folder = _params[8].valueAsText
+        output_folder = output_folder.replace('\\','/')
+
         temp_dir = tempfile.gettempdir()
         temp_dir = temp_dir.replace('\\','/')
 
         script_file = temp_dir + "/sampling_design.R"
         file = open(script_file, "w")
-        file.write("working_directory<-'" + temp_dir + "'\n")
+        file.write("working_directory<-'" + output_folder + "'\n")
         file.write("raster_map<-'" + soil_raster + "'\n")
         file.write("aoi<-'" + aoi + "'\n")
         #file.write("epsg_code<-" + epsg_code + "\n")
@@ -215,7 +227,7 @@ class SamplingDesign(object):
         file.close()
 
         self.spatial_sampling(r_exec_path, script_file)
-        self.display_outputs(temp_dir)
+        self.display_outputs(output_folder)
 
 
     def spatial_sampling(self, r_program, r_script):
@@ -235,9 +247,9 @@ class SamplingDesign(object):
         st_strata_shp = outputs_dir + '/st_strata.shp'
         st_points_txt = outputs_dir + '/st_points.txt'
 
-        arcpy.SetParameter(8, st_points_shp)
-        arcpy.SetParameter(9, st_points_txt)
-        arcpy.SetParameter(10, st_strata_shp)
+        arcpy.SetParameter(9, st_points_shp)
+        arcpy.SetParameter(10, st_points_txt)
+        arcpy.SetParameter(11, st_strata_shp)
 
     def execute(self, parameters, messages):
         """The source code of the tool."""
@@ -313,6 +325,15 @@ class MapAdaptation(object):
             direction="Input"
         )
 
+        # output directory
+        param7 = arcpy.Parameter(
+            displayName="Output Folder",
+            name="output_folder",
+            datatype="DEFolder",
+            parameterType="Required",
+            direction="Input"
+        )
+
         output1 = arcpy.Parameter(
             displayName="MRI Map",
             name="mri_map",
@@ -364,7 +385,7 @@ class MapAdaptation(object):
 
 
 
-        params = [param1, param2, param3, param4, param5, param6,param0,
+        params = [param1, param2, param3, param4, param5, param6,param0, param7,
                   output1, output2, output3, output4, output5, output6]
         return params
 
@@ -412,12 +433,15 @@ class MapAdaptation(object):
         y_coords = _params[4].valueAsText
         epsg_code = _params[5].valueAsText
 
+        output_folder = _params[7].valueAsText
+        output_folder = output_folder.replace('\\', '/')
+
         temp_dir = tempfile.gettempdir()
         temp_dir = temp_dir.replace('\\', '/')
 
         script_file = temp_dir + "/map_adaptation.R"
         file = open(script_file, "w")
-        file.write("working_directory<-'" + temp_dir + "'\n")
+        file.write("working_directory<-'" + output_folder + "'\n")
         file.write("raster_map<-'" + raster_layer + "'\n")
         file.write("soil_sample<-'" + sample_file + "'\n")
         file.write("attr_column<-'" + attr_column + "'\n")
@@ -449,7 +473,7 @@ class MapAdaptation(object):
         file.close()
 
         self.map_adaptation(r_exec_path, script_file)
-        self.display_outputs(temp_dir)
+        self.display_outputs(output_folder)
 
     def map_adaptation(self, r_program, r_script):
         # run upload sampling
@@ -469,12 +493,12 @@ class MapAdaptation(object):
         mri_evaluation = outputs_dir + '/mri_evaluation.txt'
         mri_feedback = outputs_dir + '/mri_feedback.txt'
 
-        arcpy.SetParameter(7, mri_map)
-        arcpy.SetParameter(8, mri_ordkrig)
-        arcpy.SetParameter(9, mri_regkrig)
-        arcpy.SetParameter(10, mri_reskrig)
-        arcpy.SetParameter(11, mri_evaluation)
-        arcpy.SetParameter(12, mri_feedback)
+        arcpy.SetParameter(8, mri_map)
+        arcpy.SetParameter(9, mri_ordkrig)
+        arcpy.SetParameter(10, mri_regkrig)
+        arcpy.SetParameter(11, mri_reskrig)
+        arcpy.SetParameter(12, mri_evaluation)
+        arcpy.SetParameter(13, mri_feedback)
 
 
     def execute(self, parameters, messages):

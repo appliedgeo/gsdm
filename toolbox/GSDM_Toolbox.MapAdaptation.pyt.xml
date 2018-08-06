@@ -135,6 +135,14 @@
                     MRI Feedback
                 </pythonReference>
 			</param>
+			<param name="output_folder" displayname="Output Folder" type="Required" datatype="DEFolder" expression="output_folder" direction="Input">
+				<dialogReference>
+                    Output Folder
+                </dialogReference>
+				<pythonReference>
+                    Output Folder
+                </pythonReference>
+			</param>
 		</parameters>
 	</tool>
 </metadata>

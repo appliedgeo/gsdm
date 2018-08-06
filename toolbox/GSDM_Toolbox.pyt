@@ -70,7 +70,7 @@ class SamplingDesign(object):
             direction="Input"
         )
 
-        param4.filter.list = ['stratdir','dir','grid','stratrand']
+        param4.filter.list = ['Stratified Directed','Directed','Regular Grid','Random Stratified']
 
         # strat size
         param5 = arcpy.Parameter(
@@ -170,7 +170,11 @@ class SamplingDesign(object):
         soil_raster = _params[1].valueAsText
         soil_raster = soil_raster.replace('\\','/')
 
-        sampling_method = _params[3].valueAsText
+        _sampling_method = _params[3].valueAsText
+
+        methods = {"Stratified Directed":"stratdir", "Directed":"dir", "Regular Grid":"grid", "Random Stratified":"stratrand"}
+        sampling_method = methods[_sampling_method]
+
         strat_size = _params[4].valueAsText
         min_dist = _params[5].valueAsText
         edge = _params[6].valueAsText

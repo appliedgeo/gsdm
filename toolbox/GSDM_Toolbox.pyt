@@ -132,7 +132,7 @@ class SamplingDesign(object):
             direction="Output"
         )
 
-        params = [param1, param2, param3,
+        params = [param2, param3, param1,
                   param4, param5, param6,
                   param7, param8, output1, output2, output3]
         return params
@@ -161,13 +161,13 @@ class SamplingDesign(object):
     def create_script_file(self, _params):
         # write parameters to R file
         # get user input
-        r_exec_path = _params[0].valueAsText
+        r_exec_path = _params[2].valueAsText
         r_exec_path = r_exec_path.replace('\\', '/')
 
-        aoi = _params[1].valueAsText
+        aoi = _params[0].valueAsText
         aoi = aoi.replace('\\','/')
 
-        soil_raster = _params[2].valueAsText
+        soil_raster = _params[1].valueAsText
         soil_raster = soil_raster.replace('\\','/')
 
         sampling_method = _params[3].valueAsText
@@ -360,7 +360,7 @@ class MapAdaptation(object):
 
 
 
-        params = [param0, param1, param2, param3, param4, param5, param6,
+        params = [param1, param2, param3, param4, param5, param6,param0,
                   output1, output2, output3, output4, output5, output6]
         return params
 
@@ -372,7 +372,7 @@ class MapAdaptation(object):
         """Modify the values and properties of parameters before internal
         validation is performed.  This method is called whenever a parameter
         has been changed."""
-        points_file = parameters[2].valueAsText
+        points_file = parameters[1].valueAsText
 
         fields = []
         # read columns in text file
@@ -380,10 +380,10 @@ class MapAdaptation(object):
             header = file.readline().rstrip()
             fields = header.split()
 
+        parameters[2].filter.list = fields
         parameters[3].filter.list = fields
         parameters[4].filter.list = fields
-        parameters[5].filter.list = fields
-        parameters[6].value = 3006
+        parameters[5].value = 3006
 
         return
 
@@ -394,19 +394,19 @@ class MapAdaptation(object):
 
     def create_params_file(self, _params):
         # write parameters to R file
-        r_exec_path = _params[0].valueAsText
+        r_exec_path = _params[6].valueAsText
         r_exec_path = r_exec_path.replace('\\', '/')
 
-        raster_layer = _params[1].valueAsText
+        raster_layer = _params[0].valueAsText
         raster_layer = raster_layer.replace('\\', '/')
 
-        sample_file = _params[2].valueAsText
+        sample_file = _params[1].valueAsText
         sample_file = sample_file.replace('\\', '/')
 
-        attr_column = _params[3].valueAsText
-        x_coords = _params[4].valueAsText
-        y_coords = _params[5].valueAsText
-        epsg_code = _params[6].valueAsText
+        attr_column = _params[2].valueAsText
+        x_coords = _params[3].valueAsText
+        y_coords = _params[4].valueAsText
+        epsg_code = _params[5].valueAsText
 
         temp_dir = tempfile.gettempdir()
         temp_dir = temp_dir.replace('\\', '/')

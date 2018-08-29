@@ -16,3 +16,5 @@ DATABASE = {
 		'PORT': DATABASE_PORT,
 	},
 }
+
+ALLOWED_HOSTS=['localhost', '45.33.28.192', ]

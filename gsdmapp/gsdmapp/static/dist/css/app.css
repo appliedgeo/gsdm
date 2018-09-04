@@ -1,0 +1,41 @@
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    .calcite-nav-top .calcite-map .leaflet-control-zoom {
+      margin-top: 28px;
+    }
+
+    .calcite-navbar-search {
+      margin-top: 0;
+      margin-right: 5px;
+      padding: 5px 0;
+    }
+
+    .calcite-nav-top .panel-body .geocoder-control-suggestions.leaflet-bar {
+      top: 25px;
+      bottom: auto;
+    }
+
+    .calcite-maps .esri-truncated-attribution {
+      max-width: 100% !important;
+      width: 100%;
+    }
+
+    .leaflet-touch .leaflet-bar {
+      border: none;
+    }
+
+    .calcite-panels .panel-body {
+      max-height: 600px;
+    }
+    /*
+  #collapseSampling {
+    height: 650px;
+  }
+
+  #sampling-form {
+    height: 600px;
+  }
+  */

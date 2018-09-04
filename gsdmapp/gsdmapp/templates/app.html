@@ -28,49 +28,7 @@
   <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.3/dist/esri-leaflet-geocoder.css">
   <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.3"></script>
 
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-    .calcite-nav-top .calcite-map .leaflet-control-zoom {
-      margin-top: 28px;
-    }
-
-    .calcite-navbar-search {
-      margin-top: 0;
-      margin-right: 5px;
-      padding: 5px 0;
-    }
-
-    .calcite-nav-top .panel-body .geocoder-control-suggestions.leaflet-bar {
-      top: 25px;
-      bottom: auto;
-    }
-
-    .calcite-maps .esri-truncated-attribution {
-      max-width: 100% !important;
-      width: 100%;
-    }
-
-    .leaflet-touch .leaflet-bar {
-      border: none;
-    }
-
-    .calcite-panels .panel-body {
-      max-height: 600px;
-    }
-    /*
-  #collapseSampling {
-    height: 650px;
-  }
-
-  #sampling-form {
-    height: 600px;
-  }
-  */
-  </style>
+  <link rel="stylesheet" href="/static/dist/css/app.css">
 
 </head>
 <body class="calcite-maps calcite-nav-top calcite-layout-small-title">
@@ -100,8 +58,8 @@
     <!-- Title -->
     <div class="calcite-title calcite-overflow-hidden">
       <span class="calcite-title-main">Global Soil Data Manager</span>
-      <!--span class="calcite-title-divider hidden-xs"></span>
-      <span class="calcite-title-sub hidden-xs">CIAT</span--> 
+      <span class="calcite-title-divider hidden-xs"></span>
+      <span class="calcite-title-sub hidden-xs">CIAT</span> 
     </div>
      <!-- Nav -->
     <!--ul class="calcite-nav nav navbar-nav">                    
@@ -154,7 +112,7 @@
                   <label for="samplingSoil" class="col-xs-3 control-label">Soil Raster Layer</label>
                   <div class="col-xs-9">
                     <select id="samplingSoil" class="form-control">
-                      <option value="dsms" selected>DSMS</option>
+                      <option value="select" selected>Select</option>
                       <option value="soc">Soil Organic Carbon</option>
                     </select>
                   </div>
@@ -164,7 +122,8 @@
                   <label for="samplingMethod" class="col-xs-3 control-label">Sampling Algorithm</label>
                   <div class="col-xs-9">
                     <select id="samplingMethod" class="form-control">
-                      <option value="stratdir" selected>Stratified Directed</option>
+                      <option value="select" selected>Select</option>
+                      <option value="stratdir">Stratified Directed</option>
                       <option value="dir">Directed</option>
                       <option value="grid">Regular Grid</option>
                       <option value="stratrand">Random Stratified</option>
@@ -237,7 +196,7 @@
                   <label for="adaptSoil" class="col-xs-3 control-label">Soil Raster Layer</label>
                   <div class="col-xs-9">
                     <select id="adaptSoil" class="form-control">
-                      <option value="dsms" selected>DSMS</option>
+                      <option value="select" selected>Select</option>
                       <option value="soc">Soil Organic Carbon</option>
                     </select>
                   </div>
@@ -318,65 +277,7 @@
     
   </div> <!-- /.calcite-panels -->
   
-  <script>
-    
-    // ============
-    // Esri-Leaflet
-    // ============
-
-    var map = L.map('map', {zoomControl: false}).setView([-0.062119, 38.941891], 6),
-      layer = L.esri.basemapLayer('Imagery').addTo(map),
-      layerLabels = L.esri.basemapLayer('ImageryLabels').addTo(map);
-      //layerLabels = null,
-      worldTransportation = L.esri.basemapLayer('ImageryTransportation');      
-
-    function setBasemap(basemap) {
-      if (layer) {
-        map.removeLayer(layer);
-      }
-      if (basemap === 'OpenStreetMap') {
-        layer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
-      }
-      else {
-        layer = L.esri.basemapLayer(basemap);
-      }
-      map.addLayer(layer);
-      if (layerLabels) {
-        map.removeLayer(layerLabels);
-      }
-
-      if (basemap === 'ShadedRelief' || basemap === 'Oceans' || basemap === 'Gray' || basemap === 'DarkGray' || basemap === 'Imagery' || basemap === 'Terrain') {
-        layerLabels = L.esri.basemapLayer(basemap + 'Labels');
-        map.addLayer(layerLabels);
-      }
-        
-      // add world transportation service to Imagery basemap
-      if (basemap === 'Imagery') {
-        worldTransportation.addTo(map);            
-      } else if (map.hasLayer(worldTransportation)) {
-        // remove world transportation if Imagery basemap is not selected    
-        map.removeLayer(worldTransportation);
-      }
-    }
-
-    L.control.zoom({
-      position:'topright'
-    }).addTo(map);
-
-    //var searchControl = L.esri.Geocoding.Controls.geosearch({expanded: true, collapseAfterResult: false, zoomToResult: false}).addTo(map);
-    var searchControl = L.esri.Geocoding.geosearch({expanded: true, collapseAfterResult: false, zoomToResult: false}).addTo(map);
-    
-    searchControl.on('results', function(data){ 
-      if (data.results.length > 0) {
-        var popup = L.popup()
-          .setLatLng(data.results[0].latlng)
-          .setContent(data.results[0].text)
-          .openOn(map);
-        map.setView(data.results[0].latlng)
-      }
-    })
-  
-  </script>
+  <script src="/static/dist/js/gsdm/map_panel.js"></script>
 
   <!-- ====== -->
   <!-- jQuery --> 
@@ -388,46 +289,7 @@
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
-  <script type="text/javascript">
-
-    $(document).ready(function(){
-
-      // Basemap changed
-      $("#selectStandardBasemap").on("change", function(e) {
-        setBasemap($(this).val());
-      });
-
-      // Search
-      var input = $(".geocoder-control-input");
-      input.focus(function(){
-        $("#panelSearch .panel-body").css("height", "150px");
-      });
-      input.blur(function(){
-         $("#panelSearch .panel-body").css("height", "auto");
-      });
-
-      // Attach search control for desktop or mobile
-      function attachSearch() {
-        var parentName = $(".geocoder-control").parent().attr("id"),
-          geocoder = $(".geocoder-control"),
-          width = $(window).width();
-        if (width <= 767 && parentName !== "geocodeMobile") {
-          geocoder.detach();
-          $("#geocodeMobile").append(geocoder);
-        } else if (width > 767 && parentName !== "geocode"){
-          geocoder.detach();
-          $("#geocode").append(geocoder);
-        }
-      }
-
-      $(window).resize(function() {
-        attachSearch();
-      });
-
-      attachSearch();
-
-    });<!-- jQuery -->
-  </script>
+  <script src="/static/dist/js/gsdm/app.js"></script>
 
   <!-- Bootstrap core JavaScript
   ================================================== -->

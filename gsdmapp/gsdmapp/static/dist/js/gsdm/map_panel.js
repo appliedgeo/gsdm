@@ -6,7 +6,9 @@
       layer = L.esri.basemapLayer('Imagery').addTo(map),
       layerLabels = L.esri.basemapLayer('ImageryLabels').addTo(map);
       //layerLabels = null,
-      worldTransportation = L.esri.basemapLayer('ImageryTransportation');      
+      worldTransportation = L.esri.basemapLayer('ImageryTransportation');   
+
+    var soilLayer;   
 
     function setBasemap(basemap) {
       if (layer) {
@@ -56,11 +58,21 @@
 
 function setSoilRaster(soilmap) {
 
-     var soilLayer = L.tileLayer.wms('http://localhost:8080/geoserver/wms', {
-        layers: 'gsdm:soc',
-        transparent: true,
-        format: 'image/png'
-    }).addTo(map);
+    if(soilmap == 'select'){
+      // remove layer
+      map.removeLayer(soilLayer);
+
+    } else {
+
+        soilLayer = L.tileLayer.wms('http://45.33.28.192:8080/geoserver/wms', {
+          layers: 'gsdm:soc',
+          transparent: true,
+          format: 'image/png'
+      }).addTo(map);
+
+    }
+
+     
     
 
 }

@@ -40,6 +40,10 @@ $(document).ready(function(){
         setSoilRaster($(this).val());
       });
 
+      $("#adaptSoil").on("change", function(e) {
+        setSoilRaster($(this).val());
+      });
+
 
 
 

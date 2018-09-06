@@ -56,6 +56,33 @@
       }
     })
 
+    // create a feature group for Leaflet Draw to hook into for delete functionality
+    var drawnItems = L.featureGroup();
+    map.addLayer(drawnItems);
+
+    // create a new Leaflet Draw control
+    var drawControl = new L.Control.Draw({
+         edit: {
+             featureGroup: drawnItems
+         }
+     });
+
+    // add our drawing controls to the map
+    map.addControl(drawControl);
+
+    map.on('draw:created', function(e) {
+      var type = e.layerType,
+        layer = e.layer;
+
+      if (type === 'marker') {
+        layer.bindPopup('A popup!');
+      }
+
+      drawnItems.addLayer(layer);
+    });
+
+
+
 function setSoilRaster(soilmap) {
 
     if(soilmap == 'select'){

@@ -45,6 +45,16 @@ $(document).ready(function(){
       });
 
 
+      $( "#samplingRun" ).click(function() {
+        
+        waitingDialog.show('Sampling Design running..');
+        setTimeout(function () {
+          waitingDialog.hide();
+        }, 9000);
+
+      });
+
+
 
 
     });

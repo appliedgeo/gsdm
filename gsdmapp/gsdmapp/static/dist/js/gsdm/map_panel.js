@@ -5,7 +5,8 @@
         map = new L.Map('map', { center: new L.LatLng(-0.062119, 38.941891), zoom: 6 }),
         drawnItems = L.featureGroup().addTo(map);
 
-    var satellite = L.tileLayer('http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}', {
+    var satellite = L.tileLayer('http://www.google.com/maps/vt?lyrs=s,h&x={x}&y={y}&z={z}', {
+        //http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}
             attribution: 'google'
         });
 
@@ -26,7 +27,8 @@
                 allowIntersection: true,
                 showArea: true
             },
-            marker: false
+            marker: false,
+            circlemarker: false
         }
     }));
 
@@ -34,6 +36,10 @@
         var layer = event.layer;
 
         drawnItems.addLayer(layer);
+
+        var aoi = layer.toGeoJSON();
+
+        console.log(aoi);
     });
 
 

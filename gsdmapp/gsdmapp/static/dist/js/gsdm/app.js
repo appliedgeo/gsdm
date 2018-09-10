@@ -47,12 +47,44 @@ $(document).ready(function(){
 
       $( "#samplingRun" ).click(function() {
         
+        /*
         waitingDialog.show('Sampling Design running..');
         setTimeout(function () {
-          waitingDialog.hide();
-        }, 9000);
+              waitingDialog.hide();
+            }, 9000);
 
+          }); */
+          $.ajax({
+            type: "GET",
+            url: 'http://'+site_name+'/'+'&limit=0&format=json',
+            async: false,
+            dataType: "json",
+            success: function(data){
+
+                
+                
+               
+
+            }
+        });
+
+
+      $('input[name="aoiRadios"]').change(function(){
+          if($('#aoiRadios2').prop('checked')){
+              
+            $( ".custom-file" ).append( '<input type="file" class="custom-file-input" id="customFile">' );
+
+          }else{
+
+              $( ".custom-file" ).empty();
+          }
       });
+
+
+
+
+
+
 
 
 

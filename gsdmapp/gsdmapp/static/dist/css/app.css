@@ -28,7 +28,8 @@
     }
 
     .calcite-panels .panel-body {
-      max-height: 600px;
+      max-height: 650px;
+      width: 450px;
     }
     /*
   #collapseSampling {

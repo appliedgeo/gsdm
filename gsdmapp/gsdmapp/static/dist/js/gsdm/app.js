@@ -44,7 +44,7 @@ $(document).ready(function(){
         setSoilRaster($(this).val());
       });
 
-
+      // run sampling design
       $( "#samplingRun" ).click(function() {
         
         /*
@@ -54,19 +54,48 @@ $(document).ready(function(){
             }, 9000);
 
           }); */
+          //console.log(aoi);
+
+          //var polygon = JSON.stringify(aoi);
+          var soil_raster = $("#samplingSoil").val();
+          var method = $("#samplingMethod").val();
+          var strat_size = $("#samplingStratsize").val();
+          var min_dist = $("#samplingDistance").val();
+          var edge = $("#samplingEdge").val();
+          var criterium = $("#samplingCriterium").val();
+          var output = $("#samplingOutput").val();
+
+          var _url = 'http://localhost/sampling/';
+
+          var samplingdata = {
+            "aoi": aoi,
+            "soil_raster": soil_raster,
+            "method": method,
+            "strat_size": strat_size,
+            "min_dist": min_dist,
+            "edge": edge,
+            "criterium": criterium,
+            "output": output
+
+          };
+
+         
           $.ajax({
-            type: "GET",
-            url: 'http://'+site_name+'/'+'&limit=0&format=json',
-            async: false,
-            dataType: "json",
-            success: function(data){
+              type: "POST",
+              contentType: "application/json",
+              url: _url,
+              async: false,
+              dataType: "json",
+              data: JSON.stringify(samplingdata),
+              success: function(data){
 
-                
-                
-               
+                   console.log(data.result);
+                 
 
-            }
-        });
+              }
+          }); 
+
+      });
 
 
       $('input[name="aoiRadios"]').change(function(){
@@ -89,4 +118,4 @@ $(document).ready(function(){
 
 
 
-    });
+});

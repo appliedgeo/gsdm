@@ -20,6 +20,6 @@ urlpatterns = [
 	url(r'^$', 'gsdmapp.views.app', name='app'),
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^sampling/(?P<aoi>\w+)/(?P<soil_raster>\w+)/(?P<method>\w+)/(?P<strat_size>\w+)/(?P<min_dist>\w+)/(?P<edge>\w+)/(?P<criterium>\w+)/(?P<output>\w+)/$', 'gsdmapp.views.sampling'),	
+    url(r'^sampling/$', 'gsdmapp.views.sampling'),	
 
 ]

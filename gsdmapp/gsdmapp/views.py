@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse, JsonResponse
+from gsdmapp.tools import *
 import json
 
 def app(request):
@@ -22,9 +23,22 @@ def sampling(request):
 	output = sampling_data['output']
 
 
+	# create shapefile from geojson data
+	geometry = aoi['geometry']
+	shpfile = createShp(geometry)
+
+
+	# create param file
+
+	# run param file
+
+	# get outputs 
+
+	# return outputs to user
+
+
 	sampling_response = {
-		'result': aoi
+		'result': shpfile
 	}
 
-	#return HttpResponse(json.dumps(sampling_response), mimetype="application/json")
 	return JsonResponse(sampling_response)

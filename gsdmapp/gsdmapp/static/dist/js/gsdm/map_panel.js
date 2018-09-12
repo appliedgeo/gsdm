@@ -39,7 +39,8 @@
 
         aoi = layer.toGeoJSON();
 
-        //console.log(aoi);
+        //console.log(JSON.stringify(aoi));
+        
     });
 
 

@@ -89,7 +89,7 @@ $(document).ready(function(){
               data: JSON.stringify(samplingdata),
               success: function(data){
 
-                   console.log(data.result);
+                   //console.log(data.shapefile);
                  
 
               }

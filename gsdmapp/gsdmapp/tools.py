@@ -16,7 +16,10 @@ import math
 import fnmatch
 import fiona
 import json
+
 from datetime import datetime
+from fiona.crs import from_epsg
+
 
 
 def createShp(poly):
@@ -27,7 +30,9 @@ def createShp(poly):
 
     shpfile = 'polygon.shp'
 
-    with fiona.open(shpfile, 'w', 'ESRI Shapefile', schema) as layer:
+    _crs = from_epsg(4326)
+
+    with fiona.open(shpfile, 'w', crs=_crs, 'ESRI Shapefile', schema) as layer:
 		layer.write({'geometry': poly, 'properties': {'fld_a': 'test'}}) 
 
 

@@ -30,9 +30,9 @@ def createShp(poly):
 
     shpfile = 'polygon.shp'
 
-    _crs = from_epsg(4326)
+    _crs = from_epsg(3857)
 
-    with fiona.open(shpfile, 'w', crs=_crs, 'ESRI Shapefile', schema) as layer:
+    with fiona.open(shpfile, 'w', _crs, 'ESRI Shapefile', schema) as layer:
 		layer.write({'geometry': poly, 'properties': {'fld_a': 'test'}}) 
 
 

@@ -19,6 +19,7 @@ import json
 
 from datetime import datetime
 from fiona.crs import from_epsg
+from osgeo import ogr, osr, gdal
 
 
 
@@ -35,9 +36,53 @@ def createShp(poly):
     with fiona.open(shpfile, 'w', 'ESRI Shapefile', schema) as layer:
 		layer.write({'geometry': poly, 'properties': {'fld_a': 'test'}}) 
 
+    reprojected = reProject(shpfile)
 
-    return shpfile
 
+    return reprojected
+
+
+def reProject(shapefile):
+	# reproject to planar coordinate system: 3857
+	# tif with target projection
+	tif = gdal.Open("/tmp/gsdm/soc_reproj21.tif")
+
+	# shapefile with source projection
+	driver = ogr.GetDriverByName("ESRI Shapefile")
+	datasource = driver.Open("/tmp/gsdm/polygon.shp") 
+	layer = datasource.GetLayer()
+
+	# set spatial reference and transformation
+	sourceprj = layer.GetSpatialRef()
+	targetprj = osr.SpatialReference(wkt = tif.GetProjection())
+	transform = osr.CoordinateTransformation(sourceprj, targetprj)
+
+	reprojected_shp = 'polygon_reproj.shp'
+
+	to_fill = ogr.GetDriverByName("Esri Shapefile")
+	ds = to_fill.CreateDataSource("/tmp/gsdm/polygon_reproj.shp")
+	outlayer = ds.CreateLayer('', targetprj, ogr.wkbPolygon)
+	outlayer.CreateField(ogr.FieldDefn('id', ogr.OFTInteger))
+
+	#apply transformation
+	i = 0
+
+	for feature in layer:
+	    transformed = feature.GetGeometryRef()
+	    transformed.Transform(transform)
+
+	    geom = ogr.CreateGeometryFromWkb(transformed.ExportToWkb())
+	    defn = outlayer.GetLayerDefn()
+	    feat = ogr.Feature(defn)
+	    feat.SetField('id', i)
+	    feat.SetGeometry(geom)
+	    outlayer.CreateFeature(feat)
+	    i += 1
+	    feat = None
+
+	ds = None
+
+	return reprojected_shp
 
 def createSampling(_params):
 	# write parameters to R script

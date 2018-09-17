@@ -34,7 +34,15 @@ def createShp(poly):
     #_crs = from_epsg(3857)
 
     with fiona.open(shpfile, 'w', 'ESRI Shapefile', schema) as layer:
-		layer.write({'geometry': poly, 'properties': {'fld_a': 'test'}}) 
+		layer.write({'geometry': poly, 'properties': {'fld_a': 'test'}})
+
+		spatialRef = osr.SpatialReference()
+		spatialRef.ImportFromEPSG(4326)
+
+		spatialRef.MorphToESRI()
+		prjfile = open('polygon.prj', 'w')
+		prjfile.write(spatialRef.ExportToWkt())
+		prjfile.close()
 
     reprojected = reProject(shpfile)
 

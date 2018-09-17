@@ -100,8 +100,13 @@ $(document).ready(function(){
 
       $('input[name="aoiRadios"]').change(function(){
           if($('#aoiRadios2').prop('checked')){
-              
-            $( ".custom-file" ).append( '<input type="file" class="custom-file-input" id="customFile">' );
+            var upload_form = '<form action="/uploads/" method="post" enctype="multipart/form-data">';
+            upload_form += '<label for="shapefile">Select a file:</label>';
+            upload_form += '<input id="shapefile" name="shapefile" type="file" />';
+            upload_form += '<input type="submit" value="Upload"/>';
+            upload_form += ' </form>';
+
+            $( ".custom-file" ).append(upload_form);
 
           }else{
 

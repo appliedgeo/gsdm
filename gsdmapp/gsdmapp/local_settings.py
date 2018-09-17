@@ -6,7 +6,7 @@ DATABASE_PASSWORD = 'postgres'
 DATABASE_HOST = ''
 DATABASE_PORT = '5432'
 
-DATABASE = {
+DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.postgresql_psycopg2',
 		'NAME': DATABASE_NAME,

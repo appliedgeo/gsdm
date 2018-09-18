@@ -98,21 +98,62 @@ $(document).ready(function(){
       });
 
 
+
+
       $('input[name="aoiRadios"]').change(function(){
           if($('#aoiRadios2').prop('checked')){
-            var upload_form = '<form action="/uploads/" method="post" enctype="multipart/form-data">';
-            upload_form += '<label for="shapefile">Select a file:</label>';
-            upload_form += '<input id="shapefile" name="shapefile" type="file" />';
-            upload_form += '<input type="submit" value="Upload"/>';
+            /*
+            var upload_form = '<div class="form-group">';
+            upload_form += '<form id="shpupload" action="" method="post" enctype="multipart/form-data">';
+            upload_form += '<label for="shapefile" class="col-xs-3 control-label">Select zipped shapefile:</label>';
+            upload_form += '<div class="col-xs-9">';
+            upload_form += '<input id="shapefile" name="shapefile" type="file" class="form-control"/>';
+            upload_form += '</div>';
+            upload_form += '<div class="col-xs-9 col-xs-offset-3">';
+            upload_form += '<button id="samplingUpload" type="submit" class="btn btn-primary btn-block">Upload</button>';
+            upload_form += '</div>';
             upload_form += ' </form>';
+            upload_form += '</div>';
 
             $( ".custom-file" ).append(upload_form);
+            */
 
           }else{
 
-              $( ".custom-file" ).empty();
+              /*$( ".custom-file" ).empty();*/
           }
       });
+
+
+        $("#shpupload").submit(function(e){
+            //alert("form submitted");
+            e.preventDefault();
+
+            var formdata = new FormData(this);
+
+                $.ajax({
+                    url: "/uploads/",
+                    type: "POST",
+                    data: formdata,
+                    mimeTypes:"multipart/form-data",
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(data){
+                        //alert(data.message);
+                        waitingDialog.show(data.message);
+                        setTimeout(function () {
+                          waitingDialog.hide();
+                        }, 2000);
+
+                        var _file = '<li>'+data.url+'</li>';
+                        $( "ul" ).append(_file);
+
+                    },error: function(){
+                        alert("error");
+                    }
+                 });
+         });
 
 
 

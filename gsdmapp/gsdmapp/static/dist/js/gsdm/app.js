@@ -69,7 +69,7 @@ $(document).ready(function(){
               var criterium = $("#samplingCriterium").val();
               var output = $("#samplingOutput").val();
 
-              var _url = 'http://localhost/samplingdraw/';
+              var _url = 'http://45.33.28.192/samplingdraw/';
 
               var samplingdata = {
                 "aoi": aoi,
@@ -102,7 +102,7 @@ $(document).ready(function(){
           } else {
 
                // run sampling for uploaded shapefile
-              var _url = 'http://localhost/samplingshp/';
+              var _url = 'http://45.33.28.192/samplingshp/';
 
               var samplingdata = {
                 "shp": selected_shp,

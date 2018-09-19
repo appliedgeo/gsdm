@@ -57,43 +57,101 @@ $(document).ready(function(){
           //console.log(aoi);
 
           //var polygon = JSON.stringify(aoi);
-          var soil_raster = $("#samplingSoil").val();
-          var method = $("#samplingMethod").val();
-          var strat_size = $("#samplingStratsize").val();
-          var min_dist = $("#samplingDistance").val();
-          var edge = $("#samplingEdge").val();
-          var criterium = $("#samplingCriterium").val();
-          var output = $("#samplingOutput").val();
+          var aoi_method = $("input[name='aoiRadios']:checked").val();
 
-          var _url = 'http://localhost/sampling/';
+          if(aoi_method == 'draw'){
+              // run sampling for drawn area
+              var soil_raster = $("#samplingSoil").val();
+              var method = $("#samplingMethod").val();
+              var strat_size = $("#samplingStratsize").val();
+              var min_dist = $("#samplingDistance").val();
+              var edge = $("#samplingEdge").val();
+              var criterium = $("#samplingCriterium").val();
+              var output = $("#samplingOutput").val();
 
-          var samplingdata = {
-            "aoi": aoi,
-            "soil_raster": soil_raster,
-            "method": method,
-            "strat_size": strat_size,
-            "min_dist": min_dist,
-            "edge": edge,
-            "criterium": criterium,
-            "output": output
+              var _url = 'http://localhost/samplingdraw/';
 
-          };
+              var samplingdata = {
+                "aoi": aoi,
+                "soil_raster": soil_raster,
+                "method": method,
+                "strat_size": strat_size,
+                "min_dist": min_dist,
+                "edge": edge,
+                "criterium": criterium,
+                "output": output
 
-         
-          $.ajax({
-              type: "POST",
-              contentType: "application/json",
-              url: _url,
-              async: false,
-              dataType: "json",
-              data: JSON.stringify(samplingdata),
-              success: function(data){
+              };
 
-                   //console.log(data.shapefile);
-                 
 
-              }
-          }); 
+              $.ajax({
+                  type: "POST",
+                  contentType: "application/json",
+                  url: _url,
+                  async: false,
+                  dataType: "json",
+                  data: JSON.stringify(samplingdata),
+                  success: function(data){
+
+                       //console.log(data.shapefile);
+
+
+                  }
+              });
+
+          } else {
+
+               // run sampling for uploaded shapefile
+              var _url = 'http://localhost/samplingshp/';
+
+              var samplingdata = {
+                "shp": selected_shp,
+                "soil_raster": $("#samplingSoil").val(),
+                "method": $("#samplingMethod").val(),
+                "strat_size": $("#samplingStratsize").val(),
+                "min_dist": $("#samplingDistance").val(),
+                "edge": $("#samplingEdge").val(),
+                "criterium": $("#samplingCriterium").val(),
+                "output": $("#samplingOutput").val()
+
+              };
+
+                /*
+              waitingDialog.show('Sampling Design running..');
+                        setTimeout(function () {
+                              waitingDialog.hide();
+                            }, 9000);
+                */
+
+              $.ajax({
+                  type: "POST",
+                  contentType: "application/json",
+                  url: _url,
+                  async: false,
+                  dataType: "json",
+                  data: JSON.stringify(samplingdata),
+                  success: function(data){
+
+
+
+                        $( "#outfiles ul" ).empty();
+                       //console.log(data.samplingout);
+                       for(var i=0; i < data.samplingout.length; i++){
+
+                            //var outfile = '<li>'+data.samplingout[i]+'</li>';
+                            var outfile = '<li><a href=/outputs/'+data.samplingout[i]+'>'+data.samplingout[i]+'</a></li>'
+
+                            $( "#outfiles ul" ).append(outfile);
+                       }
+
+
+                  }
+              });
+
+
+          }
+
+
 
       });
 
@@ -102,25 +160,11 @@ $(document).ready(function(){
 
       $('input[name="aoiRadios"]').change(function(){
           if($('#aoiRadios2').prop('checked')){
-            /*
-            var upload_form = '<div class="form-group">';
-            upload_form += '<form id="shpupload" action="" method="post" enctype="multipart/form-data">';
-            upload_form += '<label for="shapefile" class="col-xs-3 control-label">Select zipped shapefile:</label>';
-            upload_form += '<div class="col-xs-9">';
-            upload_form += '<input id="shapefile" name="shapefile" type="file" class="form-control"/>';
-            upload_form += '</div>';
-            upload_form += '<div class="col-xs-9 col-xs-offset-3">';
-            upload_form += '<button id="samplingUpload" type="submit" class="btn btn-primary btn-block">Upload</button>';
-            upload_form += '</div>';
-            upload_form += ' </form>';
-            upload_form += '</div>';
 
-            $( ".custom-file" ).append(upload_form);
-            */
 
           }else{
 
-              /*$( ".custom-file" ).empty();*/
+
           }
       });
 
@@ -146,8 +190,11 @@ $(document).ready(function(){
                           waitingDialog.hide();
                         }, 2000);
 
+
+                        selected_shp = data.url;
+
                         var _file = '<li>'+data.url+'</li>';
-                        $( "ul" ).append(_file);
+                        $( "#uploadfiles ul" ).append(_file);
 
                     },error: function(){
                         alert("error");

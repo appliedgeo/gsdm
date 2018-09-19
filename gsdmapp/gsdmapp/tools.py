@@ -11,7 +11,7 @@
 #
 
 
-import os, sys
+import os, sys, subprocess
 import math
 import fnmatch
 import fiona
@@ -25,7 +25,7 @@ from osgeo import ogr, osr, gdal
 
 def createShp(poly):
 	#create shapefile from user geojson
-    os.chdir('/tmp/gsdm')
+    os.chdir('/var/www/gsdm/data')
 
     schema = {'geometry': 'Polygon','properties': {'fld_a': 'str:50'}}
 
@@ -53,11 +53,11 @@ def createShp(poly):
 def reProject(shapefile):
 	# reproject to planar coordinate system: 3857
 	# tif with target projection
-	tif = gdal.Open("/tmp/gsdm/soc_reproj21.tif")
+	tif = gdal.Open("/var/www/gsdm/data/soc_reproj21.tif")
 
 	# shapefile with source projection
 	driver = ogr.GetDriverByName("ESRI Shapefile")
-	datasource = driver.Open("/tmp/gsdm/polygon.shp") 
+	datasource = driver.Open("/var/www/gsdm/data/polygon.shp")
 	layer = datasource.GetLayer()
 
 	# set spatial reference and transformation
@@ -68,7 +68,7 @@ def reProject(shapefile):
 	reprojected_shp = 'polygon_reproj.shp'
 
 	to_fill = ogr.GetDriverByName("Esri Shapefile")
-	ds = to_fill.CreateDataSource("/tmp/gsdm/polygon_reproj.shp")
+	ds = to_fill.CreateDataSource("/var/www/gsdm/data/polygon_reproj.shp")
 	outlayer = ds.CreateLayer('', targetprj, ogr.wkbPolygon)
 	outlayer.CreateField(ogr.FieldDefn('id', ogr.OFTInteger))
 
@@ -104,7 +104,7 @@ def createSampling(_params):
 	stop_dens = _params['stop_dens']
 	output_name = _params['output_name']
 
-	temp_dir = '/tmp/gsdm'
+	temp_dir = '/var/www/gsdm/data'
 	#os.chdir(temp_dir)
 
 	script_file = temp_dir + "/sampling_design.R"
@@ -137,3 +137,9 @@ def createSampling(_params):
 	file.close()
 
 	return script_file
+
+
+def runSampling(r_script):
+	# run R script
+	os.system('sudo -u servir-vic /usr/bin/Rscript --vanilla %s' % (r_script,))
+	#process = subprocess.call(['sudo -u servir-vic /usr/bin/Rscript', '--vanilla', r_script], shell=False)

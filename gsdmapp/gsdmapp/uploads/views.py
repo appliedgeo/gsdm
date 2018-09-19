@@ -27,6 +27,11 @@ def uncompress(zipped):
         if fnmatch.fnmatch(file, '*.shp'):
             shpfile = file
 
+
+    # copy to working dir
+    # os.system('gdal_translate -of GTiff -a_ullr 33.9402616506841 0.155713888855809 34.1237268086358 0.0483376209782989 -a_srs EPSG:4326 %s %s' % (tifname, tifname2))
+    os.system('cp %s/*.* %s' % (unzipped_dir, data_path))
+
     # clean up uploads folder
     os.system('rm -rf /var/www/gsdm/uploaded/shapefiles/*.*')
 

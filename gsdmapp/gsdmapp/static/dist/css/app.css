@@ -31,6 +31,13 @@
       max-height: 650px;
       width: 450px;
     }
+
+
+
+    .calcite-panels.calcite-text-light a {
+        color: #ffffff;
+    }
+    
     /*
   #collapseSampling {
     height: 650px;

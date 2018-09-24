@@ -44,16 +44,12 @@ $(document).ready(function(){
         setSoilRaster($(this).val());
       });
 
-      // run sampling design
-      $( "#samplingRun" ).click(function() {
-        
-        /*
-        waitingDialog.show('Sampling Design running..');
-        setTimeout(function () {
-              waitingDialog.hide();
-            }, 9000);
 
-          }); */
+
+      // run sampling design
+      $( "#samplingRun" ).click(function(e) {
+
+
           //console.log(aoi);
 
           //var polygon = JSON.stringify(aoi);
@@ -61,6 +57,7 @@ $(document).ready(function(){
 
           if(aoi_method == 'draw'){
               // run sampling for drawn area
+
               var soil_raster = $("#samplingSoil").val();
               var method = $("#samplingMethod").val();
               var strat_size = $("#samplingStratsize").val();
@@ -83,21 +80,24 @@ $(document).ready(function(){
 
               };
 
+                 waitingDialog.show('Sampling Design running..');
 
               $.ajax({
                   type: "POST",
                   contentType: "application/json",
                   url: _url,
-                  async: false,
+                  //async: false,
                   dataType: "json",
                   data: JSON.stringify(samplingdata),
                   success: function(data){
 
                        //console.log(data.shapefile);
+                       waitingDialog.hide();
 
 
                   }
               });
+
 
           } else {
 
@@ -115,24 +115,19 @@ $(document).ready(function(){
                 "output": $("#samplingOutput").val()
 
               };
-
-                /*
-              waitingDialog.show('Sampling Design running..');
-                        setTimeout(function () {
-                              waitingDialog.hide();
-                            }, 9000);
-                */
+                //alert('Running..');
+                waitingDialog.show('Sampling Design running..');
 
               $.ajax({
                   type: "POST",
                   contentType: "application/json",
                   url: _url,
-                  async: false,
+                  //async: false,
                   dataType: "json",
                   data: JSON.stringify(samplingdata),
                   success: function(data){
 
-
+                        waitingDialog.hide();
 
                         $( "#outfiles ul" ).empty();
                        //console.log(data.samplingout);
@@ -147,6 +142,7 @@ $(document).ready(function(){
 
                   }
               });
+
 
 
           }
@@ -185,6 +181,8 @@ $(document).ready(function(){
             //alert("form submitted");
             e.preventDefault();
 
+            waitingDialog.show('Uploading..');
+
             var formdata = new FormData(this);
 
                 $.ajax({
@@ -197,10 +195,8 @@ $(document).ready(function(){
                     processData: false,
                     success: function(data){
                         //alert(data.message);
-                        waitingDialog.show(data.message);
-                        setTimeout(function () {
-                          waitingDialog.hide();
-                        }, 2000);
+
+                        waitingDialog.hide();
 
 
                         selected_shp = data.url;
@@ -213,6 +209,8 @@ $(document).ready(function(){
                     }
                  });
          });
+
+
 
 
 

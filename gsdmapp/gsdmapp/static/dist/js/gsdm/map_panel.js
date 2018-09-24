@@ -1,4 +1,4 @@
-    var soilLayer, aoi, selected_shp;
+    var soilLayer, aoi, selected_shp, draw_control;
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib }),
@@ -14,7 +14,8 @@
         'Satellite': satellite.addTo(map)
             }, { 'AOI': drawnItems }, { position: 'bottomright', collapsed: false }).addTo(map);
 
-    map.addControl(new L.Control.Draw({
+
+   draw_control = new L.Control.Draw({
         position: 'topright',
         edit: {
             featureGroup: drawnItems,
@@ -30,7 +31,9 @@
             marker: false,
             circlemarker: false
         }
-    }));
+    });
+
+    map.addControl(draw_control);
 
     map.on(L.Draw.Event.CREATED, function (event) {
         var layer = event.layer;

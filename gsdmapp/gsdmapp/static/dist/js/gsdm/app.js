@@ -160,10 +160,22 @@ $(document).ready(function(){
 
       $('input[name="aoiRadios"]').change(function(){
           if($('#aoiRadios2').prop('checked')){
+                $( "#shapefile" ).prop( "disabled", false );
+                $( "#samplingUpload" ).prop( "disabled", false );
 
+
+                drawnItems.clearLayers();
+
+                map.removeControl(draw_control);
 
           }else{
 
+                $( "#shapefile" ).prop( "disabled", true );
+                $( "#samplingUpload" ).prop( "disabled", true );
+
+                 $( "#uploadfiles ul" ).empty();
+
+                 map.addControl(draw_control);
 
           }
       });

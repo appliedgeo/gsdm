@@ -34,18 +34,23 @@ def sampling_draw(request):
 	script_file = createSampling(user_params)
 
 	# run script file
+	runSampling(script_file)
 
 	# get outputs 
+	outputs = []
 
 	# return outputs to user
+	for file in os.listdir('/var/www/gsdm/data/samplingdata'):
+		#if fnmatch.fnmatch(file, '*.shp'):
+		outputs.append(file)
 
 
 	sampling_response = {
-		'shapefile': shpfile,
-		'script_file': script_file
+		'samplingout': outputs
 	}
 
 	return JsonResponse(sampling_response)
+
 
 def sampling_shp(request):
 	# run sampling design on shapefile
@@ -73,11 +78,7 @@ def sampling_shp(request):
 		#if fnmatch.fnmatch(file, '*.shp'):
 		outputs.append(file)
 
-	# run script file
 
-	# get outputs
-
-	# return outputs to user
 
 
 	sampling_response = {

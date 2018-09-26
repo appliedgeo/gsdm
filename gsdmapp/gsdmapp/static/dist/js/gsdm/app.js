@@ -94,6 +94,14 @@ $(document).ready(function(){
                        //console.log(data.shapefile);
                        waitingDialog.hide();
 
+                       for(var i=0; i < data.samplingout.length; i++){
+
+                            //var outfile = '<li>'+data.samplingout[i]+'</li>';
+                            var outfile = '<li><a href=/outputs/'+data.samplingout[i]+'>'+data.samplingout[i]+'</a></li>'
+
+                            $( "#outfiles ul" ).append(outfile);
+                       }
+
 
                   }
               });

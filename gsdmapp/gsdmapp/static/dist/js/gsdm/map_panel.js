@@ -49,17 +49,19 @@
 
     function setSoilRaster(soilmap) {
 
-        if(soilmap == 'select'){
-          // remove layer
-          map.removeLayer(soilLayer);
-
-        } else {
-
-            soilLayer = L.tileLayer.wms('http://45.33.28.192:8080/geoserver/wms', {
+        if(soilmap == 'soc_reproj21.tif'){
+          // add layer
+          soilLayer = L.tileLayer.wms('http://45.33.28.192:8080/geoserver/wms', {
               layers: 'gsdm:soc',
               transparent: true,
               format: 'image/png'
           }).addTo(map);
+
+        } else {
+
+
+          // remove layer
+          map.removeLayer(soilLayer);
 
         }
 

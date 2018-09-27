@@ -263,9 +263,9 @@
                 <div class="form-group">
 
                   <form id="txtupload" action="" method="post" enctype="multipart/form-data">
-                    <label for="txtfile" class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="Path to point file with observed soil property data. The coordinate system shall be the same as for the raster.">Select points data(txt):</label>
+                    <label for="pointfile" class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="Path to point file with observed soil property data. The coordinate system shall be the same as for the raster.">Select points data(txt/zipped shp):</label>
                     <div class="col-xs-9">
-                    <input id="txtfile" name="txtfile" type="file" class="form-control"/>
+                    <input id="pointfile" name="pointfile" type="file" class="form-control"/>
                     </div>
                     <div class="col-xs-9 col-xs-offset-3">
                     <button id="adaptUpload" type="submit" class="btn btn-primary btn-block">Upload</button>
@@ -361,7 +361,7 @@
     </div><!-- /.panel -->
     
   </div> <!-- /.calcite-panels -->
-  
+
   
   <script src="/static/dist/js/gsdm/map_panel.js"></script>
 

@@ -184,7 +184,7 @@ $(document).ready(function(){
           }
       });
 
-
+        // sampling design shapefile upload
         $("#shpupload").submit(function(e){
             //alert("form submitted");
             e.preventDefault();
@@ -194,7 +194,7 @@ $(document).ready(function(){
             var formdata = new FormData(this);
 
                 $.ajax({
-                    url: "/uploads/",
+                    url: "/uploads/samplingdata/",
                     type: "POST",
                     data: formdata,
                     mimeTypes:"multipart/form-data",
@@ -213,6 +213,43 @@ $(document).ready(function(){
                         $( "#uploadfiles ul" ).append(_file);
 
                     },error: function(){
+                        waitingDialog.hide();
+                        alert("error");
+                    }
+                 });
+         });
+
+
+          // map adaptation point data upload
+         $("#pointupload").submit(function(e){
+            //alert("form submitted");
+            e.preventDefault();
+
+            waitingDialog.show('Uploading..');
+
+            var formdata = new FormData(this);
+
+                $.ajax({
+                    url: "/uploads/adaptdata/",
+                    type: "POST",
+                    data: formdata,
+                    mimeTypes:"multipart/form-data",
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(data){
+                        //alert(data.message);
+
+                        waitingDialog.hide();
+
+
+                        pointdata = data.url;
+
+                        var _file = '<li>'+data.url+'</li>';
+                        $( "#uploadfiles2 ul" ).append(_file);
+
+                    },error: function(){
+                        waitingDialog.hide();
                         alert("error");
                     }
                  });

@@ -39,8 +39,8 @@ def uncompress(zipped):
 
 
 
-def file_upload(request):
-    # handle file upload
+def sampling_file_upload(request):
+    # handle sampling file upload
     if request.method == 'POST':
         form = ShapefileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -49,12 +49,39 @@ def file_upload(request):
 
             zipped_file = os.path.basename(newfile.shapefile.name)
 
-            _shapefile = uncompress(zipped_file)
+            # shapefile data
+            uploadedfile = uncompress(zipped_file)
             # return message
             upload_msg = {
                 'message': 'upload successful',
                 #'url': newfile.shapefile.name
-                'url': _shapefile
+                'url': uploadedfile
+            }
+            #return HttpResponseRedirect(reverse('gsdmapp.views.app'))
+            return JsonResponse(upload_msg)
+
+
+def adaptation_file_upload(request):
+    # handle adaptation data upload
+    if request.method == 'POST':
+        form = ShapefileForm(request.POST, request.FILES)
+        if form.is_valid():
+            newfile = Shapefile(shapefile=request.FILES['shapefile'])
+            newfile.save()
+
+            zipped_file = os.path.basename(newfile.shapefile.name)
+
+            if 'zip' in zipped_file:
+                # shapefile data
+                uploadedfile = uncompress(zipped_file)
+            else:
+                # text data
+                uploadedfile = zipped_file
+            # return message
+            upload_msg = {
+                'message': 'upload successful',
+                #'url': newfile.shapefile.name
+                'url': uploadedfile
             }
             #return HttpResponseRedirect(reverse('gsdmapp.views.app'))
             return JsonResponse(upload_msg)

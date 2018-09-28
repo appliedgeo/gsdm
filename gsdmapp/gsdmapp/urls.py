@@ -26,6 +26,6 @@ urlpatterns = [
 
     url(r'^samplingdraw/$', 'gsdmapp.views.sampling_draw'),
     url(r'^samplingshp/$', 'gsdmapp.views.sampling_shp'),
-    url(r'^uploads/$', include('gsdmapp.uploads.urls')),
+    url(r'^uploads/', include('gsdmapp.uploads.urls')),
 
 ]

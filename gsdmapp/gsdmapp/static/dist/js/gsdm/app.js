@@ -242,11 +242,34 @@ $(document).ready(function(){
 
                         waitingDialog.hide();
 
-
                         pointdata = data.url;
+                        datafields = data.fields;
 
+                        //console.log(datafields.length)
+                        // list uploaded data
                         var _file = '<li>'+data.url+'</li>';
                         $( "#uploadfiles2 ul" ).append(_file);
+
+                        // display data fields
+                        $.each(datafields, function (i, field){
+
+                            $('#adaptAttribute').append($('<option>', {
+                                value: field,
+                                text: field
+                            }));
+
+                             $('#adaptXcol').append($('<option>', {
+                                value: field,
+                                text: field
+                            }));
+
+                             $('#adaptYcol').append($('<option>', {
+                                value: field,
+                                text: field
+                            }));
+
+
+                        });
 
                     },error: function(){
                         waitingDialog.hide();

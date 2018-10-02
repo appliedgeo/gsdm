@@ -45,6 +45,53 @@ $(document).ready(function(){
       });
 
 
+        // clear selections
+      $("#samplingClear").click(function(){
+
+             $("#samplingSoil").val("select");
+
+             $("#samplingMethod").val("select");
+
+              $('#shapefile').val('');
+
+               $( "#uploadfiles ul" ).empty();
+
+             $('#samplingStratsize').val('');
+
+             $('#samplingDistance').val('');
+
+             $('#samplingEdge').val('');
+
+             $('#samplingCriterium').val('');
+
+             $('#samplingOutput').val('');
+
+      });
+
+
+      $("#adaptClear").click(function(){
+
+                $('#pointfile').val('');
+
+                 $( "#uploadfiles2 ul" ).empty();
+
+             $("#adaptSoil").val("select");
+
+              $('#adaptAttribute').val("select");
+
+             $('#adaptXcol').val("select");
+
+             $('#adaptYcol').val("select");
+
+             $('#adaptEpsg').val('');
+
+             $('#adaptOutput').val('');
+
+
+
+      });
+
+
 
       // run sampling design
       $( "#samplingRun" ).click(function(e) {

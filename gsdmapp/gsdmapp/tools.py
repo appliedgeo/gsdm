@@ -16,6 +16,7 @@ import math
 import fnmatch
 import fiona
 import json
+import zipfile
 
 from datetime import datetime
 from fiona.crs import from_epsg
@@ -127,7 +128,7 @@ def createSampling(_params):
 	file.write("r<-mask(x=r, mask=a)\n")
 	file.write("sampling<-tortoise(x1 = r,\n")
 	file.write("y = a,\n")
-	file.write("out_folder = 'samplingdata',\n")
+	file.write("out_folder = 'samplingout',\n")
 	file.write("method = sampling_method,\n")
 	file.write("strat_size = strat_size,\n")
 	file.write("min_dist = min_dist, \n")
@@ -139,7 +140,67 @@ def createSampling(_params):
 	return script_file
 
 
-def runSampling(r_script):
+def createAdaptation(_params):
+	# write parameters to R script
+    point_data = _params['pointdata']
+    soil_raster = _params['soil_raster']
+    attr_column = _params['attribute']
+    x_coords = _params['xcolumn']
+    y_coords = _params['ycolumn']
+    epsg_code = _params['epsg']
+    output_name = _params['output']
+
+    temp_dir = '/var/www/gsdm/data'
+
+    script_file = temp_dir + "/map_adaptation.R"
+
+    file = open(script_file, "w")
+    file.write("working_directory<-'" + temp_dir + "'\n")
+    file.write("raster_map<-'" + soil_raster + "'\n")
+    file.write("soil_sample<-'" + point_data + "'\n")
+    file.write("attr_column<-'" + attr_column + "'\n")
+    file.write("x_coords<-'" + x_coords + "'\n")
+    file.write("y_coords<-'" + y_coords + "'\n")
+    file.write("epsg_code<-" + epsg_code + "\n")
+    file.write("require('SurfaceTortoise')\n")
+    file.write("require('mapsRinteractive')\n")
+    file.write("require('raster')\n")
+    file.write("setwd(working_directory)\n")
+
+    file.write("s<-read.table(file=soil_sample, header = T, sep = \"\\t\")[,1:4]\n")
+    file.write("r<-raster(raster_map)\n")
+    file.write("mri.out<-mri(\n")
+    file.write("rst.r = r,\n")
+    file.write("pts.df =s,\n")
+    file.write("pts.attr = attr_column,\n")
+    file.write("pts.x= x_coords,\n")
+    file.write("pts.y= y_coords,\n")
+    file.write("epsg = epsg_code,\n")
+    file.write("out.folder = 'adaptationout',\n")
+    file.write("out.prefix = 'mri_',\n")
+    file.write("out.dec = \".\", \n")
+    file.write("out.sep = \";\"\n")
+    file.write(")\n")
+    file.write("\n")
+    file.write("\n")
+    file.write("\n")
+    file.close()
+
+    return script_file
+
+
+
+
+def runRscript(r_script):
 	# run R script
 	os.system('sudo -u servir-vic /usr/bin/Rscript --vanilla %s' % (r_script,))
 	#process = subprocess.call(['sudo -u servir-vic /usr/bin/Rscript', '--vanilla', r_script], shell=False)
+
+
+def zipFolder(folder):
+    # make zip archive from outputs directory
+    outputs_zip = zipfile.ZipFile('', 'w')
+
+    for file in os.listdir(folder):
+        # if fnmatch.fnmatch(file, '*.shp'):
+        #outputs.append(file)

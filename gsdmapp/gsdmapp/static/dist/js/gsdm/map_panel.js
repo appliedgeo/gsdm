@@ -61,7 +61,10 @@
 
 
           // remove layer
-          map.removeLayer(soilLayer);
+          if(soilLayer){
+            map.removeLayer(soilLayer);
+          }
+
 
         }
 

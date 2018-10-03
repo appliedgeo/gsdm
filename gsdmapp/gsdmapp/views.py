@@ -3,6 +3,7 @@ from django.template import RequestContext
 from django.http import HttpResponse, JsonResponse
 from gsdmapp.tools import *
 import json
+import zipfile
 
 def app(request):
 	return render_to_response('app.html')
@@ -34,7 +35,7 @@ def sampling_draw(request):
 	script_file = createSampling(user_params)
 
 	# run script file
-	runSampling(script_file)
+	runRscript(script_file)
 
 	# get outputs 
 	outputs = []
@@ -70,8 +71,9 @@ def sampling_shp(request):
 	}
 
 	script_file = createSampling(user_params)
-	runSampling(script_file)
+	runRscript(script_file)
 
+	# return outputs as zip file
 	outputs = []
 
 	for file in os.listdir('/var/www/gsdm/data/samplingdata'):
@@ -80,9 +82,30 @@ def sampling_shp(request):
 
 
 
-
 	sampling_response = {
 		'samplingout': outputs
 	}
 
 	return JsonResponse(sampling_response)
+
+
+
+def local_adaptation(request):
+	# run local map adaptation on shapefile/textfile
+
+	adaptation_data = json.loads(request.body)
+
+	# create script file
+	script_file = createAdaptation(adaptation_data)
+
+	# run adaptation
+	runRscript(script_file)
+
+	# return outputs as zip file
+	outputs = []
+
+	adaptation_response = {
+		'adaptout': 'localadaptation'
+	}
+
+	return JsonResponse(adaptation_response)

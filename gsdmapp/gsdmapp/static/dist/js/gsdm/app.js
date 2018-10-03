@@ -207,6 +207,56 @@ $(document).ready(function(){
       });
 
 
+        // run local map adaptation
+      $("#adaptRun").click(function(e){
+
+            var soil_raster = $("#adaptSoil").val();
+            var attribute = $("#adaptAttribute").val();
+            var xcolumn = $("#adaptXcol").val();
+            var ycolumn = $("#adaptYcol").val();
+            var epsg = $("#adaptEpsg").val();
+            var _output = $("#adaptOutput").val();
+
+
+            var adaptationdata = {
+                "pointdata": pointdata,
+                "soil_raster": soil_raster,
+                "attribute": attribute,
+                "xcolumn": xcolumn,
+                "ycolumn": ycolumn,
+                "epsg": epsg,
+                "output": _output
+
+              };
+
+            waitingDialog.show('Local Map Adaptation running..');
+
+            var _url = 'http://localhost/localadapt/';
+
+            $.ajax({
+                  type: "POST",
+                  contentType: "application/json",
+                  url: _url,
+                  //async: false,
+                  dataType: "json",
+                  data: JSON.stringify(adaptationdata),
+                  success: function(data){
+
+                       //console.log(data.shapefile);
+                       waitingDialog.hide();
+
+
+                  }
+              });
+
+
+
+
+
+
+      });
+
+
 
 
       $('input[name="aoiRadios"]').change(function(){

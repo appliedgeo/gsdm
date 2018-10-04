@@ -176,7 +176,10 @@ def createAdaptation(_params):
     file.write("require('raster')\n")
     file.write("setwd(working_directory)\n")
 
-    file.write("s<-read.table(file=soil_sample, header = T, sep = \"\\t\")[,1:4]\n")
+    if 'txt' in point_data:
+        file.write("s<-read.table(file=soil_sample, header = T, sep = \"\\t\")[,1:4]\n")
+    else:
+        file.write("s<-shapefile(soil_sample)\n")
     file.write("r<-raster(raster_map)\n")
     file.write("mri.out<-mri(\n")
     file.write("rst.r = r,\n")

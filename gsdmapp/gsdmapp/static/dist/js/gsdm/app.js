@@ -141,13 +141,12 @@ $(document).ready(function(){
                        //console.log(data.shapefile);
                        waitingDialog.hide();
 
-                       for(var i=0; i < data.samplingout.length; i++){
+                       $( "#outfiles ul" ).empty();
 
-                            //var outfile = '<li>'+data.samplingout[i]+'</li>';
-                            var outfile = '<li><a href=/outputs/'+data.samplingout[i]+'>'+data.samplingout[i]+'</a></li>'
+                       var outfile = '<li><a href=/outputs/'+data.samplingout+'>'+data.samplingout+'</a></li>'
 
-                            $( "#outfiles ul" ).append(outfile);
-                       }
+                       $( "#outfiles ul" ).append(outfile);
+
 
 
                   }
@@ -185,14 +184,10 @@ $(document).ready(function(){
                         waitingDialog.hide();
 
                         $( "#outfiles ul" ).empty();
-                       //console.log(data.samplingout);
-                       for(var i=0; i < data.samplingout.length; i++){
 
-                            //var outfile = '<li>'+data.samplingout[i]+'</li>';
-                            var outfile = '<li><a href=/outputs/'+data.samplingout[i]+'>'+data.samplingout[i]+'</a></li>'
+                       var outfile = '<li><a href=/outputs/'+data.samplingout+'>'+data.samplingout+'</a></li>'
 
-                            $( "#outfiles ul" ).append(outfile);
-                       }
+                       $( "#outfiles ul" ).append(outfile);
 
 
                   }
@@ -242,8 +237,15 @@ $(document).ready(function(){
                   data: JSON.stringify(adaptationdata),
                   success: function(data){
 
-                       //console.log(data.shapefile);
+                       //console.log(data.adaptout);
                        waitingDialog.hide();
+
+                       $( "#outfiles ul" ).empty();
+
+                       var outfile = '<li><a href=/outputs/'+data.adaptout+'>'+data.adaptout+'</a></li>'
+
+                       $( "#outfiles ul" ).append(outfile);
+
 
 
                   }

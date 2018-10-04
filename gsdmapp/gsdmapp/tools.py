@@ -17,16 +17,17 @@ import fnmatch
 import fiona
 import json
 import zipfile
+import shutil
 
 from datetime import datetime
 from fiona.crs import from_epsg
 from osgeo import ogr, osr, gdal
 
-
+data_dir = '/var/www/gsdm/data/'
 
 def createShp(poly):
-	#create shapefile from user geojson
-    os.chdir('/var/www/gsdm/data')
+    #create shapefile from user geojson
+    os.chdir(data_dir)
 
     schema = {'geometry': 'Polygon','properties': {'fld_a': 'str:50'}}
 
@@ -35,15 +36,15 @@ def createShp(poly):
     #_crs = from_epsg(3857)
 
     with fiona.open(shpfile, 'w', 'ESRI Shapefile', schema) as layer:
-		layer.write({'geometry': poly, 'properties': {'fld_a': 'test'}})
+        layer.write({'geometry': poly, 'properties': {'fld_a': 'test'}})
 
-		spatialRef = osr.SpatialReference()
-		spatialRef.ImportFromEPSG(4326)
+        spatialRef = osr.SpatialReference()
+        spatialRef.ImportFromEPSG(4326)
 
-		spatialRef.MorphToESRI()
-		prjfile = open('polygon.prj', 'w')
-		prjfile.write(spatialRef.ExportToWkt())
-		prjfile.close()
+        spatialRef.MorphToESRI()
+        prjfile = open('polygon.prj', 'w')
+        prjfile.write(spatialRef.ExportToWkt())
+        prjfile.close()
 
     reprojected = reProject(shpfile)
 
@@ -52,96 +53,100 @@ def createShp(poly):
 
 
 def reProject(shapefile):
-	# reproject to planar coordinate system: 3857
-	# tif with target projection
-	tif = gdal.Open("/var/www/gsdm/data/soc_reproj21.tif")
+    # reproject to planar coordinate system: 3857
+    # tif with target projection
+    tif = gdal.Open("/var/www/gsdm/data/soc_reproj21.tif")
 
-	# shapefile with source projection
-	driver = ogr.GetDriverByName("ESRI Shapefile")
-	datasource = driver.Open("/var/www/gsdm/data/polygon.shp")
-	layer = datasource.GetLayer()
+    # shapefile with source projection
+    driver = ogr.GetDriverByName("ESRI Shapefile")
+    datasource = driver.Open("/var/www/gsdm/data/polygon.shp")
+    layer = datasource.GetLayer()
 
-	# set spatial reference and transformation
-	sourceprj = layer.GetSpatialRef()
-	targetprj = osr.SpatialReference(wkt = tif.GetProjection())
-	transform = osr.CoordinateTransformation(sourceprj, targetprj)
+    # set spatial reference and transformation
+    sourceprj = layer.GetSpatialRef()
+    targetprj = osr.SpatialReference(wkt = tif.GetProjection())
+    transform = osr.CoordinateTransformation(sourceprj, targetprj)
 
-	reprojected_shp = 'polygon_reproj.shp'
+    reprojected_shp = 'polygon_reproj.shp'
 
-	to_fill = ogr.GetDriverByName("Esri Shapefile")
-	ds = to_fill.CreateDataSource("/var/www/gsdm/data/polygon_reproj.shp")
-	outlayer = ds.CreateLayer('', targetprj, ogr.wkbPolygon)
-	outlayer.CreateField(ogr.FieldDefn('id', ogr.OFTInteger))
+    to_fill = ogr.GetDriverByName("Esri Shapefile")
+    ds = to_fill.CreateDataSource("/var/www/gsdm/data/polygon_reproj.shp")
+    outlayer = ds.CreateLayer('', targetprj, ogr.wkbPolygon)
+    outlayer.CreateField(ogr.FieldDefn('id', ogr.OFTInteger))
 
-	#apply transformation
-	i = 0
+    #apply transformation
+    i = 0
 
-	for feature in layer:
-	    transformed = feature.GetGeometryRef()
-	    transformed.Transform(transform)
+    for feature in layer:
+        transformed = feature.GetGeometryRef()
+        transformed.Transform(transform)
 
-	    geom = ogr.CreateGeometryFromWkb(transformed.ExportToWkb())
-	    defn = outlayer.GetLayerDefn()
-	    feat = ogr.Feature(defn)
-	    feat.SetField('id', i)
-	    feat.SetGeometry(geom)
-	    outlayer.CreateFeature(feat)
-	    i += 1
-	    feat = None
+        geom = ogr.CreateGeometryFromWkb(transformed.ExportToWkb())
+        defn = outlayer.GetLayerDefn()
+        feat = ogr.Feature(defn)
+        feat.SetField('id', i)
+        feat.SetGeometry(geom)
+        outlayer.CreateFeature(feat)
+        i += 1
+        feat = None
 
-	ds = None
+    ds = None
 
-	return reprojected_shp
+    return reprojected_shp
 
 def createSampling(_params):
-	# write parameters to R script
+    # write parameters to R script
 
-	aoi_shp = _params['aoi']
-	soil_raster = _params['soil_raster']
-	sampling_method = _params['sampling_method']
-	strat_size = _params['strat_size']
-	min_dist = _params['min_dist']
-	edge = _params['edge']
-	stop_dens = _params['stop_dens']
-	output_name = _params['output_name']
+    aoi_shp = _params['aoi']
+    soil_raster = _params['soil_raster']
+    sampling_method = _params['sampling_method']
+    strat_size = _params['strat_size']
+    min_dist = _params['min_dist']
+    edge = _params['edge']
+    stop_dens = _params['stop_dens']
+    output_name = _params['output_name']
 
-	temp_dir = '/var/www/gsdm/data'
-	#os.chdir(temp_dir)
+    if output_name == '':
+        output_name = 'samplingout'
 
-	script_file = temp_dir + "/sampling_design.R"
+    temp_dir = '/var/www/gsdm/data'
+    #os.chdir(temp_dir)
 
-	file = open(script_file, "w")
-	file.write("working_directory<-'" + temp_dir + "'\n")
-	file.write("raster_map<-'" + soil_raster + "'\n")
-	file.write("aoi<-'" + aoi_shp + "'\n")
-	file.write("sampling_method<-'" + sampling_method + "'\n")
-	file.write("strat_size<-" + strat_size + "\n")
-	file.write("min_dist<-" + min_dist + "\n")
-	file.write("edge<-" + edge + "\n")
-	file.write("stop_dens<-" + stop_dens + "\n")
-	file.write("require('SurfaceTortoise')\n")
-	file.write("require('mapsRinteractive')\n")
-	file.write("require('raster')\n")
-	file.write("setwd(working_directory)\n")
-	file.write("r<-raster(raster_map)\n")
-	file.write("a<-shapefile(aoi)\n")
-	file.write("r<-mask(x=r, mask=a)\n")
-	file.write("sampling<-tortoise(x1 = r,\n")
-	file.write("y = a,\n")
-	file.write("out_folder = 'samplingout',\n")
-	file.write("method = sampling_method,\n")
-	file.write("strat_size = strat_size,\n")
-	file.write("min_dist = min_dist, \n")
-	file.write("edge= edge,\n")
-	file.write("stop_dens2 = stop_dens,\n")
-	file.write("plot_results = T)\n")
-	file.close()
+    script_file = temp_dir + "/sampling_design.R"
 
-	return script_file
+    file = open(script_file, "w")
+    file.write("working_directory<-'" + temp_dir + "'\n")
+    file.write("raster_map<-'" + soil_raster + "'\n")
+    file.write("aoi<-'" + aoi_shp + "'\n")
+    file.write("sampling_method<-'" + sampling_method + "'\n")
+    file.write("strat_size<-" + strat_size + "\n")
+    file.write("min_dist<-" + min_dist + "\n")
+    file.write("edge<-" + edge + "\n")
+    file.write("stop_dens<-" + stop_dens + "\n")
+    file.write("out_folder<-'" + output_name + "'\n")
+    file.write("require('SurfaceTortoise')\n")
+    file.write("require('mapsRinteractive')\n")
+    file.write("require('raster')\n")
+    file.write("setwd(working_directory)\n")
+    file.write("r<-raster(raster_map)\n")
+    file.write("a<-shapefile(aoi)\n")
+    file.write("r<-mask(x=r, mask=a)\n")
+    file.write("sampling<-tortoise(x1 = r,\n")
+    file.write("y = a,\n")
+    file.write("out_folder = out_folder,\n")
+    file.write("method = sampling_method,\n")
+    file.write("strat_size = strat_size,\n")
+    file.write("min_dist = min_dist, \n")
+    file.write("edge= edge,\n")
+    file.write("stop_dens2 = stop_dens,\n")
+    file.write("plot_results = T)\n")
+    file.close()
+
+    return script_file
 
 
 def createAdaptation(_params):
-	# write parameters to R script
+    # write parameters to R script
     point_data = _params['pointdata']
     soil_raster = _params['soil_raster']
     attr_column = _params['attribute']
@@ -149,6 +154,9 @@ def createAdaptation(_params):
     y_coords = _params['ycolumn']
     epsg_code = _params['epsg']
     output_name = _params['output']
+
+    if output_name == '':
+        output_name = 'adaptationout'
 
     temp_dir = '/var/www/gsdm/data'
 
@@ -162,6 +170,7 @@ def createAdaptation(_params):
     file.write("x_coords<-'" + x_coords + "'\n")
     file.write("y_coords<-'" + y_coords + "'\n")
     file.write("epsg_code<-" + epsg_code + "\n")
+    file.write("out_folder<-'" + output_name + "'\n")
     file.write("require('SurfaceTortoise')\n")
     file.write("require('mapsRinteractive')\n")
     file.write("require('raster')\n")
@@ -176,7 +185,7 @@ def createAdaptation(_params):
     file.write("pts.x= x_coords,\n")
     file.write("pts.y= y_coords,\n")
     file.write("epsg = epsg_code,\n")
-    file.write("out.folder = 'adaptationout',\n")
+    file.write("out.folder = out_folder,\n")
     file.write("out.prefix = 'mri_',\n")
     file.write("out.dec = \".\", \n")
     file.write("out.sep = \";\"\n")
@@ -192,15 +201,21 @@ def createAdaptation(_params):
 
 
 def runRscript(r_script):
-	# run R script
-	os.system('sudo -u servir-vic /usr/bin/Rscript --vanilla %s' % (r_script,))
-	#process = subprocess.call(['sudo -u servir-vic /usr/bin/Rscript', '--vanilla', r_script], shell=False)
+    # run R script
+    # process = subprocess.call([r_program, '--vanilla', r_script], shell=False)
+    os.system('sudo -u servir-vic /usr/bin/Rscript --vanilla %s' % (r_script,))
+    #process = subprocess.Popen('sudo -u servir-vic /usr/bin/Rscript --vanilla %s' % (r_script,))
+
+
 
 
 def zipFolder(folder):
     # make zip archive from outputs directory
-    outputs_zip = zipfile.ZipFile('', 'w')
+    os.chdir(data_dir)
+    out_dir = data_dir + folder
 
-    for file in os.listdir(folder):
-        # if fnmatch.fnmatch(file, '*.shp'):
-        #outputs.append(file)
+    outputs_zip = shutil.make_archive(folder, 'zip', out_dir)
+
+    _outputs_zip = os.path.basename(outputs_zip)
+
+    return _outputs_zip

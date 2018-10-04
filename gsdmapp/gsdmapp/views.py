@@ -58,6 +58,10 @@ def sampling_shp(request):
 
 	sampling_data = json.loads(request.body)
 
+	outputs_dir = sampling_data['output']
+	if outputs_dir == '':
+		outputs_dir = 'samplingout'
+
 	# create script file
 	user_params = {
 		'aoi': sampling_data['shp'],
@@ -74,16 +78,10 @@ def sampling_shp(request):
 	runRscript(script_file)
 
 	# return outputs as zip file
-	outputs = []
-
-	for file in os.listdir('/var/www/gsdm/data/samplingdata'):
-		#if fnmatch.fnmatch(file, '*.shp'):
-		outputs.append(file)
-
-
+	sampling_out = zipFolder(outputs_dir)
 
 	sampling_response = {
-		'samplingout': outputs
+		'samplingout': sampling_out
 	}
 
 	return JsonResponse(sampling_response)
@@ -95,17 +93,21 @@ def local_adaptation(request):
 
 	adaptation_data = json.loads(request.body)
 
+	outputs_dir = adaptation_data['output']
+	if outputs_dir == '':
+		outputs_dir = 'adaptationout'
+
 	# create script file
 	script_file = createAdaptation(adaptation_data)
 
-	# run adaptation
+	# run adaptation and return outputs dir
 	runRscript(script_file)
 
 	# return outputs as zip file
-	outputs = []
+	adaptation_out = zipFolder(outputs_dir)
 
 	adaptation_response = {
-		'adaptout': 'localadaptation'
+		'adaptout': adaptation_out
 	}
 
 	return JsonResponse(adaptation_response)

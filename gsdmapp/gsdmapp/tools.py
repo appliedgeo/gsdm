@@ -18,6 +18,7 @@ import fiona
 import json
 import zipfile
 import shutil
+import csv
 
 from datetime import datetime
 from fiona.crs import from_epsg
@@ -222,3 +223,30 @@ def zipFolder(folder):
     _outputs_zip = os.path.basename(outputs_zip)
 
     return _outputs_zip
+
+
+
+def getStats(folder):
+    # get statistics and evaluation data
+    feedback_file = data_dir + folder + '/mri_feedback.txt'
+    evaluation_file = data_dir + folder + '/mri_evaluation.txt'
+    feedback_stats = []
+    evaluation_stats = []
+    with open(feedback_file) as txt_file:
+        reader = csv.reader(txt_file, delimiter=';')
+        next(reader)
+        for row in reader:
+            feedback_stats.append(row[1])
+
+    with open(evaluation_file) as txt_file:
+        reader = csv.reader(txt_file, delimiter=';')
+        next(reader)
+        for row in reader:
+            evaluation_stats.append([row[1], row[2], row[3], row[4], row[5]])
+
+
+    return feedback_stats, evaluation_stats
+
+
+
+

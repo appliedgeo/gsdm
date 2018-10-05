@@ -113,7 +113,7 @@ $(document).ready(function(){
               var criterium = $("#samplingCriterium").val();
               var output = $("#samplingOutput").val();
 
-              var _url = 'http://localhost/samplingdraw/';
+              var _url = '/samplingdraw/';
 
               var samplingdata = {
                 "aoi": aoi,
@@ -156,7 +156,7 @@ $(document).ready(function(){
           } else {
 
                // run sampling for uploaded shapefile
-              var _url = 'http://localhost/samplingshp/';
+              var _url = '/samplingshp/';
 
               var samplingdata = {
                 "shp": selected_shp,
@@ -183,11 +183,12 @@ $(document).ready(function(){
 
                         waitingDialog.hide();
 
-                        $( "#outfiles ul" ).empty();
+                        $( "#outfiles p" ).empty();
 
-                       var outfile = '<li><a href=/outputs/'+data.samplingout+'>'+data.samplingout+'</a></li>'
+                       var outfile = '<p>Download: <a href=/outputs/'+data.samplingout+'>'+data.samplingout+'</a></p>'
 
-                       $( "#outfiles ul" ).append(outfile);
+                       $( "#outfiles" ).append(outfile);
+
 
 
                   }
@@ -226,7 +227,7 @@ $(document).ready(function(){
 
             waitingDialog.show('Local Map Adaptation running..');
 
-            var _url = 'http://localhost/localadapt/';
+            var _url = '/localadapt/';
 
             $.ajax({
                   type: "POST",
@@ -237,14 +238,38 @@ $(document).ready(function(){
                   data: JSON.stringify(adaptationdata),
                   success: function(data){
 
-                       //console.log(data.adaptout);
-                       waitingDialog.hide();
+                        waitingDialog.hide();
 
-                       $( "#outfiles ul" ).empty();
+                       //console.log(data.feedback.length);
+                       var feedback = data.feedback;
+                       var evaluation = data.evaluation;
 
-                       var outfile = '<li><a href=/outputs/'+data.adaptout+'>'+data.adaptout+'</a></li>'
 
-                       $( "#outfiles ul" ).append(outfile);
+                       $( "#outfiles p" ).empty();
+
+                       var outfile = '<p>Download: <a href=/outputs/'+data.adaptout+'>'+data.adaptout+'</a></p>'
+
+                       $( "#outfiles" ).append(outfile);
+
+                       // display feedback stats
+                       var feedback_table = '<h2>Feedback</h2>';
+                       feedback_table += '<table class="table table-bordered"><thead>';
+                       feedback_table += '<tr><th>Test</th><th>Value</th></tr></thead>';
+                        feedback_table += '<tbody>';
+                        feedback_table += '<tr><td>No of point observation data</td><td>'+feedback[0]+'</td></tr>';
+                        feedback_table += '<tr><td>No of NA point observation data</td><td>'+feedback[1]+'</td></tr>';
+                        feedback_table += '<tr><td>Number of point observation data within the mapping area</td><td>'+feedback[2]+'</td></tr>';
+                        feedback_table += '<tr><td>Number of point locations without map data</td><td>'+feedback[3]+'</td></tr>';
+                        feedback_table += '<tr><td>Number of used point observation data</td><td>'+feedback[4]+'</td></tr>';
+                        feedback_table += '</tbody></table>';
+
+                        $('#feedback').append(feedback_table);
+
+
+                        // display evaluation stats
+
+
+
 
 
 

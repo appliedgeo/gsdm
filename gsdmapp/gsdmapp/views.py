@@ -106,8 +106,12 @@ def local_adaptation(request):
 	# return outputs as zip file
 	adaptation_out = zipFolder(outputs_dir)
 
+	feedback, evaluation = getStats(outputs_dir)
+
 	adaptation_response = {
-		'adaptout': adaptation_out
+		'adaptout': adaptation_out,
+		'feedback': feedback,
+		'evaluation': evaluation
 	}
 
 	return JsonResponse(adaptation_response)

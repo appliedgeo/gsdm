@@ -10,13 +10,16 @@
             attribution: 'google'
         });
 
+    satellite.addTo(map);
+
+    /*
     L.control.layers({
         'Satellite': satellite.addTo(map)
             }, { 'AOI': drawnItems }, { position: 'bottomright', collapsed: false }).addTo(map);
-
+    */
 
    draw_control = new L.Control.Draw({
-        position: 'topright',
+        position: 'bottomright',
         edit: {
             featureGroup: drawnItems,
             poly: {
@@ -46,6 +49,7 @@
         
     });
 
+    map.zoomControl.setPosition('topright');
 
     function setSoilRaster(soilmap) {
 

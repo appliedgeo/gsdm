@@ -47,6 +47,40 @@ $(document).ready(function(){
       });
 
 
+      // draw polygon tool
+      $("#polygon").click(function(){
+            drawPolygon();
+      });
+
+
+      // draw rectangle tool
+      $("#rectangle").click(function(){
+            drawRectangle();
+      });
+
+
+      // delete polygon tool
+      $("#delete").click(function(){
+            drawnItems.clearLayers();
+      });
+
+
+      function disableDrawing(){
+            $('#polygon').prop("disabled", true);
+            $('#rectangle').prop("disabled", true);
+            drawnItems.clearLayers();
+
+      }
+
+      function enableDrawing(){
+            $('#polygon').prop("disabled", false);
+            $('#rectangle').prop("disabled", false);
+
+      }
+
+
+
+
         // clear selections
       $("#samplingClear").click(function(){
 
@@ -67,6 +101,8 @@ $(document).ready(function(){
              $('#samplingCriterium').val('');
 
              $('#samplingOutput').val('');
+
+             drawnItems.clearLayers();
 
       });
 
@@ -304,9 +340,9 @@ $(document).ready(function(){
                 $( "#samplingUpload" ).prop( "disabled", false );
 
 
-                drawnItems.clearLayers();
+                disableDrawing();
 
-                map.removeControl(draw_control);
+                //map.removeControl(draw_control);
 
           }else{
 
@@ -315,7 +351,9 @@ $(document).ready(function(){
 
                  $( "#uploadfiles ul" ).empty();
 
-                 map.addControl(draw_control);
+                 //map.addControl(draw_control);
+
+                 enableDrawing();
 
           }
       });

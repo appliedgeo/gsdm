@@ -17,7 +17,7 @@
         'Satellite': satellite.addTo(map)
             }, { 'AOI': drawnItems }, { position: 'bottomright', collapsed: false }).addTo(map);
     */
-
+    /*
    draw_control = new L.Control.Draw({
         position: 'bottomright',
         edit: {
@@ -37,6 +37,21 @@
     });
 
     map.addControl(draw_control);
+    */
+
+    // draw polygon tool
+
+
+    function drawPolygon(){
+            var polygonDrawer = new L.Draw.Polygon(map);
+            polygonDrawer.enable();
+        }
+
+
+     function drawRectangle(){
+            var rectangleDrawer = new L.Draw.Rectangle(map);
+            rectangleDrawer.enable();
+        }
 
     map.on(L.Draw.Event.CREATED, function (event) {
         var layer = event.layer;

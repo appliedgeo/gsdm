@@ -125,12 +125,16 @@
 
                 <div class="form-group">
                   <label class="col-xs-3 control-label">Area of Interest</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="SpatialPolygonsDataframe delineating the area to be sampled. The coordinate system shall be the same as for the rasters. If not completely overlapping, the itersection of x1 and y will be sampled." data-toggle="tooltip" data-trigger="click" ></span>
+
                   <div class="col-xs-9">
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="aoiRadios" id="aoiRadios1" value="draw" checked>
                       <label class="form-check-label" for="aoiRadios1">
                         Draw on the map
-                      </label>
+                      </label>&nbsp;&nbsp;<button type="button" id="polygon" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-map-marker"></span></button>&nbsp;&nbsp;
+                      <button type="button" id="rectangle" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-stop"></span></button>&nbsp;&nbsp;
+                      <button type="button" id="delete" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
                     </div>
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="aoiRadios" id="aoiRadios2" value="shapefile">
@@ -139,7 +143,6 @@
                       </label>
                     </div>
 
-                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="SpatialPolygonsDataframe delineating the area to be sampled. The coordinate system shall be the same as for the rasters. If not completely overlapping, the itersection of x1 and y will be sampled." data-toggle="tooltip" data-trigger="click" ></span>
 
                   </div>
                 </div>

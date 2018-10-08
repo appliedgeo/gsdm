@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+       $('.glyphicon-question-sign').tooltip({trigger:'click',placement:'bottom'});
+
       // Basemap changed
       $("#selectStandardBasemap").on("change", function(e) {
         setBasemap($(this).val());

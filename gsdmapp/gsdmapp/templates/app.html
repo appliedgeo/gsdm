@@ -124,7 +124,7 @@
               <div class="form-horizontal calcite-form-padding" id="sampling-form">
 
                 <div class="form-group">
-                  <label class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="SpatialPolygonsDataframe delineating the area to be sampled. The coordinate system shall be the same as for the rasters. If not completely overlapping, the itersection of x1 and y will be sampled.">Area of Interest</label>
+                  <label class="col-xs-3 control-label">Area of Interest</label>
                   <div class="col-xs-9">
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="aoiRadios" id="aoiRadios1" value="draw" checked>
@@ -139,7 +139,7 @@
                       </label>
                     </div>
 
-
+                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="SpatialPolygonsDataframe delineating the area to be sampled. The coordinate system shall be the same as for the rasters. If not completely overlapping, the itersection of x1 and y will be sampled." data-toggle="tooltip" data-trigger="click" ></span>
 
                   </div>
                 </div>
@@ -176,8 +176,8 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="samplingSoil" class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="All rasters will be centered and scaled. The first principal component of the rasters will be used as the surface for wich to optimize the sampling.">Soil Raster Layer</label>
-
+                  <label for="samplingSoil" class="col-xs-3 control-label">Soil Raster Layer</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="All rasters will be centered and scaled. The first principal component of the rasters will be used as the surface for wich to optimize the sampling." data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <select id="samplingSoil" class="form-control">
                       <option value="select" selected>Select</option>
@@ -188,7 +188,8 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="samplingMethod" class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="Sampling algorithm: 'dir' = directed (SurfaceTortoise algorithm), 'stratdir' = stratified directed (SurfaceTortoise algorithm), 'grid' = regular grid and 'stratrand' = random stratified.">Sampling Algorithm</label>
+                  <label for="samplingMethod" class="col-xs-3 control-label">Sampling Algorithm</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Sampling algorithm: 'dir' = directed (SurfaceTortoise algorithm), 'stratdir' = stratified directed (SurfaceTortoise algorithm), 'grid' = regular grid and 'stratrand' = random stratified." data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <select id="samplingMethod" class="form-control">
                       <option value="select" selected>Select</option>
@@ -201,35 +202,40 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="samplingStratsize" class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="Cell side (metre) of a square staratification grid">Strat Size</label>
+                  <label for="samplingStratsize" class="col-xs-3 control-label">Strat Size</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Cell side (metre) of a square staratification grid" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <input id="samplingStratsize" class="form-control" value="">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="samplingDistance" class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="Minimum distance allowed between samples. Valid for the 'dir' and the 'stratdir' methods.">Minimum Distance</label>
+                  <label for="samplingDistance" class="col-xs-3 control-label">Minimum Distance</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Minimum distance allowed between samples. Valid for the 'dir' and the 'stratdir' methods." data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <input id="samplingDistance" class="form-control" value="">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="samplingEdge" class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="Buffer zone (metre) inside the sample area border, where sampling is prohibited.">Edge</label>
+                  <label for="samplingEdge" class="col-xs-3 control-label">Edge</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Buffer zone (metre) inside the sample area border, where sampling is prohibited." data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <input id="samplingEdge" class="form-control" value="">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="samplingCriterium" class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="No more samples will be added when this number of samples per stratum has been reached. Valid for 'stratdir' and 'stratrand' methods.">Stopping Criterium</label>
+                  <label for="samplingCriterium" class="col-xs-3 control-label">Stopping Criterium</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="No more samples will be added when this number of samples per stratum has been reached. Valid for 'stratdir' and 'stratrand' methods." data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <input id="samplingCriterium" class="form-control" value="">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="samplingOutput" class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="Output file name">Output</label>
+                  <label for="samplingOutput" class="col-xs-3 control-label">Output</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Output file name" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <input id="samplingOutput" class="form-control" value="">
                   </div>
@@ -263,7 +269,8 @@
                 <div class="form-group">
 
                   <form id="pointupload" action="" method="post" enctype="multipart/form-data">
-                    <label for="pointfile" class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="Path to point file with observed soil property data. The coordinate system shall be the same as for the raster.">Select points data(txt/zipped shp):</label>
+                    <label for="pointfile" class="col-xs-3 control-label">Select points data(txt/zipped shp):</label>
+                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Path to point file with observed soil property data. The coordinate system shall be the same as for the raster." data-toggle="tooltip" data-trigger="click" ></span>
                     <div class="col-xs-9">
                     <input id="pointfile" name="shapefile" type="file" class="form-control"/>
                     </div>
@@ -285,7 +292,8 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="adaptSoil" class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="Raster layer">Soil Raster Layer</label>
+                  <label for="adaptSoil" class="col-xs-3 control-label">Soil Raster Layer</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Raster layer" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <select id="adaptSoil" class="form-control">
                       <option value="select" selected>Select</option>
@@ -296,7 +304,8 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="adaptAttribute" class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="Name of the attribute column in points file. Required. The data must be numerical.">Attribute Column</label>
+                  <label for="adaptAttribute" class="col-xs-3 control-label">Attribute Column</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Name of the attribute column in points file. Required. The data must be numerical." data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <select id="adaptAttribute" class="form-control">
                       <option value="select" selected>Select</option>
@@ -305,7 +314,8 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="adaptXcol" class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="Name of the x coordinate column in points file">X Coodinates</label>
+                  <label for="adaptXcol" class="col-xs-3 control-label">X Coodinates</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Name of the x coordinate column in points file" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <select id="adaptXcol" class="form-control">
                       <option value="select" selected>Select</option>
@@ -314,7 +324,8 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="adaptYcol" class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="Name of the y coordinate column in points file">Y Coordinates</label>
+                  <label for="adaptYcol" class="col-xs-3 control-label">Y Coordinates</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Name of the y coordinate column in points file" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <select id="adaptYcol" class="form-control">
                       <option value="select" selected>Select</option>
@@ -323,14 +334,16 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="adaptEpsg" class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="EPSG Code">EPSG</label>
+                  <label for="adaptEpsg" class="col-xs-3 control-label">EPSG</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="EPSG Code" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <input id="adaptEpsg" class="form-control" value="">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="adaptOutput" class="col-xs-3 control-label" data-toggle="tooltip" data-placement="top" title="Output file name">Output</label>
+                  <label for="adaptOutput" class="col-xs-3 control-label">Output</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Output file name" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <input id="adaptOutput" class="form-control" value="">
                   </div>

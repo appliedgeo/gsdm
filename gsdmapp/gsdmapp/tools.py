@@ -242,7 +242,7 @@ def getStats(folder):
         reader = csv.reader(txt_file, delimiter=';')
         next(reader)
         for row in reader:
-            evaluation_stats.append([row[1], row[2], row[3], row[4], row[5]])
+            evaluation_stats.append([float("{0:.6f}".format(float(row[1]))), float("{0:.6f}".format(float(row[2]))),float("{0:.6f}".format(float(row[3]))), float("{0:.6f}".format(float(row[4]))), float("{0:.6f}".format(float(row[5])))])
 
 
     return feedback_stats, evaluation_stats

@@ -252,6 +252,8 @@ $(document).ready(function(){
                        $( "#outfiles" ).append(outfile);
 
                        // display feedback stats
+                       $('#feedback').empty();
+
                        var feedback_table = '<h2>Feedback</h2>';
                        feedback_table += '<table class="table table-bordered"><thead>';
                        feedback_table += '<tr><th>Test</th><th>Value</th></tr></thead>';
@@ -267,10 +269,18 @@ $(document).ready(function(){
 
 
                         // display evaluation stats
+                         $('#evaluation').empty();
+                         var evaluation_table = '<h2>Evaluation</h2>';
+                         evaluation_table += '<table class="table table-bordered"><thead>';
+                         evaluation_table += '<tr><th>Measure</th><th>MAE</th><th>RMSE</th><th>E</th><th>r2</th><th>ME</th></tr></thead>';
+                         evaluation_table += '<tbody>';
+                         evaluation_table += '<tr><td>map</td><td>'+evaluation[0][0]+'</td><td>'+evaluation[0][1]+'</td><td>'+evaluation[0][2]+'</td><td>'+evaluation[0][3]+'</td><td>'+evaluation[0][4]+'</td></tr>';
+                         evaluation_table += '<tr><td>ordkrig_cv</td><td>'+evaluation[1][0]+'</td><td>'+evaluation[1][1]+'</td><td>'+evaluation[1][2]+'</td><td>'+evaluation[1][3]+'</td><td>'+evaluation[1][4]+'</td></tr>';
+                         evaluation_table += '<tr><td>reskrig_cv</td><td>'+evaluation[2][0]+'</td><td>'+evaluation[2][1]+'</td><td>'+evaluation[2][2]+'</td><td>'+evaluation[2][3]+'</td><td>'+evaluation[2][4]+'</td></tr>';
+                         evaluation_table += '<tr><td>regkrig_cv</td><td>'+evaluation[3][0]+'</td><td>'+evaluation[3][1]+'</td><td>'+evaluation[3][2]+'</td><td>'+evaluation[3][3]+'</td><td>'+evaluation[3][4]+'</td></tr>';
+                         evaluation_table += '</tbody></table>';
 
-
-
-
+                         $('#evaluation').append(evaluation_table);
 
 
                   }

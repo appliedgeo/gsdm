@@ -58,14 +58,16 @@
     <!-- Title -->
     <div class="calcite-title calcite-overflow-hidden">
       <span class="calcite-title-main">Global Soil Data Manager</span>
-      <span class="calcite-title-divider hidden-xs"></span>
-      <span class="calcite-title-sub hidden-xs">CIAT</span> 
+      <!--span class="calcite-title-divider hidden-xs"></span>
+      <span class="calcite-title-sub hidden-xs">CIAT</span-->
     </div>
      <!-- Nav -->
     <!--ul class="calcite-nav nav navbar-nav">                    
       <li><div class="calcite-navbar-search hidden-xs"><div id="geocode"></div></div></li>
     </ul-->
   </nav><!--/.navbar -->
+
+
 
   <!-- Map Container  -->
 
@@ -79,23 +81,37 @@
   
     <!-- Info Panel -->
 
-    <div id="panelInfo" class="panel collapse">
+    <div id="panelInfo" class="panel collapse in">
       <div id="headingInfo" class="panel-heading" role="tab">
         <div class="panel-title">
           <a class="panel-toggle" role="button" data-toggle="collapse" href="#collapseInfo" aria-expanded="true" aria-controls="collapseInfo"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span><span class="panel-label">About</span></a> 
           <a class="panel-close" role="button" data-toggle="collapse" tabindex="0" href="#panelInfo"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>  
         </div>
       </div>
-      <div id="collapseInfo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingInfo">
+      <div id="collapseInfo" class="panel-collapse" role="tabpanel" aria-labelledby="headingInfo">
         <div class="panel-body">            
-          <p>Welcome to the Global Soil Data Manager!</p>
-         
+          <h3>Welcome to the Global Soil Data Manager</h3>
+          <p>Here you can: </p>
+          <b><ul>
+            <li>View and download existing soil maps.</li>
+            <li>Designs sampling based on covariate data.</li>
+            <li>Upload local soil data to adapt and evaluate existing maps.</li>
+          </ul></b>
+         <p>This web application was developed in a collaboration between The Swedish University of Agricultural Sciences (SLU) and the International Center for Tropical Agriculture. The project was funded by Formas/SIDA (contract: 220-1975-2013) together with Västra Götalandsregionen (VGR; Sweden) and formed part of the CGIAR Research Program on Water, Land and Ecosystems (WLE). The web application is provided as is and we take no responsibility for any damage caused by using it.
+</p>
+          <p>Contact: kristin.piikki (a) slu.se</p>
+          <div id="logos">
+            <img src="/static/dist/images/slu.png" alt="SLU" height="70" width="70">
+            <img src="/static/dist/images/ciat.png" alt="SLU" height="50" width="105">
+            <img src="/static/dist/images/cgiar.png" alt="SLU" height="64" width="142">
+            <img src="/static/dist/images/vastra.png" alt="SLU" height="30" width="163">
+          </div>
         </div>
       </div>
     </div>
 
 
-    <div id="panelSettings" class="panel collapse in">
+    <div id="panelSettings" class="panel collapse">
               
       <div id="headingSettings" class="panel-heading">
         <div class="panel-title">

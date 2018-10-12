@@ -376,7 +376,7 @@ $(document).ready(function(){
                     cache: false,
                     processData: false,
                     success: function(data){
-                        //alert(data.message);
+                        //console.log(data.layer_wms);
 
                         waitingDialog.hide();
 
@@ -385,6 +385,8 @@ $(document).ready(function(){
 
                         var _file = '<li>'+data.url+'</li>';
                         $( "#uploadfiles ul" ).append(_file);
+
+                        addWMSlayer(data.layer_wms);
 
                     },error: function(){
                         waitingDialog.hide();
@@ -444,6 +446,8 @@ $(document).ready(function(){
 
 
                         });
+
+                        addWMSlayer(data.layer_wms);
 
                     },error: function(){
                         waitingDialog.hide();

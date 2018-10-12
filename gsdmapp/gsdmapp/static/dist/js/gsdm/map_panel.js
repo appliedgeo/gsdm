@@ -1,4 +1,4 @@
-    var soilLayer, aoi, selected_shp, pointdata, draw_control;
+    var soilLayer, aoi, selected_shp, pointdata, draw_control, uploadedLayer;
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib }),
@@ -87,7 +87,31 @@
 
         }
 
-         
-        
 
     }
+
+
+    function addWMSlayer(layer_name){
+        if(layer_name != 'no wms'){
+
+            var layer_wms = 'gsdm:' + layer_name;
+
+            uploadedLayer =  L.tileLayer.wms('http://localhost:8080/geoserver/wms', {
+              layers: layer_wms,
+              transparent: true,
+              format: 'image/png'
+          }).addTo(map);
+
+        } else {
+
+
+          // remove layer
+          if(uploadedLayer){
+            map.removeLayer(uploadedLayer);
+          }
+
+
+        }
+
+    }
+

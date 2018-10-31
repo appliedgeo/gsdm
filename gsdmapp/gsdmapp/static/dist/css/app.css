@@ -28,7 +28,7 @@
     }
 
     .calcite-panels .panel-body {
-      max-height: 750px;
+      max-height: 650px;
       width: 520px;
     }
 
@@ -37,6 +37,11 @@
     .calcite-panels.calcite-text-light a {
         color: #ffffff;
     }
+
+    .form-group {
+        margin-bottom: 5px;
+     }
+
 
     /*
   #collapseSampling {

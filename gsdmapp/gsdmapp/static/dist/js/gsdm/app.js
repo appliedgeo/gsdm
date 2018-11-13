@@ -81,10 +81,10 @@ $(document).ready(function(){
 
 
 
-        // clear selections
-        /*
-      $("#samplingClear").click(function(){
-
+        // clear selections on tool change
+	function clearPanels(){
+      
+			// sampling design 
              $("#samplingSoil").val("select");
 
              $("#samplingMethod").val("select");
@@ -105,10 +105,8 @@ $(document).ready(function(){
 
              drawnItems.clearLayers();
 
-      });
-
-
-      $("#adaptClear").click(function(){
+ 			
+			// local map adaptation
 
                 $('#pointfile').val('');
 
@@ -126,10 +124,17 @@ $(document).ready(function(){
 
              $('#adaptOutput').val('');
 
+		// map
+		if(soilLayer){
+            map.removeLayer(soilLayer);
+          }
 
+     
+	}
 
-      });
-      */
+$('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
+            clearPanels();
+        });
 
 
 

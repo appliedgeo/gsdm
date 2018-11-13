@@ -54,6 +54,9 @@
         }
 
     map.on(L.Draw.Event.CREATED, function (event) {
+		// clear previous drawn aoi
+		drawnItems.clearLayers();
+
         var layer = event.layer;
 
         drawnItems.addLayer(layer);

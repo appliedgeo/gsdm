@@ -422,6 +422,13 @@ $(document).ready(function(){
 
                         pointdata = data.url;
                         datafields = data.fields;
+						
+						// clear previous upload and data fields
+						$( "#uploadfiles2 ul" ).empty();
+						
+						$('#adaptAttribute').empty().append('<option selected value="select">Select</option>');
+						$('#adaptXcol').empty().append('<option selected value="select">Select</option>');
+						$('#adaptYcol').empty().append('<option selected value="select">Select</option>');
 
                         //console.log(datafields.length)
                         // list uploaded data

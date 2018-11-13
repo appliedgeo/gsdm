@@ -382,6 +382,8 @@ $(document).ready(function(){
 
                         waitingDialog.hide();
 
+						// clear previous upload
+						$( "#uploadfiles ul" ).empty();
 
                         selected_shp = data.url;
 

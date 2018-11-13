@@ -163,7 +163,8 @@ def sampling_file_upload(request):
 
             # shapefile data
             uploadedfile = uncompress(zipped_file)
-            layer_wms = publish_layer(uploadedfile)
+            #layer_wms = publish_layer(uploadedfile)
+            layer_wms = 'no wms'
             # return message
             upload_msg = {
                 'message': 'upload successful',
@@ -187,7 +188,8 @@ def adaptation_file_upload(request):
             if 'zip' in zipped_file:
                 # shapefile data
                 uploadedfile = uncompress(zipped_file)
-                layer_wms = publish_layer(uploadedfile)
+                #layer_wms = publish_layer(uploadedfile)
+                layer_wms = 'no wms'
                 data_fields = shp_extract_fields(uploadedfile)
             else:
                 # text data

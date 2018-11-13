@@ -82,6 +82,7 @@ $(document).ready(function(){
 
 
         // clear selections
+        /*
       $("#samplingClear").click(function(){
 
              $("#samplingSoil").val("select");
@@ -128,6 +129,7 @@ $(document).ready(function(){
 
 
       });
+      */
 
 
 

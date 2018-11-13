@@ -2,7 +2,7 @@
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib }),
-        map = new L.Map('map', { center: new L.LatLng(-0.062119, 38.941891), zoom: 6 }),
+        map = new L.Map('map', { center: new L.LatLng(-0.284200, 36.078709), zoom: 6 }),
         drawnItems = L.featureGroup().addTo(map);
 
     var satellite = L.tileLayer('http://www.google.com/maps/vt?lyrs=s,h&x={x}&y={y}&z={z}', {
@@ -75,6 +75,9 @@
               transparent: true,
               format: 'image/png'
           }).addTo(map);
+
+          // set zoom
+          map.setView([-0.284200, 36.078709], 6)
 
         } else {
 

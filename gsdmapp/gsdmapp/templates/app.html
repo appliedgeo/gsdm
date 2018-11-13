@@ -140,6 +140,18 @@
               <div class="form-horizontal calcite-form-padding" id="sampling-form">
 
                 <div class="form-group">
+                  <label for="samplingSoil" class="col-xs-3 control-label">Soil Raster Layer</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="All rasters will be centered and scaled. The first principal component of the rasters will be used as the surface for wich to optimize the sampling." data-toggle="tooltip" data-trigger="click" ></span>
+                  <div class="col-xs-9">
+                    <select id="samplingSoil" class="form-control">
+                      <option value="select" selected>Select</option>
+                      <option value="soc_reproj21.tif">Soil Organic Carbon</option>
+                      <option value="dsms_float.tif">DSMS</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
                   <label class="col-xs-3 control-label">Area of Interest</label>
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="SpatialPolygonsDataframe delineating the area to be sampled. The coordinate system shall be the same as for the rasters. If not completely overlapping, the itersection of x1 and y will be sampled." data-toggle="tooltip" data-trigger="click" ></span>
 
@@ -194,17 +206,7 @@
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="samplingSoil" class="col-xs-3 control-label">Soil Raster Layer</label>
-                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="All rasters will be centered and scaled. The first principal component of the rasters will be used as the surface for wich to optimize the sampling." data-toggle="tooltip" data-trigger="click" ></span>
-                  <div class="col-xs-9">
-                    <select id="samplingSoil" class="form-control">
-                      <option value="select" selected>Select</option>
-                      <option value="soc_reproj21.tif">Soil Organic Carbon</option>
-                      <option value="dsms_float.tif">DSMS</option>
-                    </select>
-                  </div>
-                </div>
+
 
                 <div class="form-group">
                   <label for="samplingMethod" class="col-xs-3 control-label">Sampling Algorithm</label>
@@ -284,6 +286,18 @@
 
               <div class="form-horizontal calcite-form-padding">
 
+                  <div class="form-group">
+                      <label for="adaptSoil" class="col-xs-3 control-label">Soil Raster Layer</label>
+                      <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Raster layer" data-toggle="tooltip" data-trigger="click" ></span>
+                      <div class="col-xs-9">
+                        <select id="adaptSoil" class="form-control">
+                          <option value="select" selected>Select</option>
+                          <option value="soc_reproj21.tif">Soil Organic Carbon</option>
+                          <option value="dsms_float.tif">DSMS</option>
+                        </select>
+                      </div>
+                </div>
+
 
                 <div class="form-group">
 
@@ -307,18 +321,6 @@
 
                       </ul>
 
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="adaptSoil" class="col-xs-3 control-label">Soil Raster Layer</label>
-                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Raster layer" data-toggle="tooltip" data-trigger="click" ></span>
-                  <div class="col-xs-9">
-                    <select id="adaptSoil" class="form-control">
-                      <option value="select" selected>Select</option>
-                      <option value="soc_reproj21.tif">Soil Organic Carbon</option>
-                      <option value="dsms_float.tif">DSMS</option>
-                    </select>
                   </div>
                 </div>
 

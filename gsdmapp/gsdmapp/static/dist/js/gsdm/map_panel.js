@@ -12,6 +12,12 @@
 
     satellite.addTo(map);
 
+	var soc_layer = L.tileLayer.wms('http://data.isric.org/geoserver/sg250m/wms', {
+              layers: 'sg250m:ORCDRC_M_sl4_250m',
+              transparent: true,
+              format: 'image/png'
+          }).addTo(map);
+
     /*
     L.control.layers({
         'Satellite': satellite.addTo(map)

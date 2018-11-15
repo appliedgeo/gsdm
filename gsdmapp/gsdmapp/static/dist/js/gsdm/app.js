@@ -39,11 +39,11 @@ $(document).ready(function(){
       // soil raster changed
 
       $("#samplingSoil").on("change", function(e) {
-        setSoilRaster($(this).val());
+        //setSoilRaster($(this).val());
       });
 
       $("#adaptSoil").on("change", function(e) {
-        setSoilRaster($(this).val());
+        //setSoilRaster($(this).val());
       });
 
 
@@ -128,6 +128,8 @@ $(document).ready(function(){
 		if(soilLayer){
             map.removeLayer(soilLayer);
           }
+
+		map.setView([-0.284200, 36.078709], 6)
 
      
 	}

@@ -226,7 +226,7 @@
                   <label for="samplingStratsize" class="col-xs-3 control-label">Strat Size</label>
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Cell side (metre) of a square staratification grid" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
-                    <input id="samplingStratsize" class="form-control" value="">
+                    <input id="samplingStratsize" class="form-control" value="" required>
                   </div>
                 </div>
 
@@ -234,7 +234,7 @@
                   <label for="samplingDistance" class="col-xs-3 control-label">Minimum Distance</label>
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Minimum distance allowed between samples. Valid for the 'dir' and the 'stratdir' methods." data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
-                    <input id="samplingDistance" class="form-control" value="">
+                    <input id="samplingDistance" class="form-control" value="0">
                   </div>
                 </div>
 
@@ -242,7 +242,7 @@
                   <label for="samplingEdge" class="col-xs-3 control-label">Edge</label>
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Buffer zone (metre) inside the sample area border, where sampling is prohibited." data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
-                    <input id="samplingEdge" class="form-control" value="">
+                    <input id="samplingEdge" class="form-control" value="0">
                   </div>
                 </div>
 
@@ -250,12 +250,12 @@
                   <label for="samplingCriterium" class="col-xs-3 control-label">Stopping Criterium</label>
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="No more samples will be added when this number of samples per stratum has been reached. Valid for 'stratdir' and 'stratrand' methods." data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
-                    <input id="samplingCriterium" class="form-control" value="">
+                    <input id="samplingCriterium" class="form-control" value="" required>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="samplingOutput" class="col-xs-3 control-label">Output</label>
+                  <label for="samplingOutput" class="col-xs-3 control-label">Outputs name</label>
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Output file name" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <input id="samplingOutput" class="form-control" value="">
@@ -301,7 +301,7 @@
                     <label for="pointfile" class="col-xs-3 control-label">Select points data(txt/zipped shp):</label>
                     <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Path to point file with observed soil property data. The coordinate system shall be the same as for the raster." data-toggle="tooltip" data-trigger="click" ></span>
                     <div class="col-xs-9">
-                    <input id="pointfile" name="shapefile" type="file" class="form-control"/>
+                    <input id="pointfile" name="shapefile" type="file" class="form-control" required/>
                     </div>
                     <div class="col-xs-9 col-xs-offset-3">
                     <button id="adaptUpload" type="submit" class="btn btn-primary btn-block">Upload</button>
@@ -359,7 +359,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="adaptOutput" class="col-xs-3 control-label">Output</label>
+                  <label for="adaptOutput" class="col-xs-3 control-label">Outputs name</label>
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Output file name" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <input id="adaptOutput" class="form-control" value="">

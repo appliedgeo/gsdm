@@ -353,27 +353,33 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
 
       $('input[name="aoiRadios"]').change(function(){
-          if($('#aoiRadios2').prop('checked')){
-                $( "#shapefile" ).prop( "disabled", false );
-                $( "#samplingUpload" ).prop( "disabled", false );
+          
+			var aoi_method = $("input[name='aoiRadios']:checked").val();
+		
+			if(aoi_method == 'draw'){
+				$("#aoi_shp").hide();
+                 $( "#shapefile" ).prop( "disabled", true );
+                 $( "#samplingUpload" ).prop( "disabled", true ); 
+                  $( "#uploadfiles ul" ).empty();
 
+                  enableDrawing();
 
-                disableDrawing();
+			} 
+			else if(aoi_method == 'shapefile'){
+				$("#aoi_shp").show();
+                 $( "#shapefile" ).prop( "disabled", false );
+                 $( "#samplingUpload" ).prop( "disabled", false );
+  
+                 disableDrawing();
 
-                //map.removeControl(draw_control);
+			}
+			else {
+				$("#aoi_shp").hide();
+				disableDrawing();
+				$("#aoi_gadm").show();
+			}
+			
 
-          }else{
-
-                $( "#shapefile" ).prop( "disabled", true );
-                $( "#samplingUpload" ).prop( "disabled", true );
-
-                 $( "#uploadfiles ul" ).empty();
-
-                 //map.addControl(draw_control);
-
-                 enableDrawing();
-
-          }
       });
 
         // sampling design shapefile upload

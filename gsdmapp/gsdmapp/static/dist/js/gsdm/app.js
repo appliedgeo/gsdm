@@ -188,12 +188,15 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
                        //console.log(data.shapefile);
                        waitingDialog.hide();
 
+						//alert('Sampling Design Complete!');
+
                        $( "#outfiles ul" ).empty();
 
                        var outfile = '<li><a href=/outputs/'+data.samplingout+'>'+data.samplingout+'</a></li>'
 
                        $( "#outfiles ul" ).append(outfile);
-
+	
+						alert('Sampling Design complete!');
 
 
                   }
@@ -230,11 +233,15 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
                         waitingDialog.hide();
 
+						//alert('Sampling Design complete!');
+
                         $( "#outfiles p" ).empty();
 
                        var outfile = '<p>Download: <a href=/outputs/'+data.samplingout+'>'+data.samplingout+'</a></p>'
 
                        $( "#outfiles" ).append(outfile);
+
+						alert('Sampling Design complete!');
 
 
 
@@ -286,6 +293,8 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
                   success: function(data){
 
                         waitingDialog.hide();
+
+						alert('Local map adaptation complete!');
 
                        //console.log(data.feedback.length);
                        var feedback = data.feedback;
@@ -389,6 +398,8 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
                         waitingDialog.hide();
 
+						alert('Upload complete!');
+
 						// clear previous upload
 						$( "#uploadfiles ul" ).empty();
 
@@ -428,6 +439,8 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
                         //alert(data.message);
 
                         waitingDialog.hide();
+
+						alert('Upload complete');
 
                         pointdata = data.url;
                         datafields = data.fields;

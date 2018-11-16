@@ -226,7 +226,7 @@
                   <label for="samplingStratsize" class="col-xs-3 control-label">Strat Size</label>
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Cell side (metre) of a square staratification grid" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
-                    <input id="samplingStratsize" class="form-control" value="" required>
+                    <input id="samplingStratsize" class="form-control" value="">
                   </div>
                 </div>
 
@@ -250,7 +250,7 @@
                   <label for="samplingCriterium" class="col-xs-3 control-label">Stopping Criterium</label>
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="No more samples will be added when this number of samples per stratum has been reached. Valid for 'stratdir' and 'stratrand' methods." data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
-                    <input id="samplingCriterium" class="form-control" value="" required>
+                    <input id="samplingCriterium" class="form-control" value="">
                   </div>
                 </div>
 
@@ -301,7 +301,7 @@
                     <label for="pointfile" class="col-xs-3 control-label">Select points data(txt/zipped shp):</label>
                     <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Path to point file with observed soil property data. The coordinate system shall be the same as for the raster." data-toggle="tooltip" data-trigger="click" ></span>
                     <div class="col-xs-9">
-                    <input id="pointfile" name="shapefile" type="file" class="form-control" required/>
+                    <input id="pointfile" name="shapefile" type="file" class="form-control" />
                     </div>
                     <div class="col-xs-9 col-xs-offset-3">
                     <button id="adaptUpload" type="submit" class="btn btn-primary btn-block">Upload</button>
@@ -423,7 +423,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="/static/dist/js/gsdm/bootstrap-waitingfor.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
   <script src="/static/dist/js/gsdm/app.js"></script>
 
   <!-- Bootstrap core JavaScript

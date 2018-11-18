@@ -358,6 +358,8 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 		
 			if(aoi_method == 'draw'){
 				$("#aoi_shp").hide();
+				$("#aoi_gadm").hide();
+
                  $( "#shapefile" ).prop( "disabled", true );
                  $( "#samplingUpload" ).prop( "disabled", true ); 
                   $( "#uploadfiles ul" ).empty();
@@ -367,6 +369,8 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 			} 
 			else if(aoi_method == 'shapefile'){
 				$("#aoi_shp").show();
+				$("#aoi_gadm").hide();
+
                  $( "#shapefile" ).prop( "disabled", false );
                  $( "#samplingUpload" ).prop( "disabled", false );
   

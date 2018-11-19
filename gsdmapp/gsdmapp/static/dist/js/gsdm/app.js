@@ -526,6 +526,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 				$("#aoi_gadm").hide();
 
 				// clear gadm areas
+				myGadm.clearLayers();
 				$('#level1').empty().append('<option selected value="select">Level 1</option>');
 				$('#level2').empty().append('<option selected value="select">Level 2</option>');
 
@@ -542,6 +543,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 				$("#aoi_gadm").hide();
 
 				// clear gadm areas
+				myGadm.clearLayers();
 				$('#level1').empty().append('<option selected value="select">Level 1</option>');
 				$('#level2').empty().append('<option selected value="select">Level 2</option>');
 

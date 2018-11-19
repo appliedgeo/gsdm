@@ -204,11 +204,11 @@ $(document).ready(function(){
       // soil raster changed
 
       $("#samplingSoil").on("change", function(e) {
-        //setSoilRaster($(this).val());
+        setSoilRaster($(this).val());
       });
 
       $("#adaptSoil").on("change", function(e) {
-        //setSoilRaster($(this).val());
+        setSoilRaster($(this).val());
       });
 
 

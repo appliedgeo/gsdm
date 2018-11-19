@@ -1,6 +1,8 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse, JsonResponse
+from django.db import connection
+
 from gsdmapp.tools import *
 import json
 import zipfile
@@ -115,3 +117,25 @@ def local_adaptation(request):
 	}
 
 	return JsonResponse(adaptation_response)
+
+
+def gadm(request):
+    # return gadm countries as json
+    cur = connection.cursor()
+
+    cur.execute("""SELECT adm0_name FROM gadm0""")
+    countries = []
+    for row in cur.fetchall():
+        countries.append(row[0])
+
+    gadm_json = {
+        'countries': countries
+    }
+
+    cur.close()
+
+    return JsonResponse(gadm_json)
+
+
+
+

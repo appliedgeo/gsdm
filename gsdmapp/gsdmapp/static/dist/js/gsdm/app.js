@@ -36,6 +36,41 @@ $(document).ready(function(){
 
       attachSearch();
 
+
+      // load gadm countries
+      function loadGadm(){
+            $.ajax({
+                  type: "POST",
+                  contentType: "application/json",
+                  url: '/gadm/',
+                  //async: false,
+                  dataType: "json",
+                  //data: JSON.stringify(samplingdata),
+                  success: function(data){
+
+                       var countries = data.countries;
+
+                       $.each(countries, function (i, country){
+
+                            $('#level0').append($('<option>', {
+                                value: country,
+                                text: country
+                            }));
+
+
+
+                        });
+
+
+
+
+                  }
+              });
+      }
+
+      loadGadm();
+      
+
       // soil raster changed
 
       $("#samplingSoil").on("change", function(e) {

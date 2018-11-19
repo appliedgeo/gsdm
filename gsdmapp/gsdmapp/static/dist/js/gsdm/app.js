@@ -100,6 +100,11 @@ $(document).ready(function(){
 
                         });
 
+                        myGadm.clearLayers();
+
+                        var boundary = data.boundary;
+                        myGadm.addData(boundary);
+
                         var coords = data.centroid.coordinates;
                         map.setView([coords[1], coords[0]], 5);
 
@@ -145,6 +150,11 @@ $(document).ready(function(){
 
                         });
 
+                        myGadm.clearLayers();
+
+                        var boundary = data.boundary;
+                        myGadm.addData(boundary);
+
                         var coords = data.centroid.coordinates;
                         map.setView([coords[1], coords[0]], 7);
 
@@ -172,6 +182,11 @@ $(document).ready(function(){
                   dataType: "json",
                   //data: JSON.stringify(samplingdata),
                   success: function(data){
+
+                        myGadm.clearLayers();
+
+                        var boundary = data.boundary;
+                        myGadm.addData(boundary);
 
                         var coords = data.centroid.coordinates;
                         map.setView([coords[1], coords[0]], 8);
@@ -525,7 +540,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 			else if(aoi_method == 'shapefile'){
 				$("#aoi_shp").show();
 				$("#aoi_gadm").hide();
-				
+
 				// clear gadm areas
 				$('#level1').empty().append('<option selected value="select">Level 1</option>');
 				$('#level2').empty().append('<option selected value="select">Level 2</option>');

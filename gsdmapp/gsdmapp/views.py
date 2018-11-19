@@ -148,10 +148,14 @@ def level1(request, country):
     cur.execute("SELECT ST_AsGeoJSON(ST_Centroid(geom)) FROM gadm0 WHERE adm0_name = %s", (country,))
     centroid = cur.fetchall()[0]
 
+    cur.execute("SELECT ST_AsGeoJSON(geom) FROM gadm0 WHERE adm0_name = %s", (country,))
+    boundary = cur.fetchall()[0]
+
 
     gadm_json = {
         'level1': level1,
-        'centroid': eval(centroid[0])
+        'centroid': eval(centroid[0]),
+        'boundary': eval(boundary[0])
     }
 
     cur.close()
@@ -171,9 +175,13 @@ def level2(request, level1):
     cur.execute("SELECT ST_AsGeoJSON(ST_Centroid(geom)) FROM gadm1 WHERE adm1_name = %s", (level1,))
     centroid = cur.fetchall()[0]
 
+    cur.execute("SELECT ST_AsGeoJSON(geom) FROM gadm1 WHERE adm1_name = %s", (level1,))
+    boundary = cur.fetchall()[0]
+
     gadm_json = {
         'level2': level2,
-        'centroid': eval(centroid[0])
+        'centroid': eval(centroid[0]),
+        'boundary': eval(boundary[0])
     }
 
     cur.close()
@@ -188,8 +196,12 @@ def level3(request, level2):
     cur.execute("SELECT ST_AsGeoJSON(ST_Centroid(geom)) FROM gadm2 WHERE adm2_name = %s", (level2,))
     centroid = cur.fetchall()[0]
 
+    cur.execute("SELECT ST_AsGeoJSON(geom) FROM gadm2 WHERE adm2_name = %s", (level2,))
+    boundary = cur.fetchall()[0]
+
     gadm_json = {
-        'centroid': eval(centroid[0])
+        'centroid': eval(centroid[0]),
+        'boundary': eval(boundary[0])
     }
 
     cur.close()

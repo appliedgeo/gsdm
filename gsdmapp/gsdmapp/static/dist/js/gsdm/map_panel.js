@@ -5,6 +5,8 @@
         map = new L.Map('map', { center: new L.LatLng(-0.284200, 36.078709), zoom: 6 }),
         drawnItems = L.featureGroup().addTo(map);
 
+     var myGadm = L.geoJSON().addTo(map);
+
     var satellite = L.tileLayer('http://www.google.com/maps/vt?lyrs=s,h&x={x}&y={y}&z={z}', {
         //http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}
             attribution: 'google'

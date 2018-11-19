@@ -40,7 +40,7 @@ $(document).ready(function(){
       // load gadm countries
       function loadGadm(){
             $.ajax({
-                  type: "POST",
+                  type: "GET",
                   contentType: "application/json",
                   url: '/gadm/',
                   //async: false,
@@ -69,7 +69,122 @@ $(document).ready(function(){
       }
 
       loadGadm();
-      
+
+      // load gadm level 1 areas
+      $("#level0").on("change", function(e) {
+        var country = $(this).val();
+
+        var _url = '/level1/' + country;
+
+            $.ajax({
+                  type: "GET",
+                  contentType: "application/json",
+                  url: _url,
+                  //async: false,
+                  dataType: "json",
+                  //data: JSON.stringify(samplingdata),
+                  success: function(data){
+
+                       $('#level1').empty().append('<option selected value="select">Level 1</option>');
+                       $('#level2').empty().append('<option selected value="select">Level 2</option>');
+
+                       var level1 = data.level1;
+
+                       $.each(level1, function (i, area){
+
+                            $('#level1').append($('<option>', {
+                                value: area,
+                                text: area
+                            }));
+
+
+                        });
+
+                        var coords = data.centroid.coordinates;
+                        map.setView([coords[1], coords[0]], 5);
+
+
+
+
+
+                  }
+              });
+
+
+
+      });
+
+
+          // load gadm level 2 areas
+      $("#level1").on("change", function(e) {
+        var level1 = $(this).val();
+
+        var _url = '/level2/' + level1;
+
+            $.ajax({
+                  type: "GET",
+                  contentType: "application/json",
+                  url: _url,
+                  //async: false,
+                  dataType: "json",
+                  //data: JSON.stringify(samplingdata),
+                  success: function(data){
+
+                       $('#level2').empty().append('<option selected value="select">Level 2</option>');
+
+                       var level2 = data.level2;
+
+                       $.each(level2, function (i, area){
+
+                            $('#level2').append($('<option>', {
+                                value: area,
+                                text: area
+                            }));
+
+
+
+                        });
+
+                        var coords = data.centroid.coordinates;
+                        map.setView([coords[1], coords[0]], 7);
+
+
+
+
+                  }
+              });
+
+
+
+      });
+
+                // load gadm level 2 geojson
+      $("#level2").on("change", function(e) {
+        var level2 = $(this).val();
+
+        var _url = '/level3/' + level2;
+
+            $.ajax({
+                  type: "GET",
+                  contentType: "application/json",
+                  url: _url,
+                  //async: false,
+                  dataType: "json",
+                  //data: JSON.stringify(samplingdata),
+                  success: function(data){
+
+                        var coords = data.centroid.coordinates;
+                        map.setView([coords[1], coords[0]], 8);
+
+
+
+
+                  }
+              });
+
+
+
+      });
 
       // soil raster changed
 
@@ -395,6 +510,11 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 				$("#aoi_shp").hide();
 				$("#aoi_gadm").hide();
 
+				// clear gadm areas
+				$('#level1').empty().append('<option selected value="select">Level 1</option>');
+				$('#level2').empty().append('<option selected value="select">Level 2</option>');
+
+                // disable shape uploads
                  $( "#shapefile" ).prop( "disabled", true );
                  $( "#samplingUpload" ).prop( "disabled", true ); 
                   $( "#uploadfiles ul" ).empty();
@@ -405,7 +525,12 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 			else if(aoi_method == 'shapefile'){
 				$("#aoi_shp").show();
 				$("#aoi_gadm").hide();
+				
+				// clear gadm areas
+				$('#level1').empty().append('<option selected value="select">Level 1</option>');
+				$('#level2').empty().append('<option selected value="select">Level 2</option>');
 
+                // enable shape uploads
                  $( "#shapefile" ).prop( "disabled", false );
                  $( "#samplingUpload" ).prop( "disabled", false );
   

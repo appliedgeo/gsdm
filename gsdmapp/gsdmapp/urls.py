@@ -29,5 +29,8 @@ urlpatterns = [
     url(r'^localadapt/$', 'gsdmapp.views.local_adaptation'),
     url(r'^uploads/', include('gsdmapp.uploads.urls')),
     url(r'^gadm/', 'gsdmapp.views.gadm', name='gadm'),
+    url(r'^level1/(?P<country>[^/]*)/$', 'gsdmapp.views.level1'),
+    url(r'^level2/(?P<level1>[^/]*)/$', 'gsdmapp.views.level2'),
+    url(r'^level3/(?P<level2>[^/]*)/$', 'gsdmapp.views.level3'),
 
 ]

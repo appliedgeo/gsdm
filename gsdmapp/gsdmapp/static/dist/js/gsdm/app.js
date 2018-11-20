@@ -105,8 +105,7 @@ $(document).ready(function(){
                         var boundary = data.boundary;
                         myGadm.addData(boundary);
 
-                        var coords = data.centroid.coordinates;
-                        map.setView([coords[1], coords[0]], 5);
+                        map.fitBounds(myGadm.getBounds());
 
 
 
@@ -155,8 +154,7 @@ $(document).ready(function(){
                         var boundary = data.boundary;
                         myGadm.addData(boundary);
 
-                        var coords = data.centroid.coordinates;
-                        map.setView([coords[1], coords[0]], 7);
+                        map.fitBounds(myGadm.getBounds());
 
 
 
@@ -188,8 +186,7 @@ $(document).ready(function(){
                         var boundary = data.boundary;
                         myGadm.addData(boundary);
 
-                        var coords = data.centroid.coordinates;
-                        map.setView([coords[1], coords[0]], 8);
+                        map.fitBounds(myGadm.getBounds());
 
 
 
@@ -569,6 +566,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 				if(geojsonLayer){
                    map.removeLayer(geojsonLayer);
                 }
+                $( "#uploadfiles ul" ).empty();
 			}
 			
 
@@ -676,7 +674,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
                         });
 
-                        addWMSlayer(data.layer_wms);
+                        addGeolayer(data.layer_wms);
 
                     },error: function(){
                         waitingDialog.hide();

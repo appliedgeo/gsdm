@@ -250,8 +250,8 @@ def adaptation_file_upload(request):
             if 'zip' in zipped_file:
                 # shapefile data
                 uploadedfile = uncompress(zipped_file)
-                #layer_wms = publish_layer(uploadedfile)
-                layer_wms = 'no wms'
+                layer_wms = geojson_layer(uploadedfile)
+                #layer_wms = 'no wms'
                 data_fields = shp_extract_fields(uploadedfile)
             else:
                 # text data

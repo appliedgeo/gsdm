@@ -527,6 +527,10 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
 				// clear gadm areas
 				myGadm.clearLayers();
+                if(geojsonLayer){
+                   map.removeLayer(geojsonLayer);
+                }
+
 				$('#level1').empty().append('<option selected value="select">Level 1</option>');
 				$('#level2').empty().append('<option selected value="select">Level 2</option>');
 
@@ -544,6 +548,10 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
 				// clear gadm areas
 				myGadm.clearLayers();
+				if(geojsonLayer){
+                   map.removeLayer(geojsonLayer);
+                }
+
 				$('#level1').empty().append('<option selected value="select">Level 1</option>');
 				$('#level2').empty().append('<option selected value="select">Level 2</option>');
 
@@ -558,6 +566,9 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 				$("#aoi_shp").hide();
 				disableDrawing();
 				$("#aoi_gadm").show();
+				if(geojsonLayer){
+                   map.removeLayer(geojsonLayer);
+                }
 			}
 			
 
@@ -595,7 +606,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
                         var _file = '<li>'+data.url+'</li>';
                         $( "#uploadfiles ul" ).append(_file);
 
-                        addWMSlayer(data.layer_wms);
+                        addGeolayer(data.layer_wms);
 
                     },error: function(){
                         waitingDialog.hide();

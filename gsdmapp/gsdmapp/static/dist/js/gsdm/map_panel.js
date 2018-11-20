@@ -1,4 +1,4 @@
-    var soilLayer, aoi, selected_shp, pointdata, draw_control, uploadedLayer;
+    var soilLayer, aoi, selected_shp, pointdata, draw_control, uploadedLayer, geojsonLayer;
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib }),
@@ -114,6 +114,32 @@
           // remove layer
           if(uploadedLayer){
             map.removeLayer(uploadedLayer);
+          }
+
+
+        }
+
+    }
+
+     function addGeolayer(layer_name){
+        if(layer_name != 'no wms'){
+
+            var layer_url = '/outputs/' + layer_name;
+
+            $.getJSON(layer_url,function(data){
+                // L.geoJson function is used to parse geojson file and load on to map
+                geojsonLayer = L.geoJson(data).addTo(map);
+                map.fitBounds(geojsonLayer.getBounds());
+            });
+
+
+
+        } else {
+
+
+          // remove layer
+          if(geojsonLayer){
+            map.removeLayer(geojsonLayer);
           }
 
 

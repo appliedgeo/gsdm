@@ -76,6 +76,8 @@ $(document).ready(function(){
 
         var _url = '/level1/' + country;
 
+        waitingDialog.show('Loading boundary..');
+
             $.ajax({
                   type: "GET",
                   contentType: "application/json",
@@ -84,6 +86,8 @@ $(document).ready(function(){
                   dataType: "json",
                   //data: JSON.stringify(samplingdata),
                   success: function(data){
+
+                        waitingDialog.hide();
 
                        $('#level1').empty().append('<option selected value="select">Level 1</option>');
                        $('#level2').empty().append('<option selected value="select">Level 2</option>');
@@ -125,6 +129,8 @@ $(document).ready(function(){
 
         var _url = '/level2/' + level1;
 
+        waitingDialog.show('Loading boundary..');
+
             $.ajax({
                   type: "GET",
                   contentType: "application/json",
@@ -133,6 +139,8 @@ $(document).ready(function(){
                   dataType: "json",
                   //data: JSON.stringify(samplingdata),
                   success: function(data){
+
+                        waitingDialog.hide();
 
                        $('#level2').empty().append('<option selected value="select">Level 2</option>');
 
@@ -172,6 +180,8 @@ $(document).ready(function(){
 
         var _url = '/level3/' + level2;
 
+            waitingDialog.show('Loading boundary..');
+
             $.ajax({
                   type: "GET",
                   contentType: "application/json",
@@ -180,6 +190,8 @@ $(document).ready(function(){
                   dataType: "json",
                   //data: JSON.stringify(samplingdata),
                   success: function(data){
+
+                        waitingDialog.hide();
 
                         myGadm.clearLayers();
 

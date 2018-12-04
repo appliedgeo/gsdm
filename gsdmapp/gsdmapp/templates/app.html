@@ -146,14 +146,14 @@
                     <select id="samplingSoil" class="form-control">
                       <option value="select" selected>Select</option>
                       <option value="Soil_Carbon_0_30_250m_3857.tif">Soil Organic Carbon</option>
-                      <!--option-- value="dsms_float.tif">DSMS</option-->
+                      <!--option value="dsms_float.tif">DSMS</option-->
                     </select>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-xs-3 control-label">Area of Interest</label>
-                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="SpatialPolygonsDataframe delineating the area to be sampled. The coordinate system shall be the same as for the rasters. If not completely overlapping, the itersection of x1 and y will be sampled." data-toggle="tooltip" data-trigger="click" ></span>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Boundary delineating the area to be sampled. The coordinate system shall be the same as for the rasters - WGS84(epsg:4326)." data-toggle="tooltip" data-trigger="click" ></span>
 
                   <div class="col-xs-9">
                     <div class="form-check">
@@ -245,44 +245,44 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="samplingStratsize" class="col-xs-3 control-label">Strat Size</label>
-                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Cell side (metre) of a square staratification grid" data-toggle="tooltip" data-trigger="click" ></span>
+                  <label for="samplingStratsize" class="col-xs-3 control-label">Grid Size(m)</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title=" The cell side (in meters) of a square staratification grid" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <input id="samplingStratsize" class="form-control" value="">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="samplingDistance" class="col-xs-3 control-label">Minimum Distance</label>
-                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Minimum distance allowed between samples. Valid for the 'dir' and the 'stratdir' methods." data-toggle="tooltip" data-trigger="click" ></span>
+                  <label for="samplingDistance" class="col-xs-3 control-label">Min Distance(m)</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Minimum distance (in meters) between samples" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <input id="samplingDistance" class="form-control" value="0">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="samplingEdge" class="col-xs-3 control-label">Edge</label>
-                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Buffer zone (metre) inside the sample area border, where sampling is prohibited." data-toggle="tooltip" data-trigger="click" ></span>
+                  <label for="samplingEdge" class="col-xs-3 control-label">Buffer along edge(m)</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="No samples will be placed within this distance to the edge of the area." data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <input id="samplingEdge" class="form-control" value="0">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="samplingCriterium" class="col-xs-3 control-label">Stopping Criterium</label>
-                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="No more samples will be added when this number of samples per stratum has been reached. Valid for 'stratdir' and 'stratrand' methods." data-toggle="tooltip" data-trigger="click" ></span>
+                  <label for="samplingCriterium" class="col-xs-3 control-label">No. of samples</label>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Number of samples to place." data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
-                    <input id="samplingCriterium" class="form-control" value="">
+                    <input id="samplingCriterium" class="form-control" value="50">
                   </div>
                 </div>
 
-                <div class="form-group">
+                <!--div class="form-group">
                   <label for="samplingOutput" class="col-xs-3 control-label">Outputs name</label>
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Output file name" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <input id="samplingOutput" class="form-control" value="">
                   </div>
-                </div>
+                </div-->
 
                 <div class="form-group">
                   <div class="col-xs-9 col-xs-offset-3">
@@ -311,7 +311,7 @@
                         <select id="adaptSoil" class="form-control">
                           <option value="select" selected>Select</option>
                           <option value="Soil_Carbon_0_30_250m_3857.tif">Soil Organic Carbon</option>
-                          <!--option-- value="dsms_float.tif">DSMS</option-->
+                          <!--option value="dsms_float.tif">DSMS</option-->
                         </select>
                       </div>
                 </div>
@@ -372,7 +372,7 @@
                   </div>
                 </div>
 
-                <div class="form-group">
+                <!--div class="form-group">
                   <label for="adaptEpsg" class="col-xs-3 control-label">EPSG</label>
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="EPSG Code" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
@@ -386,7 +386,7 @@
                   <div class="col-xs-9">
                     <input id="adaptOutput" class="form-control" value="">
                   </div>
-                </div>
+                </div-->
 
                 <div class="form-group">
                   <div class="col-xs-9 col-xs-offset-3">

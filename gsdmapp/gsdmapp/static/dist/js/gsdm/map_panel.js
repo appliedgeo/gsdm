@@ -2,7 +2,7 @@
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib }),
-        map = new L.Map('map', { center: new L.LatLng(-0.284200, 36.078709), zoom: 6 }),
+        map = new L.Map('map', { center: new L.LatLng(-0.284200, 36.078709), zoom: 4 }),
         drawnItems = L.featureGroup().addTo(map);
 
      var myGadm = L.geoJSON().addTo(map);
@@ -80,7 +80,7 @@
           soc_layer.addTo(map);
 
           // set zoom
-          map.setView([-0.284200, 36.078709], 6)
+          map.setView([-0.284200, 36.078709], 4)
 
         } else {
 

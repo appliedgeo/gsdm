@@ -139,7 +139,7 @@ def createSampling(_params):
     file.write("strat_size = strat_size,\n")
     file.write("min_dist = min_dist, \n")
     file.write("edge= edge,\n")
-    file.write("stop_dens2 = stop_dens,\n")
+    file.write("stop_n = stop_dens,\n")
     file.write("plot_results = T)\n")
     file.close()
 

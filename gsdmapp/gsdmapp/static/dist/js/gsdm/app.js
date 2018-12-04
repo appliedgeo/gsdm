@@ -76,7 +76,7 @@ $(document).ready(function(){
 
         var _url = '/level1/' + country;
 
-        waitingDialog.show('Loading boundary..');
+        waitingDialog.show('Loading Country boundary..');
 
             $.ajax({
                   type: "GET",
@@ -129,7 +129,7 @@ $(document).ready(function(){
 
         var _url = '/level2/' + level1;
 
-        waitingDialog.show('Loading boundary..');
+        waitingDialog.show('Loading Level 1 boundary..');
 
             $.ajax({
                   type: "GET",
@@ -180,7 +180,7 @@ $(document).ready(function(){
 
         var _url = '/level3/' + level2;
 
-            waitingDialog.show('Loading boundary..');
+            waitingDialog.show('Loading Level 2 boundary..');
 
             $.ajax({
                   type: "GET",

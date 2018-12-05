@@ -171,6 +171,7 @@
                 map.fitBounds(geojsonLayer.getBounds());
 
 				// aoi area
+				//console.log(data.features[0].geometry.coordinates);
 				var aoi_geo = L.polygon(data.features[0].geometry.coordinates);
 				var aoi_area = L.GeometryUtil.geodesicArea(aoi_geo.getLatLngs()[0]);
         		var _strat_size = Math.sqrt(aoi_area)/10;

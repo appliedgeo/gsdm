@@ -200,7 +200,16 @@ $(document).ready(function(){
 
                         map.fitBounds(myGadm.getBounds());
 
-
+						//console.log(boundary.coordinates[0]);
+						// aoi area
+						var aoi_geo = L.polygon(boundary.coordinates[0]);	
+						var aoi_area = L.GeometryUtil.geodesicArea(aoi_geo.getLatLngs()[0]);
+        				
+						var _strat_size = Math.sqrt(aoi_area)/10;
+        				_strat_size = parseFloat(_strat_size).toFixed(2);
+        				$('#samplingStratsize').val(_strat_size);
+						
+						
 
 
                   }

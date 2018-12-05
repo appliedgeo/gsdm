@@ -658,7 +658,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
                         var _file = '<li>'+data.url+'</li>';
                         $( "#uploadfiles ul" ).append(_file);
 
-                        addGeolayer(data.layer_wms);
+                        addGeo_aoilayer(data.layer_wms);
 
                     },error: function(){
                         waitingDialog.hide();

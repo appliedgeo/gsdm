@@ -65,7 +65,7 @@
 
         aoi = layer.toGeoJSON();
 
-        //console.log(aoi_area);
+        //console.log(layer);
         
     });
 
@@ -143,6 +143,40 @@
                 // L.geoJson function is used to parse geojson file and load on to map
                 geojsonLayer = L.geoJson(data).addTo(map);
                 map.fitBounds(geojsonLayer.getBounds());
+            });
+
+
+
+        } else {
+
+
+          // remove layer
+          if(geojsonLayer){
+            map.removeLayer(geojsonLayer);
+          }
+
+
+        }
+
+    }
+
+	 function addGeo_aoilayer(layer_name){
+        if(layer_name != 'no wms'){
+
+            var layer_url = '/outputs/' + layer_name;
+
+            $.getJSON(layer_url,function(data){
+                // L.geoJson function is used to parse geojson file and load on to map
+                geojsonLayer = L.geoJson(data).addTo(map);
+                map.fitBounds(geojsonLayer.getBounds());
+
+				// aoi area
+				var aoi_geo = L.polygon(data.features[0].geometry.coordinates);
+				var aoi_area = L.GeometryUtil.geodesicArea(aoi_geo.getLatLngs()[0]);
+        		var _strat_size = Math.sqrt(aoi_area)/10;
+        		_strat_size = parseFloat(_strat_size).toFixed(2);
+        		$('#samplingStratsize').val(_strat_size);
+				
             });
 
 

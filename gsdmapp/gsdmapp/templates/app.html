@@ -21,14 +21,12 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
 
-  <!-- Load Esri Leaflet from CDN -->
-  <!--script src="https://unpkg.com/esri-leaflet@2.0.7"></script-->
-
-
   <!-- Leaflet Draw -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js"></script>
 
+  <!-- Leaflet-geodesy -->
+  <script src="/static/dist/js/gsdm/leaflet-geodesy.js"></script>
 
   <link rel="stylesheet" href="/static/dist/css/app.css">
 
@@ -246,7 +244,7 @@
 
                 <div class="form-group">
                   <label for="samplingStratsize" class="col-xs-3 control-label">Grid Size(m)</label>
-                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title=" The cell side (in meters) of a square staratification grid" data-toggle="tooltip" data-trigger="click" ></span>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title=" The cell size (in meters) of a square staratification grid" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
                     <input id="samplingStratsize" class="form-control" value="" disabled>
                   </div>

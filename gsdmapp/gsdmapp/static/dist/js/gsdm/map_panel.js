@@ -1,4 +1,4 @@
-    var soilLayer, aoi, selected_shp, pointdata, draw_control, uploadedLayer, geojsonLayer;
+    var soilLayer, aoi, selected_shp, pointdata, draw_control, uploadedLayer, geojsonLayer, toc;
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib }),
@@ -29,12 +29,12 @@
           }); //.addTo(map);
 	
 	
-    
+    /*
     L.control.layers({
-        'Satellite': satellite.addTo(map)
-            }, { 'Area of Interest': drawnItems, 'Soil Organic Carbon': soc_layer }, { position: 'bottomright', collapsed: false }).addTo(map);
-    
-
+        'Satellite': satellite.addTo(map)}, 
+        { 'Area of Interest': drawnItems, 'Soil Organic Carbon': soc_layer }, 
+        { position: 'bottomright', collapsed: false }).addTo(map);
+    */
 
     // draw polygon tool
 
@@ -51,16 +51,21 @@
         }
 
     map.on(L.Draw.Event.CREATED, function (event) {
-		// clear previous drawn aoi
-		drawnItems.clearLayers();
+    		// clear previous drawn aoi
+    		drawnItems.clearLayers();
 
         var layer = event.layer;
 
         drawnItems.addLayer(layer);
 
+        var aoi_area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
+        var _strat_size = Math.sqrt(aoi_area)/10;
+        _strat_size = parseFloat(_strat_size).toFixed(2);
+        $('#samplingStratsize').val(_strat_size);
+
         aoi = layer.toGeoJSON();
 
-        //console.log(JSON.stringify(aoi));
+        //console.log(aoi_area);
         
     });
 
@@ -70,17 +75,25 @@
 
         if(soilmap == 'Soil_Carbon_0_30_250m_3857.tif'){
           // add layer
-          /*
-          soilLayer = L.tileLayer.wms('http://45.33.28.192:8080/geoserver/wms', {
-              layers: 'gsdm:soc',
-              transparent: true,
-              format: 'image/png'
-          }).addTo(map);
-          */
+          
           soc_layer.addTo(map);
 
           // set zoom
-          map.setView([-0.284200, 36.078709], 4)
+          map.setView([-0.284200, 36.078709], 4);
+
+          if(!toc){
+            toc = L.control.layers({
+            'Satellite': satellite.addTo(map)}, 
+            { 'Soil Organic Carbon': soc_layer }, 
+            { position: 'bottomright', collapsed: false }).addTo(map);
+
+          }
+
+          
+
+          //console.log(toc._map);
+
+
 
         } else {
 

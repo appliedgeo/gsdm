@@ -214,10 +214,52 @@ $(document).ready(function(){
 
       $("#samplingSoil").on("change", function(e) {
         setSoilRaster($(this).val());
+        $( "#samplingMethod" ).prop( "disabled", false );
       });
 
       $("#adaptSoil").on("change", function(e) {
         setSoilRaster($(this).val());
+        $( "#samplingMethod" ).prop( "disabled", false );
+      });
+
+      // sampling method changed
+      $("#samplingMethod").on("change", function(e) {
+        var _method = $(this).val();
+        if(_method == 'stratrand' || _method == 'stratdir'){
+          $( "#samplingStratsize" ).prop( "disabled", false );
+          $( "#samplingDistance" ).prop( "disabled", false );
+          $( "#samplingEdge" ).prop( "disabled", false );
+          $( "#samplingCriterium" ).prop( "disabled", false );
+          $( "#samplingRun" ).prop( "disabled", false );
+
+        } else if(_method == 'grid'){
+          $( "#samplingStratsize" ).prop( "disabled", false );
+          $( "#samplingEdge" ).prop( "disabled", false );
+          $( "#samplingRun" ).prop( "disabled", false );
+
+          $( "#samplingCriterium" ).prop( "disabled", true );
+          $( "#samplingDistance" ).prop( "disabled", true );
+
+        } else if(_method == 'dir'){
+          $( "#samplingDistance" ).prop( "disabled", false );
+          $( "#samplingEdge" ).prop( "disabled", false );
+          $( "#samplingCriterium" ).prop( "disabled", false );
+          $( "#samplingRun" ).prop( "disabled", false );
+
+
+           $('#samplingStratsize').val('0');
+          $( "#samplingStratsize" ).prop( "disabled", true );
+
+        } else {
+          alert('Select a Sampling Algorithm');
+           $('#samplingStratsize').val('0');
+           $( "#samplingStratsize" ).prop( "disabled", true );
+          $( "#samplingDistance" ).prop( "disabled", true );
+          $( "#samplingEdge" ).prop( "disabled", true );
+          $( "#samplingCriterium" ).prop( "disabled", true );
+          $( "#samplingRun" ).prop( "disabled", true );
+        }
+
       });
 
 
@@ -303,7 +345,7 @@ $(document).ready(function(){
             map.removeLayer(soilLayer);
           }
 
-		map.setView([-0.284200, 36.078709], 6)
+		map.setView([-0.284200, 36.078709], 4)
 
      
 	}

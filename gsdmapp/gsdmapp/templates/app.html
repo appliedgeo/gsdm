@@ -62,9 +62,9 @@
       <span class="calcite-title-sub hidden-xs">CIAT</span-->
     </div>
      <!-- Nav -->
-    <!--ul class="calcite-nav nav navbar-nav">                    
-      <li><div class="calcite-navbar-search hidden-xs"><div id="geocode"></div></div></li>
-    </ul-->
+    <ul class="calcite-nav nav navbar-nav">                    
+      <li><a href="#" target="_blank">Getting Started</a></li>
+    </ul>
   </nav><!--/.navbar -->
 
 
@@ -234,7 +234,7 @@
                   <label for="samplingMethod" class="col-xs-3 control-label">Sampling Algorithm</label>
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Sampling algorithm: 'dir' = directed (SurfaceTortoise algorithm), 'stratdir' = stratified directed (SurfaceTortoise algorithm), 'grid' = regular grid and 'stratrand' = random stratified." data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
-                    <select id="samplingMethod" class="form-control">
+                    <select id="samplingMethod" class="form-control" disabled>
                       <option value="select" selected>Select</option>
                       <option value="stratdir">Stratified Directed</option>
                       <option value="dir">Directed</option>
@@ -248,7 +248,7 @@
                   <label for="samplingStratsize" class="col-xs-3 control-label">Grid Size(m)</label>
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title=" The cell side (in meters) of a square staratification grid" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
-                    <input id="samplingStratsize" class="form-control" value="">
+                    <input id="samplingStratsize" class="form-control" value="" disabled>
                   </div>
                 </div>
 
@@ -256,7 +256,7 @@
                   <label for="samplingDistance" class="col-xs-3 control-label">Min Distance(m)</label>
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Minimum distance (in meters) between samples" data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
-                    <input id="samplingDistance" class="form-control" value="0">
+                    <input id="samplingDistance" class="form-control" value="0" disabled>
                   </div>
                 </div>
 
@@ -264,7 +264,7 @@
                   <label for="samplingEdge" class="col-xs-3 control-label">Buffer along edge(m)</label>
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="No samples will be placed within this distance to the edge of the area." data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
-                    <input id="samplingEdge" class="form-control" value="0">
+                    <input id="samplingEdge" class="form-control" value="0" disabled>
                   </div>
                 </div>
 
@@ -272,7 +272,7 @@
                   <label for="samplingCriterium" class="col-xs-3 control-label">No. of samples</label>
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="Number of samples to place." data-toggle="tooltip" data-trigger="click" ></span>
                   <div class="col-xs-9">
-                    <input id="samplingCriterium" class="form-control" value="50">
+                    <input id="samplingCriterium" class="form-control" value="50" disabled>
                   </div>
                 </div>
 
@@ -286,7 +286,7 @@
 
                 <div class="form-group">
                   <div class="col-xs-9 col-xs-offset-3">
-                    <button id="samplingRun" type="button" class="btn btn-primary btn-block">Run</button>
+                    <button id="samplingRun" type="button" class="btn btn-primary btn-block" disabled>Run</button>
                   </div>
                 </div>
 

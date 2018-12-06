@@ -14,13 +14,6 @@
 
     satellite.addTo(map);
 
-	/*
-	var soc_layer = L.tileLayer.wms('http://data.isric.org/geoserver/sg250m/wms', {
-              layers: 'sg250m:ORCDRC_M_sl4_250m',
-              transparent: true,
-              format: 'image/png'
-          }); //.addTo(map);
-     */
 
      var soc_layer = L.tileLayer.wms('http://45.33.28.192:8080/geoserver/wms', {
               layers: 'gsdm:Soil_Carbon_0_30_250m_4326',
@@ -28,13 +21,6 @@
               format: 'image/png'
           }); //.addTo(map);
 	
-	
-    /*
-    L.control.layers({
-        'Satellite': satellite.addTo(map)}, 
-        { 'Area of Interest': drawnItems, 'Soil Organic Carbon': soc_layer }, 
-        { position: 'bottomright', collapsed: false }).addTo(map);
-    */
 
     // draw polygon tool
 
@@ -66,6 +52,7 @@
         aoi = layer.toGeoJSON();
 
         //console.log(layer);
+        $( "#samplingMethod" ).prop( "disabled", false );
         
     });
 

@@ -173,18 +173,18 @@ $(document).ready(function(){
 
                         map.fitBounds(myGadm.getBounds());
 
-						//console.log(boundary.coordinates[0]);
-						// aoi area
-						var aoi_geo = L.polygon(boundary.coordinates[0]);	
-						var aoi_area = L.GeometryUtil.geodesicArea(aoi_geo.getLatLngs()[0]);
-        				
-						var _strat_size = Math.sqrt(aoi_area)/10;
-        				_strat_size = parseFloat(_strat_size).toFixed(2);
-        				$('#samplingStratsize').val(_strat_size);
-						
-						
+            						//console.log(boundary.coordinates[0]);
+            						// aoi area
+            						var aoi_geo = L.polygon(boundary.coordinates[0]);	
+            						var aoi_area = L.GeometryUtil.geodesicArea(aoi_geo.getLatLngs()[0]);
+                    				
+            						var _strat_size = Math.sqrt(aoi_area)/10;
+                    		_strat_size = parseFloat(_strat_size).toFixed(2);
+                    		$('#samplingStratsize').val(_strat_size);
 
 
+                        $( "#samplingMethod" ).prop( "disabled", false );
+						
                   }
               });
 
@@ -392,7 +392,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
                        $( "#outfiles ul" ).append(outfile);
 	
-						alert('Sampling Design complete!');
+						          alert('Sampling Design complete!');
 
 
                   }
@@ -429,7 +429,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
                         waitingDialog.hide();
 
-						//alert('Sampling Design complete!');
+						          //alert('Sampling Design complete!');
 
                         $( "#outfiles p" ).empty();
 
@@ -437,7 +437,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
                        $( "#outfiles" ).append(outfile);
 
-						alert('Sampling Design complete!');
+						          alert('Sampling Design complete!');
 
 
 
@@ -490,7 +490,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
                         waitingDialog.hide();
 
-						alert('Local map adaptation complete!');
+						          alert('Local map adaptation complete!');
 
                        //console.log(data.feedback.length);
                        var feedback = data.feedback;
@@ -558,8 +558,8 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
 				// clear gadm areas
 				myGadm.clearLayers();
-                if(geojsonLayer){
-                   map.removeLayer(geojsonLayer);
+        if(geojsonLayer){
+            map.removeLayer(geojsonLayer);
                 }
 
 				$('#level1').empty().append('<option selected value="select">Level 1</option>');
@@ -628,17 +628,19 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
                         waitingDialog.hide();
 
-						alert('Upload complete!');
+						          alert('Upload complete!');
 
-						// clear previous upload
-						$( "#uploadfiles ul" ).empty();
+          						// clear previous upload
+          						$( "#uploadfiles ul" ).empty();
 
-                        selected_shp = data.url;
+                      selected_shp = data.url;
 
-                        var _file = '<li>'+data.url+'</li>';
-                        $( "#uploadfiles ul" ).append(_file);
+                      var _file = '<li>'+data.url+'</li>';
+                      $( "#uploadfiles ul" ).append(_file);
 
-                        addGeo_aoilayer(data.layer_wms);
+                      addGeo_aoilayer(data.layer_wms);
+
+                      $( "#samplingMethod" ).prop( "disabled", false );
 
                     },error: function(){
                         waitingDialog.hide();
@@ -670,17 +672,17 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
                         waitingDialog.hide();
 
-						alert('Upload complete');
+						          alert('Upload complete');
 
                         pointdata = data.url;
                         datafields = data.fields;
-						
-						// clear previous upload and data fields
-						$( "#uploadfiles2 ul" ).empty();
-						
-						$('#adaptAttribute').empty().append('<option selected value="select">Select</option>');
-						$('#adaptXcol').empty().append('<option selected value="select">Select</option>');
-						$('#adaptYcol').empty().append('<option selected value="select">Select</option>');
+          						
+          						// clear previous upload and data fields
+          						$( "#uploadfiles2 ul" ).empty();
+          						
+          						$('#adaptAttribute').empty().append('<option selected value="select">Select</option>');
+          						$('#adaptXcol').empty().append('<option selected value="select">Select</option>');
+          						$('#adaptYcol').empty().append('<option selected value="select">Select</option>');
 
                         //console.log(datafields.length)
                         // list uploaded data

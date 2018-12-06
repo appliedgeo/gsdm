@@ -88,6 +88,14 @@
             { position: 'bottomright', collapsed: false }).addTo(map);
 
           }
+			// enable sampling options
+			$( "#samplingMethod" ).prop( "disabled", false );
+			$( "#aoiRadios1" ).prop( "disabled", false );
+			$( "#aoiRadios2" ).prop( "disabled", false );
+			$( "#aoiRadios3" ).prop( "disabled", false );
+
+			$( "#polygon" ).prop( "disabled", false );
+			$( "#rectangle" ).prop( "disabled", false );
 
           
 

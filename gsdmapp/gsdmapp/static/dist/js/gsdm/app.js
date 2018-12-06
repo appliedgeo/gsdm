@@ -7,35 +7,8 @@ $(document).ready(function(){
         setBasemap($(this).val());
       });
 
-      // Search
-      var input = $(".geocoder-control-input");
-      input.focus(function(){
-        $("#panelSearch .panel-body").css("height", "150px");
-      });
-      input.blur(function(){
-         $("#panelSearch .panel-body").css("height", "auto");
-      });
-
-      // Attach search control for desktop or mobile
-      function attachSearch() {
-        var parentName = $(".geocoder-control").parent().attr("id"),
-          geocoder = $(".geocoder-control"),
-          width = $(window).width();
-        if (width <= 767 && parentName !== "geocodeMobile") {
-          geocoder.detach();
-          $("#geocodeMobile").append(geocoder);
-        } else if (width > 767 && parentName !== "geocode"){
-          geocoder.detach();
-          $("#geocode").append(geocoder);
-        }
-      }
-
-      $(window).resize(function() {
-        attachSearch();
-      });
-
-      attachSearch();
-
+	//$('#samplingStratsize').attr('title', 'Processing will take a very long time');
+	//$('#samplingStratsize').tooltip('show');    
 
       // load gadm countries
       function loadGadm(){
@@ -223,7 +196,7 @@ $(document).ready(function(){
 
       $("#samplingSoil").on("change", function(e) {
         setSoilRaster($(this).val());
-        $( "#samplingMethod" ).prop( "disabled", false );
+        
       });
 
       $("#adaptSoil").on("change", function(e) {
@@ -367,7 +340,6 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
       // run sampling design
       $( "#samplingRun" ).click(function(e) {
-
 
           //console.log(aoi);
 

@@ -201,7 +201,6 @@ $(document).ready(function(){
 
       $("#adaptSoil").on("change", function(e) {
         setSoilRaster($(this).val());
-        $( "#samplingMethod" ).prop( "disabled", false );
       });
 
       // sampling method changed
@@ -333,7 +332,7 @@ $(document).ready(function(){
 	}
 
 $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
-            clearPanels();
+            //clearPanels();
         });
 
 

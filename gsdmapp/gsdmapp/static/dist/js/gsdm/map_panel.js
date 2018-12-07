@@ -1,4 +1,4 @@
-    var soilLayer, aoi, selected_shp, pointdata, draw_control, uploadedLayer, geojsonLayer, toc;
+    var soilLayer, aoi, selected_shp, pointdata, draw_control, uploadedLayer, geojsonLayer, toc, aoi_area;
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib }),
@@ -44,9 +44,9 @@
 
         drawnItems.addLayer(layer);
 
-        var aoi_area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
+        aoi_area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
         var _strat_size = Math.sqrt(aoi_area)/10;
-        _strat_size = parseFloat(_strat_size).toFixed(2);
+        _strat_size = Math.trunc(_strat_size);
         $('#samplingStratsize').val(_strat_size);
 
         aoi = layer.toGeoJSON();
@@ -168,9 +168,9 @@
 				// aoi area
 				//console.log(data.features[0].geometry.coordinates);
 				var aoi_geo = L.polygon(data.features[0].geometry.coordinates);
-				var aoi_area = L.GeometryUtil.geodesicArea(aoi_geo.getLatLngs()[0]);
+				aoi_area = L.GeometryUtil.geodesicArea(aoi_geo.getLatLngs()[0]);
         		var _strat_size = Math.sqrt(aoi_area)/10;
-        		_strat_size = parseFloat(_strat_size).toFixed(2);
+        		_strat_size = Math.trunc(_strat_size);
         		$('#samplingStratsize').val(_strat_size);
 				
             });

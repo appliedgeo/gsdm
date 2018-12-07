@@ -1,11 +1,13 @@
 $(document).ready(function(){
 
-       $('.glyphicon-question-sign').tooltip({trigger:'click',placement:'bottom'});
+     $('.glyphicon-question-sign').tooltip({trigger:'click',placement:'bottom'});
 
       // Basemap changed
       $("#selectStandardBasemap").on("change", function(e) {
         setBasemap($(this).val());
       });
+
+
 
 	//$('#samplingStratsize').attr('title', 'Processing will take a very long time');
 	//$('#samplingStratsize').tooltip('show');    
@@ -176,10 +178,10 @@ $(document).ready(function(){
             						//console.log(boundary.coordinates[0]);
             						// aoi area
             						var aoi_geo = L.polygon(boundary.coordinates[0]);	
-            						var aoi_area = L.GeometryUtil.geodesicArea(aoi_geo.getLatLngs()[0]);
+            						aoi_area = L.GeometryUtil.geodesicArea(aoi_geo.getLatLngs()[0]);
                     				
             						var _strat_size = Math.sqrt(aoi_area)/10;
-                    		_strat_size = parseFloat(_strat_size).toFixed(2);
+                    		_strat_size = Math.trunc(_strat_size);
                     		$('#samplingStratsize').val(_strat_size);
 
 
@@ -274,8 +276,6 @@ $(document).ready(function(){
             $('#rectangle').prop("disabled", false);
 
       }
-
-
 
 
         // clear selections on tool change
@@ -718,6 +718,53 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
                     }
                  });
          });
+
+
+
+
+
+          // validate sampling options
+          $("#samplingStratsize").on("change", function(e) {
+              var stratsize_val = $(this).val();
+
+              if(stratsize_val < (Math.sqrt(aoi_area)/20)){
+                  alert('Warning! Processing will take a very long time because the grid size is too small in relation to the size of the area. Consider a larger grid size.');
+              }
+ 
+          });
+
+
+          $("#samplingDistance").on("change", function(e) {
+              var distance_val = $(this).val();
+              
+              if(distance_val > (Math.sqrt(aoi_area)/60)){
+                  alert('Warning! Processing may fail because the minimum distance between samples is too large. Make sure the minimum distance is smaller than half of the grid size if a stratification grid is specified.');
+              }
+          });
+
+
+          $("#samplingEdge").on("change", function(e) {
+              var edge_val = $(this).val();
+
+              if(edge_val > (Math.sqrt(aoi_area)/20)){
+                  alert('Warning! Processing may fail because the buffer zone is too wide in relation to the size of the area. Consider setting a smaller value.');
+              }
+
+
+          });
+
+
+          $("#samplingCriterium").on("change", function(e) {
+              var criterium_val = $(this).val();
+
+              if(criterium_val > 4000){
+                  alert('Warning! Maximum number of samples allowed is 4000.');
+              }
+          });
+
+
+
+
 
 
 

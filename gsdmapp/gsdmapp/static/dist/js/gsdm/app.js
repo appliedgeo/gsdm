@@ -51,7 +51,8 @@ $(document).ready(function(){
 
         var _url = '/level1/' + country;
 
-        waitingDialog.show('Loading Country boundary..');
+        waitingDialog.show('Loading Country boundary<img src="/static/dist/images/spinner.gif" height="96" width="96">');
+		
 
             $.ajax({
                   type: "GET",
@@ -104,7 +105,7 @@ $(document).ready(function(){
 
         var _url = '/level2/' + level1;
 
-        waitingDialog.show('Loading Level 1 boundary..');
+        waitingDialog.show('Loading Level 1 boundary<img src="/static/dist/images/spinner.gif" height="96" width="96">');
 
             $.ajax({
                   type: "GET",
@@ -155,7 +156,7 @@ $(document).ready(function(){
 
         var _url = '/level3/' + level2;
 
-            waitingDialog.show('Loading Level 2 boundary..');
+            waitingDialog.show('Loading Level 2 boundary<img src="/static/dist/images/spinner.gif" height="96" width="96">');
 
             $.ajax({
                   type: "GET",
@@ -370,7 +371,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
               };
 
-                 waitingDialog.show('Sampling Design running..');
+                 waitingDialog.show('Sampling Design running<img src="/static/dist/images/spinner.gif" height="96" width="96">');
 
               $.ajax({
                   type: "POST",
@@ -416,7 +417,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
               };
                 //alert('Running..');
-                waitingDialog.show('Sampling Design running..');
+                waitingDialog.show('Sampling Design running<img src="/static/dist/images/spinner.gif" height="96" width="96">');
 
               $.ajax({
                   type: "POST",
@@ -475,7 +476,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
               };
 
-            waitingDialog.show('Local Map Adaptation running..');
+            waitingDialog.show('Local Map Adaptation running<img src="/static/dist/images/spinner.gif" height="96" width="96">');
 
             var _url = '/localadapt/';
 
@@ -611,7 +612,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
             //alert("form submitted");
             e.preventDefault();
 
-            waitingDialog.show('Uploading..');
+            waitingDialog.show('Uploading<img src="/static/dist/images/spinner.gif" height="96" width="96">');
 
             var formdata = new FormData(this);
 
@@ -655,7 +656,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
             //alert("form submitted");
             e.preventDefault();
 
-            waitingDialog.show('Uploading..');
+            waitingDialog.show('Uploading<img src="/static/dist/images/spinner.gif" height="96" width="96">');
 
             var formdata = new FormData(this);
 

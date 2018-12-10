@@ -105,10 +105,8 @@ def createSampling(_params):
     min_dist = _params['min_dist']
     edge = _params['edge']
     stop_dens = _params['stop_dens']
-    output_name = _params['output_name']
-
-    if output_name == '':
-        output_name = 'samplingout'
+    
+    output_name = 'samplingout'
 
     temp_dir = '/var/www/gsdm/data'
     #os.chdir(temp_dir)
@@ -154,10 +152,8 @@ def createAdaptation(_params):
     x_coords = _params['xcolumn']
     y_coords = _params['ycolumn']
     epsg_code = _params['epsg']
-    output_name = _params['output']
 
-    if output_name == '':
-        output_name = 'adaptationout'
+    output_name = 'adaptationout'
 
     temp_dir = '/var/www/gsdm/data'
 

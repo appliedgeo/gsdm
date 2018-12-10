@@ -30,8 +30,8 @@ def sampling_draw(request):
 		'strat_size': sampling_data['strat_size'],
 		'min_dist': sampling_data['min_dist'],
 		'edge': sampling_data['edge'],
-		'stop_dens': sampling_data['criterium'],
-		'output_name': sampling_data['output']
+		'stop_dens': sampling_data['criterium']
+		
 	}
 
 	script_file = createSampling(user_params)
@@ -72,8 +72,7 @@ def sampling_shp(request):
 		'strat_size': sampling_data['strat_size'],
 		'min_dist': sampling_data['min_dist'],
 		'edge': sampling_data['edge'],
-		'stop_dens': sampling_data['criterium'],
-		'output_name': sampling_data['output']
+		'stop_dens': sampling_data['criterium']
 	}
 
 	script_file = createSampling(user_params)

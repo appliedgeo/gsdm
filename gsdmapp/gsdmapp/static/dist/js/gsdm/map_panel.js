@@ -41,8 +41,10 @@
     		drawnItems.clearLayers();
 
         var layer = event.layer;
-
         drawnItems.addLayer(layer);
+
+		toc.removeLayer(drawnItems);
+		toc.addOverlay(drawnItems, "Area of Interest");
 
         aoi_area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
         var _strat_size = Math.sqrt(aoi_area)/10;

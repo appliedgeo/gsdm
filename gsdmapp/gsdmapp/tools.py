@@ -138,6 +138,8 @@ def createSampling(_params):
     file.write("min_dist = min_dist, \n")
     file.write("edge= edge,\n")
     file.write("stop_n = stop_dens,\n")
+    file.write("stop_dens1 = 10000000,\n")
+    file.write("stop_dens2 = 10000000,\n")
     file.write("plot_results = T)\n")
     file.close()
 

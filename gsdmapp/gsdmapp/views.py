@@ -60,9 +60,7 @@ def sampling_shp(request):
 
 	sampling_data = json.loads(request.body)
 
-	outputs_dir = sampling_data['output']
-	if outputs_dir == '':
-		outputs_dir = 'samplingout'
+	outputs_dir = 'samplingout'
 
 	# create script file
 	user_params = {
@@ -94,9 +92,7 @@ def local_adaptation(request):
 
 	adaptation_data = json.loads(request.body)
 
-	outputs_dir = adaptation_data['output']
-	if outputs_dir == '':
-		outputs_dir = 'adaptationout'
+	outputs_dir = 'adaptationout'
 
 	# create script file
 	script_file = createAdaptation(adaptation_data)

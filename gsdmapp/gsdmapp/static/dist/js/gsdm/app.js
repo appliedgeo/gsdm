@@ -87,7 +87,14 @@ $(document).ready(function(){
 
                         map.fitBounds(myGadm.getBounds());
 
-
+						// update layer control
+						toc.removeLayer(drawnItems);
+ 						
+						if(geojsonLayer){
+							toc.removeLayer(geojsonLayer);
+						}
+ 						toc.removeLayer(myGadm);
+ 						toc.addOverlay(myGadm, "Area of Interest");
 
 
 
@@ -140,7 +147,14 @@ $(document).ready(function(){
 
                         map.fitBounds(myGadm.getBounds());
 
+						// update layer control
+						toc.removeLayer(drawnItems);
 
+						if(geojsonLayer){
+                        	toc.removeLayer(geojsonLayer);
+						}
+                        toc.removeLayer(myGadm);
+                        toc.addOverlay(myGadm, "Area of Interest");
 
 
                   }
@@ -176,14 +190,23 @@ $(document).ready(function(){
 
                         map.fitBounds(myGadm.getBounds());
 
-            						//console.log(boundary.coordinates[0]);
-            						// aoi area
-            						var aoi_geo = L.polygon(boundary.coordinates[0]);	
-            						aoi_area = L.GeometryUtil.geodesicArea(aoi_geo.getLatLngs()[0]);
+						// update layer control
+						toc.removeLayer(drawnItems);
+						
+						if(geojsonLayer){
+                        	toc.removeLayer(geojsonLayer);
+						}
+                        toc.removeLayer(myGadm);
+                        toc.addOverlay(myGadm, "Area of Interest");
+ 
+   						//console.log(boundary.coordinates[0]);
+   						// aoi area
+   						var aoi_geo = L.polygon(boundary.coordinates[0]);	
+   						aoi_area = L.GeometryUtil.geodesicArea(aoi_geo.getLatLngs()[0]);
                     				
-            						var _strat_size = Math.sqrt(aoi_area)/10;
-                    		_strat_size = Math.trunc(_strat_size);
-                    		$('#samplingStratsize').val(_strat_size);
+   						var _strat_size = Math.sqrt(aoi_area)/10;
+ 	              		_strat_size = Math.trunc(_strat_size);
+                   		$('#samplingStratsize').val(_strat_size);
 
 
                         $( "#samplingMethod" ).prop( "disabled", false );

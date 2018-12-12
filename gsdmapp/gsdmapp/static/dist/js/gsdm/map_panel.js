@@ -43,7 +43,11 @@
         var layer = event.layer;
         drawnItems.addLayer(layer);
 
+		// update layer control
 		toc.removeLayer(drawnItems);
+		if(geojsonLayer){
+			toc.removeLayer(geojsonLayer);
+		}
 		toc.addOverlay(drawnItems, "Area of Interest");
 
         aoi_area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
@@ -166,6 +170,14 @@
                 // L.geoJson function is used to parse geojson file and load on to map
                 geojsonLayer = L.geoJson(data).addTo(map);
                 map.fitBounds(geojsonLayer.getBounds());
+				
+				// update layer control
+				toc.removeLayer(drawnItems);
+				
+				if(geojsonLayer){
+					toc.removeLayer(geojsonLayer);
+				}
+				toc.addOverlay(geojsonLayer, "Area of Interest");
 
 				// aoi area
 				//console.log(data.features[0].geometry.coordinates);

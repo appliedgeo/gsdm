@@ -129,7 +129,7 @@ def createSampling(_params):
     file.write("setwd(working_directory)\n")
     file.write("r<-raster(raster_map)\n")
     file.write("a<-shapefile(aoi)\n")
-    file.write("r<-mask(x=r, mask=a)\n")
+    file.write("r<-mask(crop(x=r, mask=a))\n")
     file.write("sampling<-tortoise(x1 = r,\n")
     file.write("y = a,\n")
     file.write("out_folder = out_folder,\n")

@@ -66,7 +66,7 @@
 
     function setSoilRaster(soilmap) {
 
-        if(soilmap == 'Soil_Carbon_0_30_250m_3857clip.tif'){
+        if(soilmap == 'Soil_Carbon_0_30_250m_3857.tif'){
           // add layer
           
           soc_layer.addTo(map);

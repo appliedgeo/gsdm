@@ -78,9 +78,11 @@ def sampling_shp(request):
 
 	# return outputs as zip file
 	sampling_out = zipFolder(outputs_dir)
+	#points_out = outputGeo(outputs_dir)
 
 	sampling_response = {
 		'samplingout': sampling_out
+		#'pointsout': points_out
 	}
 
 	return JsonResponse(sampling_response)

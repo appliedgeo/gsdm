@@ -34,22 +34,19 @@ def sampling_draw(request):
 		
 	}
 
+	outputs_dir = 'samplingout'
+
 	script_file = createSampling(user_params)
 
 	# run script file
 	runRscript(script_file)
 
-	# get outputs 
-	outputs = []
-
-	# return outputs to user
-	for file in os.listdir('/var/www/gsdm/data/samplingdata'):
-		#if fnmatch.fnmatch(file, '*.shp'):
-		outputs.append(file)
-
+	# return outputs as zip file
+	sampling_out = zipFolder(outputs_dir)
+	
 
 	sampling_response = {
-		'samplingout': outputs
+		'samplingout': sampling_out
 	}
 
 	return JsonResponse(sampling_response)
@@ -75,10 +72,11 @@ def sampling_shp(request):
 
 	script_file = createSampling(user_params)
 	runRscript(script_file)
+	createPrj()
 
 	# return outputs as zip file
 	sampling_out = zipFolder(outputs_dir)
-	#points_out = outputGeo(outputs_dir)
+	points_out = outputGeo(outputs_dir)
 
 	sampling_response = {
 		'samplingout': sampling_out

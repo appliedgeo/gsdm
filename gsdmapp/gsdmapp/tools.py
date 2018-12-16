@@ -52,6 +52,15 @@ def createShp(poly):
 
     return reprojected
 
+def createPrj():
+    # create outputs projection file
+    spatialRef = osr.SpatialReference()
+    spatialRef.ImportFromEPSG(3857)
+    spatialRef.MorthToESRI()
+    points_file = open('/var/www/gsdm/data/samplingout/points.prj', 'w')
+    points_file.write(spatialRef.ExportToWkt())
+    points_file.close()
+
 
 def reProject(shapefile):
     # reproject to planar coordinate system: 3857
@@ -260,7 +269,7 @@ def output_point_geo(shape_file):
 
     # shapefile with source projection
     driver = ogr.GetDriverByName("ESRI Shapefile")
-    ds = data_path +'samplingout/'+ shape_file
+    ds = data_dir +'samplingout/'+ shape_file
     datasource = driver.Open(ds)
     layer = datasource.GetLayer()
 
@@ -272,7 +281,7 @@ def output_point_geo(shape_file):
     reprojected_shp = shape_file.replace('.shp','') + '_reprojected.shp'
 
     to_fill = ogr.GetDriverByName("Esri Shapefile")
-    new_ds = data_path + 'samplingout/' + reprojected_shp
+    new_ds = data_dir + 'samplingout/' + reprojected_shp
     ds2 = to_fill.CreateDataSource(new_ds)
     outlayer = ds2.CreateLayer('', targetprj, ogr.wkbPoint)
     outlayer.CreateField(ogr.FieldDefn('id', ogr.OFTInteger))
@@ -297,14 +306,14 @@ def output_point_geo(shape_file):
 
 
     # geojson conversion
-    input_shp = data_path + 'samplingout/'+reprojected_shp
+    input_shp = data_dir + 'samplingout/'+reprojected_shp
 
     # avoid duplicate geojson files
     geo_ext = datetime.now().strftime('%Y%m%d%H%M%S%f')
     geo_name = geo_ext + '.geojson'
 
     geojson = reprojected_shp.replace('reprojected.shp',geo_name)
-    _geojson = data_path + 'samplingout/'+geojson
+    _geojson = data_dir + 'samplingout/'+geojson
 
     with fiona.open(input_shp) as source:
         with fiona.open(_geojson, 'w', driver='GeoJSON', schema=source.schema) as sink:

@@ -1,4 +1,4 @@
-    var soilLayer, aoi, selected_shp, pointdata, draw_control, uploadedLayer, geojsonLayer, pointsoutLayer, toc, aoi_area;
+    var soilLayer, aoi, selected_shp, pointdata, draw_control, uploadedLayer, geojsonLayer, pointsoutLayer, strataoutLayer, toc, aoi_area;
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib }),
@@ -235,6 +235,44 @@
           // remove layer
           if(pointsoutLayer){
             map.removeLayer(pointsoutLayer);
+          }
+
+
+        }
+
+    }
+
+
+	function strataOutgeo(layer_name){
+        if(layer_name != 'no wms'){
+
+            var layer_url = '/outputs/samplingout/' + layer_name;
+
+            $.getJSON(layer_url,function(data){
+                // L.geoJson function is used to parse geojson file and load on to map
+                strataoutLayer = L.geoJson(data).addTo(map);
+                map.fitBounds(strataoutLayer.getBounds());
+				
+				// update layer control
+				//toc.removeLayer(drawnItems);
+				
+				if(strataoutLayer){
+					toc.removeLayer(strataoutLayer);
+				}
+				toc.addOverlay(strataoutLayer, "Output Strata");
+
+				
+				
+            });
+
+
+
+        } else {
+
+
+          // remove layer
+          if(strataoutLayer){
+            map.removeLayer(strataoutLayer);
           }
 
 

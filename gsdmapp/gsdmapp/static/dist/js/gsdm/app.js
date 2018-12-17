@@ -378,7 +378,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
               var min_dist = $("#samplingDistance").val();
               var edge = $("#samplingEdge").val();
               var criterium = $("#samplingCriterium").val();
-              var output = $("#samplingOutput").val();
+              //var output = $("#samplingOutput").val();
 
               var _url = '/samplingdraw/';
 
@@ -389,8 +389,8 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
                 "strat_size": strat_size,
                 "min_dist": min_dist,
                 "edge": edge,
-                "criterium": criterium,
-                "output": output
+                "criterium": criterium
+                //"output": output
 
               };
 
@@ -410,13 +410,17 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
 						//alert('Sampling Design Complete!');
 
-                       $( "#outfiles ul" ).empty();
+                        $( "#outfiles p" ).empty();
 
-                       var outfile = '<li><a href=/outputs/'+data.samplingout+'>'+data.samplingout+'</a></li>'
+                       var outfile = '<p>Download: <a href=/outputs/'+data.samplingout+'>'+data.samplingout+'</a></p>'
 
-                       $( "#outfiles ul" ).append(outfile);
+                       $( "#outfiles" ).append(outfile);
 	
-						          alert('Sampling Design complete!');
+						alert('Sampling Design complete!');
+
+						pointsOutgeo(data.pointsout);
+                        strataOutgeo(data.strataout);
+
 
 
                   }
@@ -464,6 +468,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 						alert('Sampling Design complete!');
 
 						pointsOutgeo(data.pointsout);
+						strataOutgeo(data.strataout);
 
 
 

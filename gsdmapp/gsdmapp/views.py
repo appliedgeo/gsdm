@@ -43,10 +43,14 @@ def sampling_draw(request):
 
 	# return outputs as zip file
 	sampling_out = zipFolder(outputs_dir)
-	
 
+	# convert output to geojson
+	points_out, strata_out = outputGeo(outputs_dir)
+	
 	sampling_response = {
-		'samplingout': sampling_out
+		'samplingout': sampling_out,
+		'pointsout': points_out,
+		'strataout': strata_out
 	}
 
 	return JsonResponse(sampling_response)
@@ -72,15 +76,15 @@ def sampling_shp(request):
 
 	script_file = createSampling(user_params)
 	runRscript(script_file)
-	createPrj()
 
 	# return outputs as zip file
 	sampling_out = zipFolder(outputs_dir)
-	points_out = outputGeo(outputs_dir)
+	points_out, strata_out = outputGeo(outputs_dir)
 
 	sampling_response = {
-		'samplingout': sampling_out
-		#'pointsout': points_out
+		'samplingout': sampling_out,
+		'pointsout': points_out,
+		'strataout': strata_out        
 	}
 
 	return JsonResponse(sampling_response)

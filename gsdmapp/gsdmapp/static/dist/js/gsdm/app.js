@@ -461,7 +461,9 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
                        $( "#outfiles" ).append(outfile);
 
-						          alert('Sampling Design complete!');
+						alert('Sampling Design complete!');
+
+						pointsOutgeo(data.pointsout);
 
 
 

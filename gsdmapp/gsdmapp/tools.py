@@ -52,15 +52,6 @@ def createShp(poly):
 
     return reprojected
 
-def createPrj():
-    # create outputs projection file
-    spatialRef = osr.SpatialReference()
-    spatialRef.ImportFromEPSG(3857)
-    spatialRef.MorthToESRI()
-    points_file = open('/var/www/gsdm/data/samplingout/points.prj', 'w')
-    points_file.write(spatialRef.ExportToWkt())
-    points_file.close()
-
 
 def reProject(shapefile):
     # reproject to planar coordinate system: 3857
@@ -152,7 +143,13 @@ def createSampling(_params):
     file.write("stop_n = stop_dens,\n")
     file.write("stop_dens1 = 10000000,\n")
     file.write("stop_dens2 = 10000000,\n")
-    file.write("plot_results = T)\n")
+    file.write("plot_results = F)\n")
+    file.write("epsg3857<-' +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs'\n")
+    file.write("wgs84<-   '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'\n")
+    file.write("crs(sampling$p.sp)<-epsg3857\n")
+    file.write("crs(sampling$strat.sp)<-epsg3857\n")
+    file.write("sampling$p.sp<- spTransform(sampling$p.sp, CRS(wgs84))\n")
+    file.write("sampling$strat.sp <- spTransform(sampling$strat.sp, CRS(wgs84))\n")
     file.write("shapefile(sampling$p.sp, paste0(out_folder,'//points.shp'), overwrite=TRUE)\n")
     file.write("shapefile(sampling$strat.sp, paste0(out_folder,'//strata.shp'), overwrite=TRUE)\n")
     file.close()
@@ -221,6 +218,7 @@ def runRscript(r_script):
     # process = subprocess.call([r_program, '--vanilla', r_script], shell=False)
     os.system('sudo -u servir-vic /usr/bin/Rscript --vanilla %s' % (r_script,))
     #process = subprocess.Popen('sudo -u servir-vic /usr/bin/Rscript --vanilla %s' % (r_script,))
+    
 
 
 
@@ -260,59 +258,15 @@ def getStats(folder):
     return feedback_stats, evaluation_stats
 
 
-def output_point_geo(shape_file):
-    # reproject shapefile and convert to geojson
-
-    # reproject to wgs84: 4326
-    # tif with target projection
-    tif = gdal.Open("/var/www/gsdm/data/soc_origin.tif")
-
-    # shapefile with source projection
-    driver = ogr.GetDriverByName("ESRI Shapefile")
-    ds = data_dir +'samplingout/'+ shape_file
-    datasource = driver.Open(ds)
-    layer = datasource.GetLayer()
-
-    # set spatial reference and transformation
-    sourceprj = layer.GetSpatialRef()
-    targetprj = osr.SpatialReference(wkt=tif.GetProjection())
-    transform = osr.CoordinateTransformation(sourceprj, targetprj)
-
-    reprojected_shp = shape_file.replace('.shp','') + '_reprojected.shp'
-
-    to_fill = ogr.GetDriverByName("Esri Shapefile")
-    new_ds = data_dir + 'samplingout/' + reprojected_shp
-    ds2 = to_fill.CreateDataSource(new_ds)
-    outlayer = ds2.CreateLayer('', targetprj, ogr.wkbPoint)
-    outlayer.CreateField(ogr.FieldDefn('id', ogr.OFTInteger))
-
-    # apply transformation
-    i = 0
-
-    for feature in layer:
-        transformed = feature.GetGeometryRef()
-        transformed.Transform(transform)
-
-        geom = ogr.CreateGeometryFromWkb(transformed.ExportToWkb())
-        defn = outlayer.GetLayerDefn()
-        feat = ogr.Feature(defn)
-        feat.SetField('id', i)
-        feat.SetGeometry(geom)
-        outlayer.CreateFeature(feat)
-        i += 1
-        feat = None
-
-    ds2 = None
-
-
+def output_sampling_geo(shape_file):
     # geojson conversion
-    input_shp = data_dir + 'samplingout/'+reprojected_shp
+    input_shp = data_dir + 'samplingout/'+shape_file
 
     # avoid duplicate geojson files
     geo_ext = datetime.now().strftime('%Y%m%d%H%M%S%f')
     geo_name = geo_ext + '.geojson'
 
-    geojson = reprojected_shp.replace('reprojected.shp',geo_name)
+    geojson = shape_file.replace('.shp',geo_name)
     _geojson = data_dir + 'samplingout/'+geojson
 
     with fiona.open(input_shp) as source:
@@ -327,6 +281,7 @@ def outputGeo(folder):
     points_output = 'points.shp'
     strata_output = 'strata.shp'
 
-    points_geojson = output_point_geo(points_output)
+    points_geojson = output_sampling_geo(points_output)
+    strata_geojson = output_sampling_geo(strata_output)
 
-    return points_geojson
+    return points_geojson, strata_geojson

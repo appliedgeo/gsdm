@@ -1,4 +1,4 @@
-    var soilLayer, aoi, selected_shp, pointdata, draw_control, uploadedLayer, geojsonLayer, toc, aoi_area;
+    var soilLayer, aoi, selected_shp, pointdata, draw_control, uploadedLayer, geojsonLayer, pointsoutLayer, toc, aoi_area;
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib }),
@@ -197,6 +197,44 @@
           // remove layer
           if(geojsonLayer){
             map.removeLayer(geojsonLayer);
+          }
+
+
+        }
+
+    }
+
+
+	function pointsOutgeo(layer_name){
+        if(layer_name != 'no wms'){
+
+            var layer_url = '/outputs/samplingout/' + layer_name;
+
+            $.getJSON(layer_url,function(data){
+                // L.geoJson function is used to parse geojson file and load on to map
+                pointsoutLayer = L.geoJson(data).addTo(map);
+                map.fitBounds(pointsoutLayer.getBounds());
+				
+				// update layer control
+				//toc.removeLayer(drawnItems);
+				
+				if(pointsoutLayer){
+					toc.removeLayer(pointsoutLayer);
+				}
+				toc.addOverlay(pointsoutLayer, "Output Points");
+
+				
+				
+            });
+
+
+
+        } else {
+
+
+          // remove layer
+          if(pointsoutLayer){
+            map.removeLayer(pointsoutLayer);
           }
 
 

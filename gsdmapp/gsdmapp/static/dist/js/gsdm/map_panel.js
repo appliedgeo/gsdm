@@ -90,6 +90,11 @@
     			$( "#polygon" ).prop( "disabled", false );
     			$( "#rectangle" ).prop( "disabled", false );
 
+				// enable adaptation options
+				 $( "#pointfile" ).prop( "disabled", false );
+				 $( "#adaptUpload" ).prop( "disabled", false );
+
+
           
 
           //console.log(toc._map);
@@ -142,9 +147,14 @@
 
             $.getJSON(layer_url,function(data){
                 // L.geoJson function is used to parse geojson file and load on to map
-                geojsonLayer = L.geoJson(data).addTo(map);
-                map.fitBounds(geojsonLayer.getBounds());
+                adaptLayer = L.geoJson(data).addTo(map);
+                map.fitBounds(adaptLayer.getBounds());
             });
+
+			if(adaptLayer){
+					toc.removeLayer(adaptLayer);
+				}
+			toc.addOverlay(adaptLayer, "Sample Points");
 
 
 

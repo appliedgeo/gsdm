@@ -487,22 +487,23 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
         // run local map adaptation
       $("#adaptRun").click(function(e){
 
-            var soil_raster = $("#adaptSoil").val();
+            var soil_raster = $("#samplingSoil").val();
             var attribute = $("#adaptAttribute").val();
             var xcolumn = $("#adaptXcol").val();
             var ycolumn = $("#adaptYcol").val();
-            var epsg = $("#adaptEpsg").val();
-            var _output = $("#adaptOutput").val();
+            //var epsg = $("#adaptEpsg").val();
+            //var _output = $("#adaptOutput").val();
 
 
             var adaptationdata = {
                 "pointdata": pointdata,
+				"aoidata": selected_shp,
                 "soil_raster": soil_raster,
                 "attribute": attribute,
                 "xcolumn": xcolumn,
-                "ycolumn": ycolumn,
-                "epsg": epsg,
-                "output": _output
+                "ycolumn": ycolumn
+                //"epsg": epsg,
+                //"output": _output
 
               };
 
@@ -707,6 +708,12 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
                         pointdata = data.url;
                         datafields = data.fields;
+
+						// enable adaptation fields
+						$( "#adaptAttribute" ).prop( "disabled", false );
+						$( "#adaptXcol" ).prop( "disabled", false );
+						$( "#adaptYcol" ).prop( "disabled", false );
+						$( "#adaptRun" ).prop( "disabled", false );
           						
           						// clear previous upload and data fields
           						$( "#uploadfiles2 ul" ).empty();

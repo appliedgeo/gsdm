@@ -160,11 +160,15 @@ def createSampling(_params):
 def createAdaptation(_params):
     # write parameters to R script
     point_data = _params['pointdata']
+    aoi_data = _params['aoidata']
     soil_raster = _params['soil_raster']
     attr_column = _params['attribute']
-    x_coords = _params['xcolumn']
-    y_coords = _params['ycolumn']
-    epsg_code = _params['epsg']
+    #x_coords = _params['xcolumn']
+    #y_coords = _params['ycolumn']
+    x_coords = "x_coords"
+    y_coords = "y_coords"
+    #epsg_code = _params['epsg']
+    epsg_code = '3857'
 
     output_name = 'adaptationout'
 
@@ -176,6 +180,7 @@ def createAdaptation(_params):
     file.write("working_directory<-'" + temp_dir + "'\n")
     file.write("raster_map<-'" + soil_raster + "'\n")
     file.write("soil_sample<-'" + point_data + "'\n")
+    file.write("aoi<-'" + aoi_data + "'\n")
     file.write("attr_column<-'" + attr_column + "'\n")
     file.write("x_coords<-'" + x_coords + "'\n")
     file.write("y_coords<-'" + y_coords + "'\n")
@@ -190,7 +195,18 @@ def createAdaptation(_params):
         file.write("s<-read.table(file=soil_sample, header = T, sep = \"\\t\")[,1:4]\n")
     else:
         file.write("s<-shapefile(soil_sample)\n")
+    file.write("a<-shapefile(aoi)\n")
     file.write("r<-raster(raster_map)\n")
+    file.write("r<-crop(r, a)\n")
+    file.write("r<-mask(r, a)\n")
+    file.write("epsg3857<-' +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs'\n")
+    file.write("wgs84<-   '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'\n")
+    file.write("crs(s)<-wgs84\n")
+    file.write("s<- spTransform(s, CRS(epsg3857))\n")
+    file.write("coordinates<-coordinates(s)\n")
+    file.write("s$x_coords<-coordinates[,1]\n")
+    file.write("s$y_coords<-coordinates[,2]\n")
+  
     file.write("mri.out<-mri(\n")
     file.write("rst.r = r,\n")
     file.write("pts.df =s,\n")
@@ -203,6 +219,11 @@ def createAdaptation(_params):
     file.write("out.dec = \".\", \n")
     file.write("out.sep = \";\"\n")
     file.write(")\n")
+    file.write("maps<-mri.out$all_maps.r\n")
+    file.write("crs(maps)<-epsg3857\n")
+    file.write("maps<-projectRaster (from=maps, crs=CRS(wgs84))\n")
+    file.write("names(maps)<-c('map' , 'ordkrig',   'reskrig' ,  'regkrig')\n")
+    file.write("writeRaster(maps, paste0(outfolder,'//a.tif'), bylayer=T, suffix='names', format='GTiff', overwrite=T)\n")
     file.write("\n")
     file.write("\n")
     file.write("\n")

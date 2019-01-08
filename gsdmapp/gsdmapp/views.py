@@ -3,6 +3,8 @@ from django.template import RequestContext
 from django.http import HttpResponse, JsonResponse
 from django.db import connection
 
+from geoserver.catalog import Catalog
+
 from gsdmapp.tools import *
 import json
 import zipfile
@@ -116,6 +118,20 @@ def local_adaptation(request):
 	}
 
 	return JsonResponse(adaptation_response)
+
+def soilmaps(request):
+	# return list of soilmap layers from geoserver
+	cat = Catalog("http://localhost:8080/geoserver/rest")
+	all_layers = cat.get_layers()
+	soil_maps = []
+	for layer in all_layers:
+		soil_layers.append(layer.name)
+
+	layers_json = {
+		'soil_maps': soil_maps
+	}
+
+	return JsonResponse(layers_json)
 
 
 def gadm(request):

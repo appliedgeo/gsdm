@@ -24,6 +24,7 @@ urlpatterns = [
 	url(r'^$', 'gsdmapp.views.app', name='app'),
     url(r'^admin/', include(admin.site.urls)),
 
+    url(r'^soilmaps/$', 'gsdmapp.views.soilmaps'),
     url(r'^samplingdraw/$', 'gsdmapp.views.sampling_draw'),
     url(r'^samplingshp/$', 'gsdmapp.views.sampling_shp'),
     url(r'^localadapt/$', 'gsdmapp.views.local_adaptation'),

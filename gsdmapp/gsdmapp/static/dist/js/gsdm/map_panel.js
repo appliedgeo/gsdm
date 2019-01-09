@@ -69,14 +69,7 @@
 
         if(soilmap != 'select'){
 
-          // add toc
-           if(!toc){
-            toc = L.control.layers({
-            'Satellite': satellite.addTo(map)}, 
-            //{ 'Soil Organic Carbon': soc_layer }, 
-            { position: 'bottomright', collapsed: false }).addTo(map);
-
-          }
+         
 
           // add layer
           soilmap_wms = 'gsdm:' + soilmap;
@@ -89,6 +82,15 @@
 
           // set zoom
           map.setView([-0.284200, 36.078709], 4);
+
+           // add toc
+           if(!toc){
+            toc = L.control.layers({
+            'Satellite': satellite.addTo(map)}, 
+            { soilmap: soilmap_layer }, 
+            { position: 'bottomright', collapsed: false }).addTo(map);
+
+          }
 
     			// enable sampling options
     			//$( "#samplingMethod" ).prop( "disabled", false );

@@ -1,4 +1,4 @@
-    var soilLayer, aoi, selected_shp, pointdata, draw_control, uploadedLayer, geojsonLayer, pointsoutLayer, strataoutLayer, toc, aoi_area;
+    var soilLayer, aoi, selected_shp, pointdata, draw_control, uploadedLayer, geojsonLayer, pointsoutLayer, strataoutLayer, toc, aoi_area, soilmap_wms, soilmap_layer;
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib }),
@@ -14,12 +14,13 @@
 
     satellite.addTo(map);
 
-
+    /*
      var soc_layer = L.tileLayer.wms('http://45.33.28.192:8080/geoserver/wms', {
               layers: 'gsdm:Soil_Carbon_0_30_250m_4326',
               transparent: true,
               format: 'image/png'
-          }); //.addTo(map);
+          }); */
+          //.addTo(map);
 	
 
     // draw polygon tool
@@ -66,21 +67,29 @@
 
     function setSoilRaster(soilmap) {
 
-        if(soilmap == 'Soil_Carbon_0_30_250m_3857.tif'){
+        if(soilmap != 'select'){
+
+          // add toc
+           if(!toc){
+            toc = L.control.layers({
+            'Satellite': satellite.addTo(map)}, 
+            //{ 'Soil Organic Carbon': soc_layer }, 
+            { position: 'bottomright', collapsed: false }).addTo(map);
+
+          }
+
           // add layer
-          
-          soc_layer.addTo(map);
+          soilmap_wms = 'gsdm:' + soilmap;
+          soilmap_layer = L.tileLayer.wms('http://45.33.28.192:8080/geoserver/wms', {
+              layers: soilmap_wms,
+              transparent: true,
+              format: 'image/png'
+          }).addTo(map);
+
 
           // set zoom
           map.setView([-0.284200, 36.078709], 4);
 
-          if(!toc){
-            toc = L.control.layers({
-            'Satellite': satellite.addTo(map)}, 
-            { 'Soil Organic Carbon': soc_layer }, 
-            { position: 'bottomright', collapsed: false }).addTo(map);
-
-          }
     			// enable sampling options
     			//$( "#samplingMethod" ).prop( "disabled", false );
     			$( "#aoiRadios1" ).prop( "disabled", false );
@@ -106,7 +115,7 @@
 
           // remove layer
           if(soilLayer){
-            map.removeLayer(soc_layer);
+            map.removeLayer(soilmap_layer);
           }
 
 

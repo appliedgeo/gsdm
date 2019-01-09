@@ -10,7 +10,42 @@ $(document).ready(function(){
 
 
 	//$('#samplingStratsize').attr('title', 'Processing will take a very long time');
-	//$('#samplingStratsize').tooltip('show');    
+	//$('#samplingStratsize').tooltip('show'); 
+
+
+      // load soil maps
+      function loadSoilmaps(){
+            $.ajax({
+                  type: "GET",
+                  contentType: "application/json",
+                  url: '/soilmaps/',
+                  //async: false,
+                  dataType: "json",
+                  success: function(data){
+
+                       var soil_maps = data.soil_maps;
+
+                       $.each(soil_maps, function (i, soilmap){
+
+                            soilmap = soilmap.replace('gsdm:','');
+
+                            $('#samplingSoil').append($('<option>', {
+                                value: soilmap,
+                                text: soilmap
+                            }));
+
+
+
+                        });
+
+
+
+
+                  }
+              });
+      }   
+
+      loadSoilmaps();
 
       // load gadm countries
       function loadGadm(){

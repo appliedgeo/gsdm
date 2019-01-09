@@ -125,7 +125,7 @@ def soilmaps(request):
 	all_layers = cat.get_layers()
 	soil_maps = []
 	for layer in all_layers:
-		soil_layers.append(layer.name)
+		soil_maps.append(layer.name)
 
 	layers_json = {
 		'soil_maps': soil_maps

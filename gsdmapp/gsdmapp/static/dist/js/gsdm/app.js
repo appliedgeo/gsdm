@@ -28,10 +28,12 @@ $(document).ready(function(){
                        $.each(soil_maps, function (i, soilmap){
 
                             soilmap = soilmap.replace('gsdm:','');
+                            var soilmap_label = soilmap.replace('_',' ');
+                            soilmap_label = soilmap_label.replace('.tif','');
 
                             $('#samplingSoil').append($('<option>', {
                                 value: soilmap,
-                                text: soilmap
+                                text: soilmap_label
                             }));
 
 

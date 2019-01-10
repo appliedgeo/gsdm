@@ -237,6 +237,25 @@ def move_data(textfile):
 
     return textfile
 
+def txt2shp(textfile):
+    # convert txt to shapefile
+    # move to working directory and rename txt to csv
+    file_path = upload_path + textfile
+
+    csv_file = textfile.replace('.txt', '.csv')
+    csv_path = data_path + csv_file
+
+    os.system('mv %s %s' % (file_path, csv_path))
+
+    # convert csv to shp
+    _shp_file = textfile.replace('.txt', '.shp')
+    _shp_file_path = data_path + _shp_file
+
+    os.system('ogr2ogr -s_srs EPSG:4326 -t_srs EPSG:4326 -oo X_POSSIBLE_NAMES=LON* -oo Y_POSSIBLE_NAMES=LAT*  -f "ESRI Shapefile" %s %s' % (_shp_file_path, csv_path))
+
+
+    return _shp_file
+
 
 def shp_extract_fields(shape_file):
     # return shapefile fields
@@ -253,8 +272,8 @@ def shp_extract_fields(shape_file):
         fieldTypeCode = layerDefinition.GetFieldDefn(i).GetType()
         fieldType = layerDefinition.GetFieldDefn(i).GetFieldTypeName(fieldTypeCode)
 
-        if fieldType == 'Real':
-            fields.append(fieldName)
+        #if fieldType == 'Real':
+        fields.append(fieldName)
 
 
     return fields
@@ -315,9 +334,13 @@ def adaptation_file_upload(request):
                 data_fields = shp_extract_fields(uploadedfile)
             else:
                 # text data
-                uploadedfile = move_data(zipped_file)
-                data_fields = txt_extract_fields(uploadedfile)
-                layer_wms = 'no wms'
+                #uploadedfile = move_data(zipped_file)
+                shp_file = txt2shp(zipped_file)
+                uploadedfile = shp_file
+                #data_fields = txt_extract_fields(uploadedfile)
+                data_fields = shp_extract_fields(shp_file)
+                #layer_wms = 'no wms'
+                layer_wms = geojson_point_layer(shp_file)
             # return message
             upload_msg = {
                 'message': 'upload successful',

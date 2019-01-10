@@ -251,7 +251,7 @@ def txt2shp(textfile):
     _shp_file = textfile.replace('.txt', '.shp')
     _shp_file_path = data_path + _shp_file
 
-    os.system('ogr2ogr -s_srs EPSG:4326 -t_srs EPSG:4326 -oo X_POSSIBLE_NAMES=LON* -oo Y_POSSIBLE_NAMES=LAT*  -f "ESRI Shapefile" %s %s' % (_shp_file_path, csv_path))
+    os.system('ogr2ogr -s_srs EPSG:4326 -t_srs EPSG:4326 -oo X_POSSIBLE_NAMES=LON* -oo Y_POSSIBLE_NAMES=LAT* -mapFieldType All=Real -f "ESRI Shapefile" %s %s' % (_shp_file_path, csv_path))
 
 
     return _shp_file

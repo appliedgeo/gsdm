@@ -27,8 +27,8 @@ $(document).ready(function(){
 
                        $.each(soil_maps, function (i, soilmap){
 
-                            soilmap = soilmap.replace('gsdm:','');
-                            var soilmap_label = soilmap.replace('_',' ');
+                            soilmap = soilmap.replace('gsdm:',''); 
+                            var soilmap_label = soilmap.replace(/_/g, ' ');
                             soilmap_label = soilmap_label.replace('.tif','');
 
                             $('#samplingSoil').append($('<option>', {

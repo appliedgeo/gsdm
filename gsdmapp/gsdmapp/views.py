@@ -109,12 +109,16 @@ def local_adaptation(request):
 	# return outputs as zip file
 	adaptation_out = zipFolder(outputs_dir)
 
+	# publish rasters
+	adaptation_wms = publishRasters(outputs_dir)
+
 	feedback, evaluation = getStats(outputs_dir)
 
 	adaptation_response = {
 		'adaptout': adaptation_out,
 		'feedback': feedback,
-		'evaluation': evaluation
+		'evaluation': evaluation,
+		'adaptwms': adaptation_wms
 	}
 
 	return JsonResponse(adaptation_response)
@@ -122,7 +126,9 @@ def local_adaptation(request):
 def soilmaps(request):
 	# return list of soilmap layers from geoserver
 	cat = Catalog("http://localhost:8080/geoserver/rest")
+	#gsdm_space = cat.get_resource(workspace='gsdm')
 	all_layers = cat.get_layers()
+
 	soil_maps = []
 	for layer in all_layers:
 		soil_maps.append(layer.name)

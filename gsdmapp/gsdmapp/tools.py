@@ -24,6 +24,8 @@ from datetime import datetime
 from fiona.crs import from_epsg
 from osgeo import ogr, osr, gdal
 
+from geoserver.catalog import Catalog
+
 data_dir = '/var/www/gsdm/data/'
 
 def createShp(poly):
@@ -254,6 +256,32 @@ def zipFolder(folder):
     _outputs_zip = os.path.basename(outputs_zip)
 
     return _outputs_zip
+
+
+def publishRasters(folder):
+    # publish adaptation output files (tifs) as wms
+    cat = Catalog("http://localhost:8080/geoserver/rest")
+
+    out_dir = data_dir + folder
+    _files = os.listdir(out_dir)
+
+    wms_layers = []
+
+    for file in _files:
+        if fnmatch.fnmatch(file, '*.tif'):
+            # unique store/layer name with timestamp
+            tif_ext = datetime.now().strftime('%Y%m%d%H%M%S%f')
+            _tif_ext = '_' + tif_ext + '.tif'
+            _file = file.replace('.tif', _tif_ext)
+
+            # publish to geoserver
+            tiff = out_dir + '/' + file
+            cat.create_coveragestore(_file, tiff)
+
+            wms_layers.append(_file)
+
+
+    return wms_layers
 
 
 

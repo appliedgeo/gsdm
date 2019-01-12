@@ -31,6 +31,8 @@ $(document).ready(function(){
                             var soilmap_label = soilmap.replace(/_/g, ' ');
                             soilmap_label = soilmap_label.replace('.tif','');
 
+                            soilmap_label = soilmap_label.charAt(0).toUpperCase() + soilmap_label.slice(1);
+
                             $('#samplingSoil').append($('<option>', {
                                 value: soilmap,
                                 text: soilmap_label

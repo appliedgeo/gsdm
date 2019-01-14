@@ -14,14 +14,16 @@
 
     satellite.addTo(map);
 
-    /*
-     var soc_layer = L.tileLayer.wms('http://45.33.28.192:8080/geoserver/wms', {
-              layers: 'gsdm:Soil_Carbon_0_30_250m_4326',
-              transparent: true,
-              format: 'image/png'
-          }); */
-          //.addTo(map);
-	
+    var baseMap = {
+        "Google Satellite": satellite
+    };
+
+    var overlayMaps = {
+    };
+
+    // add layer control
+
+     toc = L.control.layers(baseMap, overlayMaps, { position: 'bottomright', collapsed: false }).addTo(map);
 
     // draw polygon tool
 
@@ -69,7 +71,16 @@
 
         if(soilmap != 'select'){
 
-         
+            var _soilmap_label = soilmap.replace(/_/g, ' ');
+            _soilmap_label = _soilmap_label.replace('.tif','');
+            _soilmap_label = _soilmap_label.charAt(0).toUpperCase() + _soilmap_label.slice(1);
+
+
+            if(soilmap_layer){
+                map.removeLayer(soilmap_layer);
+                toc.removeLayer(soilmap_layer);
+              }
+
 
           // add layer
           soilmap_wms = 'gsdm:' + soilmap;
@@ -84,13 +95,7 @@
           map.setView([-0.284200, 36.078709], 4);
 
            // add toc
-           if(!toc){
-            toc = L.control.layers({
-            'Satellite': satellite.addTo(map)}, 
-            { soilmap: soilmap_layer }, 
-            { position: 'bottomright', collapsed: false }).addTo(map);
-
-          }
+          toc.addOverlay(soilmap_layer, _soilmap_label);
 
     			// enable sampling options
     			//$( "#samplingMethod" ).prop( "disabled", false );
@@ -116,8 +121,9 @@
 
 
           // remove layer
-          if(soilLayer){
+          if(soilmap_layer){
             map.removeLayer(soilmap_layer);
+            toc.removeLayer(soilmap_layer);
           }
 
 

@@ -316,7 +316,7 @@ def output_sampling_geo(shape_file):
     geo_name = geo_ext + '.geojson'
 
     geojson = shape_file.replace('.shp',geo_name)
-    _geojson = data_dir + 'samplingout/'+geojson
+    _geojson = data_dir + 'vault/'+geojson
 
     with fiona.open(input_shp) as source:
         with fiona.open(_geojson, 'w', driver='GeoJSON', schema=source.schema) as sink:

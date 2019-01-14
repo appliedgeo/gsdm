@@ -235,7 +235,7 @@
 	function pointsOutgeo(layer_name){
         if(layer_name != 'no wms'){
 
-            var layer_url = '/outputs/samplingout/' + layer_name;
+            var layer_url = '/outputs/vault/' + layer_name;
 
             $.getJSON(layer_url,function(data){
                 // L.geoJson function is used to parse geojson file and load on to map
@@ -273,7 +273,7 @@
 	function strataOutgeo(layer_name){
         if(layer_name != 'no wms'){
 
-            var layer_url = '/outputs/samplingout/' + layer_name;
+            var layer_url = '/outputs/vault/' + layer_name;
 
             $.getJSON(layer_url,function(data){
                 // L.geoJson function is used to parse geojson file and load on to map

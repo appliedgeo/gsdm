@@ -58,7 +58,8 @@ def createShp(poly):
 def reProject(shapefile):
     # reproject to planar coordinate system: 3857
     # tif with target projection
-    tif = gdal.Open("/var/www/gsdm/data/soc_reproj21.tif")
+    #tif = gdal.Open("/var/www/gsdm/data/soc_reproj21.tif")
+    tif = gdal.Open("/var/www/gsdm/data/Soil_Carbon_0_30_250m_3857.tif")
 
     # shapefile with source projection
     driver = ogr.GetDriverByName("ESRI Shapefile")

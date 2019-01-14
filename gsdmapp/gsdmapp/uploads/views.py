@@ -111,7 +111,8 @@ def geojson_layer(shape_file):
 
     # reproject to wgs84: 4326
     # tif with target projection
-    tif = gdal.Open("/var/www/gsdm/data/soc_origin.tif")
+    #tif = gdal.Open("/var/www/gsdm/data/soc_origin.tif")
+    tif = gdal.Open("/var/www/gsdm/data/Soil_Carbon_0_30_250m_4326.tif")
 
     # shapefile with source projection
     driver = ogr.GetDriverByName("ESRI Shapefile")
@@ -173,7 +174,8 @@ def geojson_point_layer(shape_file):
 
     # reproject to wgs84: 4326
     # tif with target projection
-    tif = gdal.Open("/var/www/gsdm/data/soc_origin.tif")
+    #tif = gdal.Open("/var/www/gsdm/data/soc_origin.tif")
+    tif = gdal.Open("/var/www/gsdm/data/Soil_Carbon_0_30_250m_4326.tif")
 
     # shapefile with source projection
     driver = ogr.GetDriverByName("ESRI Shapefile")

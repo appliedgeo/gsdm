@@ -16,12 +16,12 @@ import os
 import fnmatch
 import csv
 
-data_path = '/var/www/gsdm/data/'
-upload_path = '/var/www/gsdm/uploaded/shapefiles/'
+data_path = '/var/www/html/gsdm/data/'
+upload_path = '/var/www/html/gsdm/uploaded/shapefiles/'
 
 def uncompress(zipped):
     # unzip folder and extract shapefile
-    zipped_path = '/var/www/gsdm/uploaded/shapefiles/' + zipped
+    zipped_path = '/var/www/html/gsdm/uploaded/shapefiles/' + zipped
     zf = ZipFile(zipped_path, 'r')
     zf.extractall(data_path)
     zf.close()
@@ -40,7 +40,7 @@ def uncompress(zipped):
     os.system('cp %s/*.* %s' % (unzipped_dir, data_path))
 
     # clean up uploads folder
-    os.system('rm -rf /var/www/gsdm/uploaded/shapefiles/*.*')
+    os.system('rm -rf /var/www/html/gsdm/uploaded/shapefiles/*.*')
 
     return shpfile
 
@@ -50,7 +50,7 @@ def publish_layer(shape_file):
 
     # reproject to wgs84: 4326
     # tif with target projection
-    tif = gdal.Open("/var/www/gsdm/data/soc_origin.tif")
+    tif = gdal.Open("/var/www/html/gsdm/data/soc_origin.tif")
 
     # shapefile with source projection
     driver = ogr.GetDriverByName("ESRI Shapefile")
@@ -112,7 +112,7 @@ def geojson_layer(shape_file):
     # reproject to wgs84: 4326
     # tif with target projection
     #tif = gdal.Open("/var/www/gsdm/data/soc_origin.tif")
-    tif = gdal.Open("/var/www/gsdm/data/Soil_Carbon_0_30_250m_4326.tif")
+    tif = gdal.Open("/var/www/html/gsdm/data/Soil_Carbon_0_30_250m_4326.tif")
 
     # shapefile with source projection
     driver = ogr.GetDriverByName("ESRI Shapefile")
@@ -175,7 +175,7 @@ def geojson_point_layer(shape_file):
     # reproject to wgs84: 4326
     # tif with target projection
     #tif = gdal.Open("/var/www/gsdm/data/soc_origin.tif")
-    tif = gdal.Open("/var/www/gsdm/data/Soil_Carbon_0_30_250m_4326.tif")
+    tif = gdal.Open("/var/www/html/gsdm/data/Soil_Carbon_0_30_250m_4326.tif")
 
     # shapefile with source projection
     driver = ogr.GetDriverByName("ESRI Shapefile")

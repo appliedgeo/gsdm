@@ -26,7 +26,7 @@ from osgeo import ogr, osr, gdal
 
 from geoserver.catalog import Catalog
 
-data_dir = '/var/www/gsdm/data/'
+data_dir = '/var/www/html/gsdm/data/'
 
 def createShp(poly):
     #create shapefile from user geojson
@@ -59,11 +59,11 @@ def reProject(shapefile):
     # reproject to planar coordinate system: 3857
     # tif with target projection
     #tif = gdal.Open("/var/www/gsdm/data/soc_reproj21.tif")
-    tif = gdal.Open("/var/www/gsdm/data/Soil_Carbon_0_30_250m_3857.tif")
+    tif = gdal.Open("/var/www/html/gsdm/data/Soil_Carbon_0_30_250m_3857.tif")
 
     # shapefile with source projection
     driver = ogr.GetDriverByName("ESRI Shapefile")
-    datasource = driver.Open("/var/www/gsdm/data/polygon.shp")
+    datasource = driver.Open("/var/www/html/gsdm/data/polygon.shp")
     layer = datasource.GetLayer()
 
     # set spatial reference and transformation
@@ -74,7 +74,7 @@ def reProject(shapefile):
     reprojected_shp = 'polygon_reproj.shp'
 
     to_fill = ogr.GetDriverByName("Esri Shapefile")
-    ds = to_fill.CreateDataSource("/var/www/gsdm/data/polygon_reproj.shp")
+    ds = to_fill.CreateDataSource("/var/www/html/gsdm/data/polygon_reproj.shp")
     outlayer = ds.CreateLayer('', targetprj, ogr.wkbPolygon)
     outlayer.CreateField(ogr.FieldDefn('id', ogr.OFTInteger))
 
@@ -111,7 +111,7 @@ def createSampling(_params):
     
     output_name = 'samplingout'
 
-    temp_dir = '/var/www/gsdm/data'
+    temp_dir = '/var/www/html/gsdm/data'
     #os.chdir(temp_dir)
 
     script_file = temp_dir + "/sampling_design.R"
@@ -175,7 +175,7 @@ def createAdaptation(_params):
 
     output_name = 'adaptationout'
 
-    temp_dir = '/var/www/gsdm/data'
+    temp_dir = '/var/www/html/gsdm/data'
 
     script_file = temp_dir + "/map_adaptation.R"
 
@@ -240,7 +240,7 @@ def createAdaptation(_params):
 def runRscript(r_script):
     # run R script
     # process = subprocess.call([r_program, '--vanilla', r_script], shell=False)
-    os.system('sudo -u servir-vic /usr/bin/Rscript --vanilla %s' % (r_script,))
+    os.system('sudo -u developer /usr/bin/Rscript --vanilla %s' % (r_script,))
     #process = subprocess.Popen('sudo -u servir-vic /usr/bin/Rscript --vanilla %s' % (r_script,))
     
 

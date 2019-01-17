@@ -125,7 +125,7 @@ def local_adaptation(request):
 
 def soilmaps(request):
 	# return list of soilmap layers from geoserver
-	cat = Catalog("http://localhost:8080/geoserver/rest")
+	cat = Catalog("https://beta8.ciat.cgiar.org/geoserver/rest", "developer", "greece@GREAT@said@42")
 	#gsdm_space = cat.get_resource(workspace='gsdm')
 	all_layers = cat.get_layers()
 

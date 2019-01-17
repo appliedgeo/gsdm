@@ -91,7 +91,7 @@ def publish_layer(shape_file):
 
 
     # geoserver publishing
-    cat = Catalog("http://localhost:8080/geoserver/rest")
+    cat = Catalog("https://beta8.ciat.cgiar.org/geoserver/rest", "developer", "greece@GREAT@said@42")
 
     shpfile = reprojected_shp.replace('.shp','')
     _shpfile = data_path + shpfile

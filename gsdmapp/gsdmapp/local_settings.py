@@ -1,9 +1,9 @@
 
 DATABASE_ENGINE = 'postgresql_psycopg2'
 DATABASE_NAME = 'gsdm'
-DATABASE_USER = 'postgres'
-DATABASE_PASSWORD = 'postgres'
-DATABASE_HOST = ''
+DATABASE_USER = 'gsdm'
+DATABASE_PASSWORD = '?wheel?STONE?strike?12'
+DATABASE_HOST = '192.168.20.3'
 DATABASE_PORT = '5432'
 
 DATABASES = {
@@ -17,4 +17,4 @@ DATABASES = {
 	},
 }
 
-ALLOWED_HOSTS=['localhost', '45.33.28.192', ]
+ALLOWED_HOSTS=['localhost', '45.33.28.192', 'gsdmtest.ciat.cgiar.org']

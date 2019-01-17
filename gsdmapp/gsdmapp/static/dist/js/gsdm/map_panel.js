@@ -84,7 +84,7 @@
 
           // add layer
           soilmap_wms = 'gsdm:' + soilmap;
-          soilmap_layer = L.tileLayer.wms('http://45.33.28.192:8080/geoserver/wms', {
+          soilmap_layer = L.tileLayer.wms('https://beta8.ciat.cgiar.org/geoserver/wms', {
               layers: soilmap_wms,
               transparent: true,
               format: 'image/png'
@@ -138,7 +138,7 @@
 
             var layer_wms = 'gsdm:' + layer_name;
 
-            uploadedLayer =  L.tileLayer.wms('http://localhost:8080/geoserver/wms', {
+            uploadedLayer =  L.tileLayer.wms('https://beta8.ciat.cgiar.org/geoserver/wms', {
               layers: layer_wms,
               transparent: true,
               format: 'image/png'

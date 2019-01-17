@@ -261,7 +261,7 @@ def zipFolder(folder):
 
 def publishRasters(folder):
     # publish adaptation output files (tifs) as wms
-    cat = Catalog("http://localhost:8080/geoserver/rest")
+    cat = Catalog("https://beta8.ciat.cgiar.org/geoserver/rest", "developer", "greece@GREAT@said@42")
 
     out_dir = data_dir + folder
     _files = os.listdir(out_dir)

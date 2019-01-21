@@ -8,6 +8,7 @@ from geoserver.catalog import Catalog
 from gsdmapp.tools import *
 import json
 import zipfile
+import fnmatch
 
 def app(request):
 	return render_to_response('app.html')
@@ -131,7 +132,9 @@ def soilmaps(request):
 
 	soil_maps = []
 	for layer in all_layers:
-		soil_maps.append(layer.name)
+		layer_name = layer.name
+		if not fnmatch.fnmatch(layer_name, 'mri*'):
+			soil_maps.append(layer_name)
 
 	layers_json = {
 		'soil_maps': soil_maps

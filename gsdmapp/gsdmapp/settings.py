@@ -101,7 +101,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-UPLOAD_DIR = '/var/www/gsdm/'
+UPLOAD_DIR = '/var/www/html/gsdm/'
 
 MEDIA_ROOT = os.path.join(UPLOAD_DIR, 'uploaded')
 MEDIA_URL = '/uploaded/'

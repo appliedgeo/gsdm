@@ -17,4 +17,16 @@ DATABASES = {
 	},
 }
 
+UPLOAD_DIR = '/var/www/gsdm/'
+
+
+
+
+DATA_DIR = '/var/www/gsdm/data/'
+UPLOAD_PATH = '/var/www/gsdm/uploaded/shapefiles/'
+
 ALLOWED_HOSTS=['localhost', '45.33.28.192', ]
+
+GEOSERVER_URL = 'http://localhost:8080/geoserver'
+
+R_USER = 'servir-vic'

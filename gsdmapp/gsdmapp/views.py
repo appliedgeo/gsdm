@@ -6,6 +6,7 @@ from django.db import connection
 from geoserver.catalog import Catalog
 
 from gsdmapp.tools import *
+from gsdmapp import settings
 import json
 import zipfile
 import fnmatch
@@ -56,6 +57,8 @@ def sampling_draw(request):
 		'strataout': strata_out
 	}
 
+	cleanUp(outputs_dir)
+
 	return JsonResponse(sampling_response)
 
 
@@ -90,6 +93,8 @@ def sampling_shp(request):
 		'strataout': strata_out        
 	}
 
+	cleanUp(outputs_dir)
+
 	return JsonResponse(sampling_response)
 
 
@@ -122,11 +127,14 @@ def local_adaptation(request):
 		'adaptwms': adaptation_wms
 	}
 
+	cleanUp(outputs_dir)
+
 	return JsonResponse(adaptation_response)
 
 def soilmaps(request):
 	# return list of soilmap layers from geoserver
-	cat = Catalog("http://localhost:8080/geoserver/rest")
+	geoserver_api = settings.GEOSERVER_URL + '/rest'
+	cat = Catalog(geoserver_api)
 	#gsdm_space = cat.get_resource(workspace='gsdm')
 	all_layers = cat.get_layers()
 

@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 
 from gsdmapp.uploads.models import Shapefile
 from gsdmapp.uploads.forms import ShapefileForm
+from gsdmapp import settings
 from zipfile import ZipFile
 from datetime import datetime
 from geoserver.catalog import Catalog
@@ -16,12 +17,12 @@ import os
 import fnmatch
 import csv
 
-data_path = '/var/www/gsdm/data/'
-upload_path = '/var/www/gsdm/uploaded/shapefiles/'
+data_path = settings.DATA_DIR
+upload_path = settings.UPLOAD_PATH
 
 def uncompress(zipped):
     # unzip folder and extract shapefile
-    zipped_path = '/var/www/gsdm/uploaded/shapefiles/' + zipped
+    zipped_path = upload_path + zipped
     zf = ZipFile(zipped_path, 'r')
     zf.extractall(data_path)
     zf.close()
@@ -40,7 +41,8 @@ def uncompress(zipped):
     os.system('cp %s/*.* %s' % (unzipped_dir, data_path))
 
     # clean up uploads folder
-    os.system('rm -rf /var/www/gsdm/uploaded/shapefiles/*.*')
+    cmd = 'rm -rf ' + upload_path + '*.*'
+    os.system(cmd)
 
     return shpfile
 
@@ -50,7 +52,8 @@ def publish_layer(shape_file):
 
     # reproject to wgs84: 4326
     # tif with target projection
-    tif = gdal.Open("/var/www/gsdm/data/soc_origin.tif")
+    tiff_src = settings.DATA_DIR + 'soc_origin.tif'
+    tif = gdal.Open(tiff_src)
 
     # shapefile with source projection
     driver = ogr.GetDriverByName("ESRI Shapefile")
@@ -91,7 +94,8 @@ def publish_layer(shape_file):
 
 
     # geoserver publishing
-    cat = Catalog("http://localhost:8080/geoserver/rest")
+    geoserver_api = settings.GEOSERVER_URL + '/rest'
+    cat = Catalog(geoserver_api)
 
     shpfile = reprojected_shp.replace('.shp','')
     _shpfile = data_path + shpfile
@@ -111,8 +115,8 @@ def geojson_layer(shape_file):
 
     # reproject to wgs84: 4326
     # tif with target projection
-    #tif = gdal.Open("/var/www/gsdm/data/soc_origin.tif")
-    tif = gdal.Open("/var/www/gsdm/data/Soil_Carbon_0_30_250m_4326.tif")
+    tiff_src = settings.DATA_DIR + 'Soil_Carbon_0_30_250m_4326.tif'
+    tif = gdal.Open(tiff_src)
 
     # shapefile with source projection
     driver = ogr.GetDriverByName("ESRI Shapefile")
@@ -174,8 +178,8 @@ def geojson_point_layer(shape_file):
 
     # reproject to wgs84: 4326
     # tif with target projection
-    #tif = gdal.Open("/var/www/gsdm/data/soc_origin.tif")
-    tif = gdal.Open("/var/www/gsdm/data/Soil_Carbon_0_30_250m_4326.tif")
+    tiff_src = settings.DATA_DIR + 'Soil_Carbon_0_30_250m_4326.tif'
+    tif = gdal.Open(tiff_src)
 
     # shapefile with source projection
     driver = ogr.GetDriverByName("ESRI Shapefile")
@@ -315,7 +319,6 @@ def sampling_file_upload(request):
                 'layer_wms': layer_geojson,
                 'url': uploadedfile
             }
-            #return HttpResponseRedirect(reverse('gsdmapp.views.app'))
             return JsonResponse(upload_msg)
 
 
@@ -352,5 +355,4 @@ def adaptation_file_upload(request):
                 'layer_wms': layer_wms
 
             }
-            #return HttpResponseRedirect(reverse('gsdmapp.views.app'))
             return JsonResponse(upload_msg)

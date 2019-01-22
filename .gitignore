@@ -53,3 +53,5 @@ Thumbs.db
 toolbox/.idea
 toolbox/log
 gsdmapp/gsdmapp/*.pyc
+gsdmapp/gsdmapp/local_settings.py
+

@@ -26,11 +26,11 @@ from osgeo import ogr, osr, gdal
 
 from geoserver.catalog import Catalog
 
-data_dir = '/var/www/gsdm/data/'
+from gsdmapp import settings
 
 def createShp(poly):
     #create shapefile from user geojson
-    os.chdir(data_dir)
+    os.chdir(settings.DATA_DIR)
 
     schema = {'geometry': 'Polygon','properties': {'fld_a': 'str:50'}}
 
@@ -58,12 +58,13 @@ def createShp(poly):
 def reProject(shapefile):
     # reproject to planar coordinate system: 3857
     # tif with target projection
-    #tif = gdal.Open("/var/www/gsdm/data/soc_reproj21.tif")
-    tif = gdal.Open("/var/www/gsdm/data/Soil_Carbon_0_30_250m_3857.tif")
+    tiff_src = settings.DATA_DIR + 'Soil_Carbon_0_30_250m_3857.tif'
+    tif = gdal.Open(tiff_src)
 
     # shapefile with source projection
     driver = ogr.GetDriverByName("ESRI Shapefile")
-    datasource = driver.Open("/var/www/gsdm/data/polygon.shp")
+    shp_src = settings.DATA_DIR + 'polygon.shp'
+    datasource = driver.Open(shp_src)
     layer = datasource.GetLayer()
 
     # set spatial reference and transformation
@@ -74,7 +75,8 @@ def reProject(shapefile):
     reprojected_shp = 'polygon_reproj.shp'
 
     to_fill = ogr.GetDriverByName("Esri Shapefile")
-    ds = to_fill.CreateDataSource("/var/www/gsdm/data/polygon_reproj.shp")
+    shp2_src = settings.DATA_DIR + 'polygon_reproj.shp'
+    ds = to_fill.CreateDataSource(shp2_src)
     outlayer = ds.CreateLayer('', targetprj, ogr.wkbPolygon)
     outlayer.CreateField(ogr.FieldDefn('id', ogr.OFTInteger))
 
@@ -111,10 +113,9 @@ def createSampling(_params):
     
     output_name = 'samplingout'
 
-    temp_dir = '/var/www/gsdm/data'
-    #os.chdir(temp_dir)
+    temp_dir = settings.DATA_DIR
 
-    script_file = temp_dir + "/sampling_design.R"
+    script_file = temp_dir + "sampling_design.R"
 
     file = open(script_file, "w")
     file.write("working_directory<-'" + temp_dir + "'\n")
@@ -175,9 +176,9 @@ def createAdaptation(_params):
 
     output_name = 'adaptationout'
 
-    temp_dir = '/var/www/gsdm/data'
+    temp_dir = settings.DATA_DIR
 
-    script_file = temp_dir + "/map_adaptation.R"
+    script_file = temp_dir + "map_adaptation.R"
 
     file = open(script_file, "w")
     file.write("working_directory<-'" + temp_dir + "'\n")
@@ -240,8 +241,9 @@ def createAdaptation(_params):
 def runRscript(r_script):
     # run R script
     # process = subprocess.call([r_program, '--vanilla', r_script], shell=False)
-    os.system('sudo -u servir-vic /usr/bin/Rscript --vanilla %s' % (r_script,))
-    #process = subprocess.Popen('sudo -u servir-vic /usr/bin/Rscript --vanilla %s' % (r_script,))
+    run_r = 'sudo -u ' + settings.R_USER + ' /usr/bin/Rscript --vanilla %s'
+    os.system(run_r % (r_script,))
+    #process = subprocess.Popen('sudo -u developer /usr/bin/Rscript --vanilla %s' % (r_script,))
     
 
 
@@ -249,8 +251,8 @@ def runRscript(r_script):
 
 def zipFolder(folder):
     # make zip archive from outputs directory
-    os.chdir(data_dir)
-    out_dir = data_dir + folder
+    os.chdir(settings.DATA_DIR)
+    out_dir = settings.DATA_DIR + folder
 
     outputs_zip = shutil.make_archive(folder, 'zip', out_dir)
 
@@ -261,9 +263,10 @@ def zipFolder(folder):
 
 def publishRasters(folder):
     # publish adaptation output files (tifs) as wms
-    cat = Catalog("http://localhost:8080/geoserver/rest")
+    geoserver_api = settings.GEOSERVER_URL + '/rest'
+    cat = Catalog(geoserver_api)
 
-    out_dir = data_dir + folder
+    out_dir = settings.DATA_DIR + folder
     _files = os.listdir(out_dir)
 
     wms_layers = []
@@ -288,8 +291,8 @@ def publishRasters(folder):
 
 def getStats(folder):
     # get statistics and evaluation data
-    feedback_file = data_dir + folder + '/mri_feedback.txt'
-    evaluation_file = data_dir + folder + '/mri_evaluation.txt'
+    feedback_file = settings.DATA_DIR + folder + '/mri_feedback.txt'
+    evaluation_file = settings.DATA_DIR + folder + '/mri_evaluation.txt'
     feedback_stats = []
     evaluation_stats = []
     with open(feedback_file) as txt_file:
@@ -310,14 +313,14 @@ def getStats(folder):
 
 def output_sampling_geo(shape_file):
     # geojson conversion
-    input_shp = data_dir + 'samplingout/'+shape_file
+    input_shp = settings.DATA_DIR + 'samplingout/'+shape_file
 
     # avoid duplicate geojson files
     geo_ext = datetime.now().strftime('%Y%m%d%H%M%S%f')
     geo_name = geo_ext + '.geojson'
 
     geojson = shape_file.replace('.shp',geo_name)
-    _geojson = data_dir + 'vault/'+geojson
+    _geojson = settings.DATA_DIR + 'vault/'+geojson
 
     with fiona.open(input_shp) as source:
         with fiona.open(_geojson, 'w', driver='GeoJSON', schema=source.schema) as sink:
@@ -335,3 +338,10 @@ def outputGeo(folder):
     strata_geojson = output_sampling_geo(strata_output)
 
     return points_geojson, strata_geojson
+
+
+def cleanUp(folder):
+    # clean up outputs
+    outputs_folder = settings.DATA_DIR + folder
+    cmd = 'rm -rf ' + outputs_folder + '/*.*'
+    os.system(cmd)

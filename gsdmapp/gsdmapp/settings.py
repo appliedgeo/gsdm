@@ -101,10 +101,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-UPLOAD_DIR = '/var/www/gsdm/'
-
-MEDIA_ROOT = os.path.join(UPLOAD_DIR, 'uploaded')
-MEDIA_URL = '/uploaded/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
@@ -115,3 +111,6 @@ try:
     from local_settings import *
 except ImportError:
     pass
+
+MEDIA_ROOT = os.path.join(UPLOAD_DIR, 'uploaded')
+MEDIA_URL = '/uploaded/'

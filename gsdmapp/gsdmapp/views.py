@@ -12,7 +12,10 @@ import zipfile
 import fnmatch
 
 def app(request):
-	return render_to_response('app.html')
+	context_dict = {
+		'geoserver_url': settings.GEOSERVER_URL
+	}
+	return render_to_response('app.html', RequestContext(request, context_dict))
 
 
 def sampling_draw(request):

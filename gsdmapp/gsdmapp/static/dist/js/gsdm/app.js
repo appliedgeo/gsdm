@@ -787,7 +787,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
                         });
 
-                        addGeolayer(data.layer_wms);
+                        //addGeolayer(data.layer_wms);
 
                     },error: function(){
                         waitingDialog.hide();

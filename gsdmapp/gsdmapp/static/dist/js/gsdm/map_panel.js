@@ -7,6 +7,9 @@
 
      var myGadm = L.geoJSON().addTo(map);
 
+     //console.log(geoserver_link);
+     var geoserver_wms = geoserver_link + '/wms';
+
     var satellite = L.tileLayer('http://www.google.com/maps/vt?lyrs=s,h&x={x}&y={y}&z={z}', {
         //http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}
             attribution: 'google'
@@ -84,7 +87,7 @@
 
           // add layer
           soilmap_wms = 'gsdm:' + soilmap;
-          soilmap_layer = L.tileLayer.wms('http://45.33.28.192:8080/geoserver/wms', {
+          soilmap_layer = L.tileLayer.wms(geoserver_wms, {
               layers: soilmap_wms,
               transparent: true,
               format: 'image/png'
@@ -138,7 +141,7 @@
 
             var layer_wms = 'gsdm:' + layer_name;
 
-            uploadedLayer =  L.tileLayer.wms('http://localhost:8080/geoserver/wms', {
+            uploadedLayer =  L.tileLayer.wms(geoserver_wms, {
               layers: layer_wms,
               transparent: true,
               format: 'image/png'

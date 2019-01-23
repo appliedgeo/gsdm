@@ -78,16 +78,22 @@ The steps to deploy GSDM in a Ubuntu 16.04 machine are as follows:
 	# CREATE EXTENSION postgis;
 
 4. Load data into the GSDM database::
-	
+
+    $ wget http://45.33.28.192/gsdmdata/gsdm_data.tar.gz
+    $ tar -xvzf gsdm_data.tar.gz | cd gsdm_data
 	$ psql gsdm -f gsdm_data
 
 5. Create the GSDM workspace in GeoServer.
 
 	.. image:: img/workspace.png
 
-6. Publish GSDM soil background maps to GeoServer as WMS layers.
+6. Publish GSDM soil background maps to GeoServer as WMS layers::
 
-	.. image:: img/layers.png
+    $ cd /home/ubuntu/soildata
+    $ python /home/ubuntu/gsdm/scripts/publish_layer.py Soil_Carbon_0_30_250m_4326.tif
+
+
+.. image:: img/layers.png
 
 7. Set up and enable the Apache2 virtualhost configuration for the GSDM web interface::
 	
@@ -164,12 +170,15 @@ The steps to deploy GSDM in a Ubuntu 16.04 machine are as follows:
 	$ sudo a2ensite gsdm.conf
 
 
+8. Install required R packages::
 
-8. Enable the www-data user to run Rscript as local user by adding the following line to /etc/sudoers file::
+    $ Rscript /home/ubuntu/gsdm/scripts/installer.R
+
+9. Enable the www-data user to run Rscript as local user by adding the following line to /etc/sudoers file::
 
 	www-data ALL=(ubuntu) NOPASSWD: /usr/bin/Rscript
 
-9. Access GSDM web interface from your web browser, using the server address from step 7 above. The GSDM home page should be displayed.
+10. Access GSDM web interface from your web browser, using the server address from step 7 above. The GSDM home page should be displayed.
 
 	.. image:: img/home_page.png
  

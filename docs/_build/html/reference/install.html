@@ -220,7 +220,9 @@ $ psql gsdm
 </div>
 </li>
 <li><p class="first">Load data into the GSDM database:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ psql gsdm -f gsdm_data
+<div class="highlight-python"><div class="highlight"><pre>$ wget http://45.33.28.192/gsdmdata/gsdm_data.tar.gz
+$ tar -xvzf gsdm_data.tar.gz | cd gsdm_data
+    $ psql gsdm -f gsdm_data
 </pre></div>
 </div>
 </li>
@@ -229,11 +231,15 @@ $ psql gsdm
 <div><img alt="../_images/workspace.png" src="../_images/workspace.png" />
 </div></blockquote>
 </li>
-<li><p class="first">Publish GSDM soil background maps to GeoServer as WMS layers.</p>
-<blockquote>
-<div><img alt="../_images/layers.png" src="../_images/layers.png" />
-</div></blockquote>
+<li><p class="first">Publish GSDM soil background maps to GeoServer as WMS layers:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /home/ubuntu/soildata
+$ python /home/ubuntu/gsdm/scripts/publish_layer.py Soil_Carbon_0_30_250m_4326.tif
+</pre></div>
+</div>
 </li>
+</ol>
+<img alt="../_images/layers.png" src="../_images/layers.png" />
+<ol class="arabic" start="7">
 <li><p class="first">Set up and enable the Apache2 virtualhost configuration for the GSDM web interface:</p>
 <div class="highlight-python"><div class="highlight"><pre>  $ sudo vim etc/apache2/sites-available/gsdm.conf
 
@@ -306,6 +312,11 @@ $ psql gsdm
   &lt;/VirtualHost&gt;
 
   $ sudo a2ensite gsdm.conf
+</pre></div>
+</div>
+</li>
+<li><p class="first">Install required R packages:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ Rscript /home/ubuntu/gsdm/scripts/installer.R
 </pre></div>
 </div>
 </li>

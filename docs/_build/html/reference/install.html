@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation Guide &mdash; GSDM 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="GSDM 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Installation &amp; Admin" href="index.html"/>
+        <link rel="next" title="Configuration Guide" href="config.html"/>
+        <link rel="prev" title="Installation &amp; Admin" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> GSDM
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/help.html">Online User Help</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation &amp; Admin</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">Installation Guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#recommended-minimum-system-requirements">Recommended Minimum System Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#software-requirements">Software Requirements</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python-packages-requirements-txt">Python Packages (requirements.txt)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#r-packages">R packages</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ubuntu-deployment">Ubuntu Deployment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">Configuration Guide</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">GSDM</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Installation &amp; Admin</a> &raquo;</li>
+      
+    <li>Installation Guide</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/reference/install.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation-guide">
+<span id="install-guide"></span><h1>Installation Guide<a class="headerlink" href="#installation-guide" title="Permalink to this headline">¶</a></h1>
+<p>The following is a guide to get GSDM up and running in a Linux operating system. This is meant to be run on a fresh machine with no previously installed packages or GSDM versions.</p>
+<div class="section" id="recommended-minimum-system-requirements">
+<h2>Recommended Minimum System Requirements<a class="headerlink" href="#recommended-minimum-system-requirements" title="Permalink to this headline">¶</a></h2>
+<p>For deployment of GSDM on a single server, the following are the <em>bare minimum</em> system requirements:</p>
+<ul class="simple">
+<li>6GB of RAM, including swap space.</li>
+<li>2.2GHz processor. (Additional processing power may be required for multiple concurrent map renderings and R processing)</li>
+<li>1 GB software disk usage.</li>
+<li>Additional disk space for any data hosted with GeoServer, database, user uploads and outputs.
+For spatial data, cached tiles, and files useful for R processing, a decent baseline size for GSDM deployment is 100GB.</li>
+<li>64-bit hardware recommended.</li>
+</ul>
+</div>
+<div class="section" id="software-requirements">
+<h2>Software Requirements<a class="headerlink" href="#software-requirements" title="Permalink to this headline">¶</a></h2>
+<p>The current GSDM release has been tested on a server meeting the following requirements:</p>
+<ul class="simple">
+<li>Ubuntu 16.04 64 bit server edition.</li>
+<li>GeoServer 2.14</li>
+<li>R version 3.4.4</li>
+<li>Postgresql 9.5</li>
+<li>Postgis 2.2</li>
+<li>Apache2</li>
+<li>libapache2-mod-wsgi</li>
+<li>Git</li>
+<li>Python-django</li>
+<li>Python-psycopg2</li>
+</ul>
+<div class="section" id="python-packages-requirements-txt">
+<h3>Python Packages (requirements.txt)<a class="headerlink" href="#python-packages-requirements-txt" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Django==1.8.19</li>
+<li>Fiona==1.7.13</li>
+<li>GDAL==2.1.2</li>
+<li>gsconfig==1.0.10</li>
+<li>psycopg2==2.7.3.1</li>
+</ul>
+</div>
+<div class="section" id="r-packages">
+<h3>R packages<a class="headerlink" href="#r-packages" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>raster</li>
+<li>SurfaceTortoise</li>
+<li>mapsRinteractive</li>
+</ul>
+</div>
+</div>
+<div class="section" id="ubuntu-deployment">
+<h2>Ubuntu Deployment<a class="headerlink" href="#ubuntu-deployment" title="Permalink to this headline">¶</a></h2>
+<p>The steps to deploy GSDM in a Ubuntu 16.04 machine are as follows:</p>
+<ol class="arabic">
+<li><p class="first">Clone the GSDM git repository:</p>
+<div class="highlight-python"><div class="highlight"><pre>git clone https://github.com/appliedgeo/gsdm.git
+</pre></div>
+</div>
+</li>
+<li><p class="first">Set up the GSDM data directories:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /var/www/html/
+$ sudo mkdir -p gsdm gsdm/data gsdm/data/samplingout gsdm/data/adaptationout gsdm/uploaded gsdm/uploaded/shapefiles
+$ sudo chown -R www-data:www-data gsdm/
+$ sudo chmod -R 777 gsdm/
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create the GSDM database and enable the spatial extension:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ createdb gsdm
+$ psql gsdm
+# CREATE EXTENSION postgis;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Load data into the GSDM database:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ psql gsdm -f gsdm_data
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create the GSDM workspace in GeoServer.</p>
+<blockquote>
+<div><img alt="../_images/workspace.png" src="../_images/workspace.png" />
+</div></blockquote>
+</li>
+<li><p class="first">Publish GSDM soil background maps to GeoServer as WMS layers.</p>
+<blockquote>
+<div><img alt="../_images/layers.png" src="../_images/layers.png" />
+</div></blockquote>
+</li>
+<li><p class="first">Set up and enable the Apache2 virtualhost configuration for the GSDM web interface:</p>
+<div class="highlight-python"><div class="highlight"><pre>  $ sudo vim etc/apache2/sites-available/gsdm.conf
+
+  WSGIPythonPath /home/ubuntu/gsdm/gsdmapp/:/usr/local/lib/python2.7/dist-packages
+  &lt;VirtualHost *:80&gt;
+  ServerName localhost
+  ServerAdmin admin@gsdm.ciat.cgiar.org
+
+  ErrorLog /var/log/apache2/error.log
+  LogLevel warn
+  CustomLog /var/log/apache2/access.log combined
+
+  WSGIPassAuthorization On
+  WSGIScriptAlias / /home/ubuntu/gsdm/gsdmapp/gsdmapp/wsgi.py
+
+  &lt;Directory &quot;/home/ubuntu/gsdm/gsdmapp/gsdmapp/&quot;&gt;
+          &lt;Files wsgi.py&gt;
+                  Order deny,allow
+                  Require all granted
+          &lt;/Files&gt;
+  &lt;/Directory&gt;
+
+  &lt;Directory /home/ubuntu/gsdm/gsdmapp/gsdmapp/static/&gt;
+  Options Indexes FollowSymLinks
+  AllowOverride None
+  Require all granted
+  IndexOptions FancyIndexing
+  &lt;/Directory&gt;
+
+
+  &lt;Directory /home/ubuntu/gsdm/docs/_build/html/&gt;
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+    IndexOptions FancyIndexing
+&lt;/Directory&gt;
+
+  &lt;Directory &quot;/var/www/html/gsdm/uploaded/&quot;&gt;
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+    IndexOptions FancyIndexing
+
+  &lt;/Directory&gt;
+
+
+  &lt;Directory &quot;/var/www/html/gsdm/data/&quot;&gt;
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+    IndexOptions FancyIndexing
+
+  &lt;/Directory&gt;
+
+
+  ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+  &lt;Directory &quot;/usr/lib/cgi-bin&quot;&gt;
+          AllowOverride None
+          Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+          Order allow,deny
+          Allow from all
+  &lt;/Directory&gt;
+
+  Alias /static/ /home/ubuntu/gsdm/gsdmapp/gsdmapp/static/
+  Alias /uploaded/ /var/www/html/gsdm/uploaded/
+  Alias /outputs/ /var/www/html/gsdm/data/
+  Alias /docs/ /home/ubuntu/gsdm/docs/_build/html/
+
+
+  &lt;/VirtualHost&gt;
+
+  $ sudo a2ensite gsdm.conf
+</pre></div>
+</div>
+</li>
+<li><p class="first">Enable the www-data user to run Rscript as local user by adding the following line to /etc/sudoers file:</p>
+<div class="highlight-python"><div class="highlight"><pre>www-data ALL=(ubuntu) NOPASSWD: /usr/bin/Rscript
+</pre></div>
+</div>
+</li>
+<li><p class="first">Access GSDM web interface from your web browser, using the server address from step 7 above. The GSDM home page should be displayed.</p>
+<blockquote>
+<div><img alt="../_images/home_page.png" src="../_images/home_page.png" />
+</div></blockquote>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="config.html" class="btn btn-neutral float-right" title="Configuration Guide" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Installation &amp; Admin" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, CIAT.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

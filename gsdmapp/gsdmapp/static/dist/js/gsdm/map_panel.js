@@ -55,6 +55,8 @@
         var layer = event.layer;
         drawnItems.addLayer(layer);
 
+        map.fitBounds(layer.getBounds());
+
 		// update layer control
 		toc.removeLayer(drawnItems);
 		if(geojsonLayer){
@@ -63,7 +65,7 @@
 		toc.addOverlay(drawnItems, "Area of Interest");
 
         aoi_area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
-        var _strat_size = Math.sqrt(aoi_area)/10;
+        _strat_size = Math.sqrt(aoi_area)/10;
         _strat_size = Math.trunc(_strat_size);
         $('#samplingStratsize').val(_strat_size);
 
@@ -219,7 +221,7 @@
 				//console.log(data.features[0].geometry.coordinates);
 				var aoi_geo = L.polygon(data.features[0].geometry.coordinates);
 				aoi_area = L.GeometryUtil.geodesicArea(aoi_geo.getLatLngs()[0]);
-        		var _strat_size = Math.sqrt(aoi_area)/10;
+        		_strat_size = Math.sqrt(aoi_area)/10;
         		_strat_size = Math.trunc(_strat_size);
         		$('#samplingStratsize').val(_strat_size);
 				

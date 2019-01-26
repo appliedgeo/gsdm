@@ -273,23 +273,41 @@ $(document).ready(function(){
         var _method = $(this).val();
         if(_method == 'stratrand' || _method == 'stratdir'){
           $( "#samplingStratsize" ).prop( "disabled", false );
+
           $( "#samplingDistance" ).prop( "disabled", false );
+          $( "#samplingDistance" ).val('0');
+
           $( "#samplingEdge" ).prop( "disabled", false );
+           $( "#samplingEdge" ).val('0');
+
           $( "#samplingCriterium" ).prop( "disabled", false );
+          $( "#samplingCriterium" ).val('50');
+
           $( "#samplingRun" ).prop( "disabled", false );
 
         } else if(_method == 'grid'){
           $( "#samplingStratsize" ).prop( "disabled", false );
           $( "#samplingEdge" ).prop( "disabled", false );
+           $( "#samplingEdge" ).val('0');
+
           $( "#samplingRun" ).prop( "disabled", false );
 
           $( "#samplingCriterium" ).prop( "disabled", true );
+           $( "#samplingCriterium" ).val('50');
+
           $( "#samplingDistance" ).prop( "disabled", true );
+           $( "#samplingDistance" ).val('0');
 
         } else if(_method == 'dir'){
           $( "#samplingDistance" ).prop( "disabled", false );
+           $( "#samplingDistance" ).val('0');
+
           $( "#samplingEdge" ).prop( "disabled", false );
+           $( "#samplingEdge" ).val('0');
+
           $( "#samplingCriterium" ).prop( "disabled", false );
+           $( "#samplingCriterium" ).val('50');
+
           $( "#samplingRun" ).prop( "disabled", false );
 
 
@@ -301,8 +319,14 @@ $(document).ready(function(){
            $('#samplingStratsize').val('0');
            $( "#samplingStratsize" ).prop( "disabled", true );
           $( "#samplingDistance" ).prop( "disabled", true );
+           $( "#samplingDistance" ).val('0');
+
           $( "#samplingEdge" ).prop( "disabled", true );
+          $( "#samplingEdge" ).val('0');
+
           $( "#samplingCriterium" ).prop( "disabled", true );
+           $( "#samplingCriterium" ).val('50');
+           
           $( "#samplingRun" ).prop( "disabled", true );
         }
 

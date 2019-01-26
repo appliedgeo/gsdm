@@ -48,10 +48,7 @@ Reference
 
 The :doc:`Reference <reference/index>` section provides details about the internals of the GSDM application. It has background information about components that make up GSDM, deployment, configuration and much more.
 
-.. toctree::
-    :maxdepth: 2
 
-    reference/index
 
 
 Indices and tables

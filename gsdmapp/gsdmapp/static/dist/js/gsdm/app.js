@@ -400,10 +400,15 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
 
 
+
+
+
+
       // run sampling design
       $( "#samplingRun" ).click(function(e) {
 
           //console.log(aoi);
+
 
           //var polygon = JSON.stringify(aoi);
           var aoi_method = $("input[name='aoiRadios']:checked").val();
@@ -433,7 +438,10 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
               };
 
-                 waitingDialog.show('Sampling Design running<img src="/static/dist/images/spinner.gif" height="96" width="96">');
+                var dialog_content = 'Sampling Design running<img src="/static/dist/images/spinner.gif" height="96" width="96">';
+                dialog_content += '<button id="stopRun" type="button" class="btn btn-primary btn-block" onclick="abortRun()">Cancel</button>';
+
+                waitingDialog.show(dialog_content);
 
               $.ajax({
                   type: "POST",
@@ -483,9 +491,12 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
               };
                 //alert('Running..');
-                waitingDialog.show('Sampling Design running<img src="/static/dist/images/spinner.gif" height="96" width="96">');
+                var dialog_content = 'Sampling Design running<img src="/static/dist/images/spinner.gif" height="96" width="96">';
+                dialog_content += '<button id="stopRun" type="button" class="btn btn-primary btn-block" onclick="abortRun()">Cancel</button>';
 
-              $.ajax({
+                waitingDialog.show(dialog_content);
+
+              req = $.ajax({
                   type: "POST",
                   contentType: "application/json",
                   url: _url,
@@ -523,6 +534,8 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
       });
 
 
+
+
         // run local map adaptation
       $("#adaptRun").click(function(e){
 
@@ -546,7 +559,11 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
               };
 
-            waitingDialog.show('Local Map Adaptation running<img src="/static/dist/images/spinner.gif" height="96" width="96">');
+
+            var dialog_content = 'Local Map Adaptation running<img src="/static/dist/images/spinner.gif" height="96" width="96">';
+                dialog_content += '<button id="stopRun" type="button" class="btn btn-primary btn-block" onclick="abortRun()">Cancel</button>';
+
+                waitingDialog.show(dialog_content);
 
             var _url = '/localadapt/';
 
@@ -561,7 +578,7 @@ $('#collapseSettings a[data-toggle="tab"]').bind('click', function (e) {
 
                         waitingDialog.hide();
 
-						          alert('Local map adaptation complete!');
+						alert('Local map adaptation complete!');
 
                        //console.log(data.feedback.length);
                        var feedback = data.feedback;

@@ -1,4 +1,4 @@
-    var soilLayer, aoi, selected_shp, pointdata, draw_control, uploadedLayer, geojsonLayer, pointsoutLayer, strataoutLayer, toc, aoi_area, soilmap_wms, soilmap_layer;
+    var soilLayer, aoi, selected_shp, pointdata, draw_control, uploadedLayer, geojsonLayer, pointsoutLayer, strataoutLayer, toc, aoi_area, soilmap_wms, soilmap_layer, req;
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib }),
@@ -27,6 +27,12 @@
     // add layer control
 
      toc = L.control.layers(baseMap, overlayMaps, { position: 'bottomright', collapsed: false }).addTo(map);
+
+
+     function abortRun(){
+            req.abort();
+            waitingDialog.hide();
+      }
 
     // draw polygon tool
 

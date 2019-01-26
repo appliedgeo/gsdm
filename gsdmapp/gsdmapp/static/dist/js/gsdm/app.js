@@ -135,6 +135,17 @@ $(document).ready(function(){
  						toc.removeLayer(myGadm);
  						toc.addOverlay(myGadm, "Area of Interest");
 
+ 						// aoi area
+   						aoi_geo = L.polygon(boundary.coordinates[0]);
+   						aoi_area = L.GeometryUtil.geodesicArea(aoi_geo.getLatLngs()[0]);
+
+   						_strat_size = Math.sqrt(aoi_area)/10;
+ 	              		_strat_size = Math.trunc(_strat_size);
+                   		$('#samplingStratsize').val(_strat_size);
+
+
+                        $( "#samplingMethod" ).prop( "disabled", false );
+
 
 
                   }
@@ -195,6 +206,17 @@ $(document).ready(function(){
                         toc.removeLayer(myGadm);
                         toc.addOverlay(myGadm, "Area of Interest");
 
+                        // aoi area
+   						aoi_geo = L.polygon(boundary.coordinates[0]);
+   						aoi_area = L.GeometryUtil.geodesicArea(aoi_geo.getLatLngs()[0]);
+
+   						_strat_size = Math.sqrt(aoi_area)/10;
+ 	              		_strat_size = Math.trunc(_strat_size);
+                   		$('#samplingStratsize').val(_strat_size);
+
+
+                        $( "#samplingMethod" ).prop( "disabled", false );
+
 
                   }
               });
@@ -240,7 +262,7 @@ $(document).ready(function(){
  
    						//console.log(boundary.coordinates[0]);
    						// aoi area
-   						var aoi_geo = L.polygon(boundary.coordinates[0]);	
+   						aoi_geo = L.polygon(boundary.coordinates[0]);
    						aoi_area = L.GeometryUtil.geodesicArea(aoi_geo.getLatLngs()[0]);
                     				
    						_strat_size = Math.sqrt(aoi_area)/10;
@@ -289,7 +311,7 @@ $(document).ready(function(){
         } else if(_method == 'grid'){
           $( "#samplingStratsize" ).prop( "disabled", false );
           $('#samplingStratsize').val(_strat_size);
-          
+
           $( "#samplingEdge" ).prop( "disabled", false );
            $( "#samplingEdge" ).val('0');
 

@@ -177,12 +177,26 @@
                 // L.geoJson function is used to parse geojson file and load on to map
                 adaptLayer = L.geoJson(data).addTo(map);
                 map.fitBounds(adaptLayer.getBounds());
-            });
 
-			if(adaptLayer){
+                if(adaptLayer){
 					toc.removeLayer(adaptLayer);
 				}
-			toc.addOverlay(adaptLayer, "Sample Points");
+
+			    toc.addOverlay(adaptLayer, "Sample Points");
+
+			    // disable sampling design outputs
+			    if(pointsoutLayer){
+					map.removeLayer(pointsoutLayer);
+				}
+
+				if(strataoutLayer){
+					map.removeLayer(strataoutLayer);
+				}
+
+            });
+
+
+
 
 
 

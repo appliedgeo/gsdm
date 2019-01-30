@@ -119,15 +119,15 @@ def local_adaptation(request):
 	adaptation_out = zipFolder(outputs_dir)
 
 	# publish rasters
-	adaptation_wms = publishRasters(outputs_dir)
+	#adaptation_wms = publishRasters(outputs_dir)
 
 	feedback, evaluation = getStats(outputs_dir)
 
 	adaptation_response = {
 		'adaptout': adaptation_out,
 		'feedback': feedback,
-		'evaluation': evaluation,
-		'adaptwms': adaptation_wms
+		'evaluation': evaluation
+		#'adaptwms': adaptation_wms
 	}
 
 	cleanUp(outputs_dir)

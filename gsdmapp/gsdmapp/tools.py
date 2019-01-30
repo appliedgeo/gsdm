@@ -264,7 +264,7 @@ def zipFolder(folder):
 def publishRasters(folder):
     # publish adaptation output files (tifs) as wms
     geoserver_api = settings.GEOSERVER_URL + '/rest'
-    cat = Catalog(geoserver_api)
+    cat = Catalog(geoserver_api, settings.GEOSERVER_USER, settings.GEOSERVER_PASS)
 
     out_dir = settings.DATA_DIR + folder
     _files = os.listdir(out_dir)
